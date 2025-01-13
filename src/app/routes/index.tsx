@@ -5,7 +5,7 @@ import {
   DailyCheckPage,
   HistoryPage,
   HomePage,
-  Intro,
+  IntroPage,
   InvitePage,
   OnChainPage,
   SocialPage,
@@ -18,11 +18,11 @@ import { RouteObject, useLocation, useNavigate, useRoutes } from 'react-router-d
 const routes: RouteObject[] = [
   {
     path: `${DEFAULT_ROUTES_PATH}/`,
-    element: <Intro />,
+    element: <IntroPage />,
   },
   {
     path: `${DEFAULT_ROUTES_PATH}/intro`,
-    element: <Intro />,
+    element: <IntroPage />,
   },
   {
     path: `${DEFAULT_ROUTES_PATH}/home`,
