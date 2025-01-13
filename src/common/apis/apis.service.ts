@@ -1,18 +1,10 @@
-import { Store } from '@reduxjs/toolkit';
 import axios, { AxiosInstance, AxiosResponse, AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { isPathAllowed } from 'common/libs';
-import { apiHost_v1, accountHost, DEFAULT_FALLBACK_URL, landingHost, debug_apiHost_v1 } from 'consts';
+import { apiDomain, DEFAULT_FALLBACK_URL } from 'consts';
 
 import { BaseError, BaseResponse, CreateAxiosInstanceOptions, CustomAxiosInstance } from './apis.model';
 
-let _store: Store | null = null;
-
-let _timeDiff: number = 0;
-
-let _accountId: string;
-const injectAccountId = (id: string): void => {
-  _accountId = id;
-};
+let _store: any | null = null;
 
 /**
  * @function injectStore
@@ -21,12 +13,8 @@ const injectAccountId = (id: string): void => {
  * - store가 할당된 경우, 토큰값을 store.auth.{token} 값에 접근하여 가져온다
  * - axios 인스턴의 request 인터셉터에서 options 속성에 useAuthorization 가 포함된 경우, 헤더에 위 토큰 정보를 사용하여 발송한다
  */
-const injectStore = (s: Store): void => {
+const injectStore = (s: any): void => {
   _store = s;
-};
-
-const injectServerTime = (response: BaseResponse): void => {
-  _timeDiff = parseInt(response.time_now, 10) - Date.now();
 };
 
 const handleInterceptorRequest = (
@@ -64,9 +52,6 @@ const handleInterceptorRequest = (
         requestConfig.headers['X-PBAPI-TOKEN'] = token;
       }
     }
-    requestConfig.headers['X-PBAPI-SIGN-TYPE'] = 2;
-    requestConfig.headers['X-PBAPI-TIMESTAMP'] = Date.now() + _timeDiff;
-    requestConfig.headers['X-PBAPI-RECV-WINDOW'] = '5000';
   }
 
   return requestConfig;
@@ -108,10 +93,6 @@ const handleInterceptorResult = (
     const code = response.data.code.toString();
 
     const axiosError: AxiosError = new AxiosError(message, code, response.config, response.request, response);
-
-    if (code === '1515') {
-      window.location.href = `${landingHost}${DEFAULT_FALLBACK_URL}`;
-    }
 
     throw axiosError;
   }
@@ -158,28 +139,17 @@ const removeToken = ($axiosInstance: AxiosInstance): void => {
 };
 
 /** 공개 api 객체 */
-const api_v1 = createAxiosInstance(apiHost_v1);
-const debug_api_v1 = createAxiosInstance(debug_apiHost_v1);
+const api_v1 = createAxiosInstance(apiDomain);
 
 /** 인증 api 객체 */
-const apiAuth_v1 = createAxiosInstance(apiHost_v1, {
+const apiAuth = createAxiosInstance(apiDomain, {
   useAuthorization: true,
 });
 
 /** 다른도메인에 쿠키를 포함하여 전송하는 api 객체 */
-const apiWithCredentials = createAxiosInstance(accountHost, {
+const apiWithCredentials = createAxiosInstance(apiDomain, {
   useCredentials: true,
   useAuthorization: true,
 });
 
-export {
-  api_v1,
-  debug_api_v1,
-  apiAuth_v1,
-  apiWithCredentials,
-  removeToken,
-  injectStore,
-  injectServerTime,
-  injectAccountId,
-  _accountId,
-};
+export { api_v1, apiAuth, apiWithCredentials, removeToken, injectStore };

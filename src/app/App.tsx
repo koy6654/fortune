@@ -9,16 +9,22 @@ function App() {
 
   /** app 구동을 위한 필수 프로세스 */
   const bootstrap = useCallback(async () => {
-    try {
-      setInitialized(true);
-    } catch (error) {
-      console.error(error);
+    if (!initialized) {
+      try {
+        setInitialized(true);
+      } catch (error) {
+        console.error(error);
+      }
     }
-  }, []);
+  }, [initialized]);
 
   useEffect(() => {
     bootstrap();
   }, [bootstrap]);
+
+  if (!initialized) {
+    return <>Loading...</>;
+  }
 
   return (
     <AppProviders>

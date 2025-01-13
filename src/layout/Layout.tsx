@@ -1,12 +1,7 @@
-import './styles/globals.css';
+import 'styles/globals.css';
 
 import { ReactNode } from 'react';
-
-import { Alert } from 'features/alert';
-import { Toast } from 'features/toast';
-import GlobalStyle from 'styles/globalStyle';
-
-import { StyledContainer } from './Layout.style';
+import Background from 'assets/images/Background.png';
 
 interface LayoutProps {
   children?: ReactNode;
@@ -16,13 +11,14 @@ export function Layout(props: LayoutProps) {
   const { children } = props;
 
   return (
-    <StyledContainer>
-      <GlobalStyle />
+    <div
+      className="w-full h-screen flex flex-col"
+      style={{
+        backgroundImage: `url(${Background})`,
+        backgroundSize: 'cover',
+      }}
+    >
       {children}
-      <Toast />
-      <Alert />
-      <div id="tooltip-root"></div>
-      <div id="modal-root"></div>
-    </StyledContainer>
+    </div>
   );
 }
