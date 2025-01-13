@@ -1,0 +1,58 @@
+/**
+ * 필수적 혹은 자주 사용하는 요소 위주로 RESET.
+ */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+ol,
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+
+  th,
+  td {
+    padding: 0;
+  }
+}
+
+a,
+a:visited,
+a:hover {
+  text-decoration: none;
+}
+
+a,
+button,
+button:disabled,
+input,
+select {
+  appearance: none;
+}
+
+label {
+  display: inline-block;
+}
+
+[role='button'] {
+  cursor: pointer;
+}

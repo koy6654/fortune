@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.52.2",
+    "@tanstack/react-query-devtools": "^5.17.1",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.7.7",
     "bignumber.js": "^9.1.2",
@@ -16,6 +17,8 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2",
     "react-scripts": "^5.0.1",
+    "sass": "^1.83.1",
+    "web-vitals": "^2.1.4",
     "zustand": "^5.0.3"
   },
   "devDependencies": {
