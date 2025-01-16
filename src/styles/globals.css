@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Pridi-Regular';
+  src: url('~assets/fonts/PridiRegular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pridi-Medium';
+  src: url('~assets/fonts/PridiMedium.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pridi-SemiBold';
+  src: url('~assets/fonts/PridiSemiBold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pridi-Bold';
+  src: url('~assets/fonts/PridiBold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
