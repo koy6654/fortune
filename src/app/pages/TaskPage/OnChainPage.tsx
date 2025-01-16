@@ -1,13 +1,12 @@
 import React from 'react';
-import { Footer, Header } from 'layout';
+import { Footer, Header, Layout } from 'layout';
 import { OnChain } from 'features/onChain';
 export const OnChainPage = () => {
   return (
-    <div>
-      {' '}
-      <Header />
+    <Layout>
+      <Header title="Task" content="Complete tasks to earn FRTN and boost your progress!" />
       <OnChain />
       <Footer />
-    </div>
+    </Layout>
   );
 };

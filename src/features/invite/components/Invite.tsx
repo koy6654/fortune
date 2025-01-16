@@ -1,5 +1,5 @@
 import React from 'react';
 
 export const Invite = () => {
-  return <div>Invite</div>;
+  return <div className="flex-1 flex flex-col justify-center items-center relative">Invite</div>;
 };

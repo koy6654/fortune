@@ -7,8 +7,22 @@ import { ReactComponent as HomeHeaderInviteFriend } from 'assets/images/home/Hea
 import { ReactComponent as HomeHeaderFortunePoint } from 'assets/images/home/HeaderFortunePoint.svg';
 import { ReactComponent as HomeHeaderDailyCheck } from 'assets/images/home/HeaderDailyCheck.svg';
 
-export const Header = () => {
-  return <div className="header">Header</div>;
+type HeaderProps = {
+  title: string;
+  content: string;
+};
+
+export const Header = ({ title, content }: HeaderProps) => {
+  return (
+    <div className="h-[70px] w-full px-4 py-4">
+      <div className="text-center text-black text-xl font-semibold font-pridi">{title}</div>
+      <div
+        className="text-center text-[#2b2b2b] text-xs font-normal font-pridi"
+        style={{ whiteSpace: 'pre-line' }}
+        dangerouslySetInnerHTML={{ __html: content.replace(/\n/g, '<br />') }}
+      />
+    </div>
+  );
 };
 
 export const HomeHeader = () => {

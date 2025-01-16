@@ -1,13 +1,12 @@
 import React from 'react';
-import { Footer, Header } from 'layout';
+import { Footer, Header, Layout } from 'layout';
 import { Basic } from 'features/basic';
 export const BasicPage = () => {
   return (
-    <div>
-      {' '}
-      <Header />
+    <Layout>
+      <Header title="Task" content="Complete tasks to earn FRTN and boost your progress!" />
       <Basic />
       <Footer />
-    </div>
+    </Layout>
   );
 };
