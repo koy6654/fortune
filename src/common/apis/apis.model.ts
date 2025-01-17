@@ -1,11 +1,11 @@
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
 export interface BaseResponse<ResponseDataType = unknown> {
   /** response code */
-  code: number;
+  code?: number;
   /** api response data */
-  data: ResponseDataType;
+  data?: ResponseDataType;
   /** code와 1:1 매칭되는 상황별 에러 메시지 */
-  msg: string;
+  msg?: string;
   /** timestamp */
   time_now: string;
 }

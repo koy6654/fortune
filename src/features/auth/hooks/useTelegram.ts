@@ -36,10 +36,24 @@ export function useTelegramInitData(): TelegramWebApps.WebAppInitData {
   const [data, setData] = useState<TelegramWebApps.WebAppInitData>(USE_DEV_MODE ? DEFAULT_TELEGRAM_DATA : {});
 
   useEffect(() => {
-    if (!USE_DEV_MODE) {
+    const isNotDevMode = Boolean(!USE_DEV_MODE);
+    const isWindowTelegram = Boolean(window.Telegram);
+
+    const needsTelegramData = isNotDevMode && isWindowTelegram;
+    if (needsTelegramData) {
       setData(parseTelegramInitData());
     }
   }, []);
 
   return data;
+}
+
+export function useTelegramUISetting() {
+  useEffect(() => {
+    if (window.Telegram) {
+      window.Telegram.WebApp.setHeaderColor('#000');
+      window.Telegram.WebApp.setBackgroundColor('#000');
+      window.Telegram.WebApp.expand();
+    }
+  }, []);
 }

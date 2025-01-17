@@ -3,8 +3,11 @@ import { isPathAllowed } from 'common/libs';
 import { apiDomain, DEFAULT_FALLBACK_URL } from 'consts';
 
 import { BaseError, BaseResponse, CreateAxiosInstanceOptions, CustomAxiosInstance } from './apis.model';
+import { LocalStorage } from 'common/libs/storageManager';
+import { AuthState } from 'features/auth';
+import { StoreApi, UseBoundStore } from 'zustand';
 
-let _store: any | null = null;
+let _authStore: UseBoundStore<StoreApi<AuthState>> | null = null;
 
 /**
  * @function injectStore
@@ -13,8 +16,8 @@ let _store: any | null = null;
  * - store가 할당된 경우, 토큰값을 store.auth.{token} 값에 접근하여 가져온다
  * - axios 인스턴의 request 인터셉터에서 options 속성에 useAuthorization 가 포함된 경우, 헤더에 위 토큰 정보를 사용하여 발송한다
  */
-const injectStore = (s: any): void => {
-  _store = s;
+const injectStore = (s: UseBoundStore<StoreApi<AuthState>>): void => {
+  _authStore = s;
 };
 
 const handleInterceptorRequest = (
@@ -38,18 +41,11 @@ const handleInterceptorRequest = (
   }
 
   if (options?.useAuthorization) {
-    if (_store) {
-      if (_store.getState()?.auth.accessToken) {
-        const token = _store.getState().auth.accessToken;
+    if (_authStore) {
+      const { token } = _authStore.getState() as AuthState;
+      if (token) {
         const authorization = /^bearer/i.test(token) ? token : `bearer ${token}`;
         requestConfig.headers.Authorization = authorization;
-        requestConfig.headers['X-PBAPI-TOKEN'] = token;
-      }
-      if (_store.getState()?.auth.jwtToken) {
-        const token = _store.getState().auth.jwtToken;
-        const authorization = /^bearer/i.test(token) ? token : `bearer ${token}`;
-        requestConfig.headers.Authorization = authorization;
-        requestConfig.headers['X-PBAPI-TOKEN'] = token;
       }
     }
   }
@@ -77,7 +73,7 @@ const handleInterceptorResult = (
   /**
    * 특정 API를 에러로 간주할 수 있도록 함
    * @example
-   * const blackLists = ['/market/something', '/market/time'];
+   * const blackLists = ['/category/something', '/else/time'];
    */
   // eslint-disable-next-line prefer-const
   let blackLists: string[] = [];
@@ -88,9 +84,9 @@ const handleInterceptorResult = (
     method: 'includes',
   });
 
-  if (response.data?.code > 0 || isExistBlacklistAPI) {
-    const message = response.data.msg;
-    const code = response.data.code.toString();
+  if (isExistBlacklistAPI) {
+    const message = response?.data?.msg;
+    const code = response?.data?.code?.toString();
 
     const axiosError: AxiosError = new AxiosError(message, code, response.config, response.request, response);
 
@@ -104,6 +100,13 @@ const handleInterceptorResultError = (error: AxiosError | Error): Promise<AxiosE
   if (axios.isCancel(error)) {
     throw error;
   }
+
+  // 401 Unauthorized (type assertion)
+  if (axios.isAxiosError(error) && (error as AxiosError).response?.status === 401) {
+    LocalStorage.remove('token');
+    window.location.reload();
+  }
+
   return Promise.reject(error);
 };
 
