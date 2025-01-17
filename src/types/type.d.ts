@@ -1,3 +1,13 @@
+declare global {
+  interface Window {
+    Telegram: {
+      WebApp: {
+        initData: string;
+      };
+    };
+  }
+}
+
 export interface Config {
   appUrl: string;
   apiDomain: string;
