@@ -7,14 +7,14 @@ import { ReactComponent as HomeHeaderInviteFriend } from 'assets/images/home/Hea
 import { ReactComponent as HomeHeaderFortunePoint } from 'assets/images/home/HeaderFortunePoint.svg';
 import { ReactComponent as HomeHeaderDailyCheck } from 'assets/images/home/HeaderDailyCheck.svg';
 
-type HeaderProps = {
+interface HeaderProps {
   title: string;
   content: string;
-};
+}
 
 export const Header = ({ title, content }: HeaderProps) => {
   return (
-    <div className="h-[70px] w-full px-4 py-4">
+    <div className="h-[90px] w-full px-4 py-4">
       <div className="text-center text-black text-xl font-pridi-medium">{title}</div>
       <div
         className="text-center text-[#2b2b2b] text-xs font-normal font-pridi"
