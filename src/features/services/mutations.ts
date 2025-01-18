@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { BaseError, BaseResponse } from 'common/apis';
+import { BaseError } from 'common/apis';
 import { AuthParams, AuthResponse } from 'features/auth';
 import { postAuthTelegramUser, postFortuneDailyClaim, postFortuneUserHistory } from './service';
 import {
