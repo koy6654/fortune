@@ -14,7 +14,6 @@ function App() {
 
   const { token, setToken } = useAuthStore();
 
-  console.log('app');
   const { query_id, user, receiver, start_param, auth_date, hash } = useTelegramInitData();
 
   /** app 구동을 위한 필수 프로세스 */
