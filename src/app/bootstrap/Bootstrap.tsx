@@ -18,7 +18,7 @@ export function Bootstrap({ children }: BootstrapProps) {
         setInitialized(true);
       } catch (error) {
         console.error(error);
-        setInitialized(true);
+        setInitialized(false);
       }
     }
   }, [initialized, loadAuthentication]);

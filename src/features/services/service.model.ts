@@ -1,15 +1,13 @@
-import { AuthParams } from 'features/auth';
-
-type UserType = {
+export type UserType = {
   id: number;
   telegram_id: number;
   first_name: string;
   last_name: string;
-  username: string | null;
+  usernames: string | null;
   wallet: string | null;
   balance: number;
   fortune: number | null;
-  referred_by: number;
+  referred_by: number | string;
   login_streak: number;
   production_per_hour: number;
   last_login_date: string | null;
@@ -17,6 +15,13 @@ type UserType = {
   updated_at: string;
   last_login_round: string | null;
 };
+
+export type AuthParams = Pick<UserType, 'telegram_id' | 'first_name' | 'last_name'> &
+  Partial<Pick<UserType, 'usernames' | 'referred_by'>>;
+
+export interface AuthResponse {
+  token: string;
+}
 
 export interface SyncParams {}
 

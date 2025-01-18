@@ -32,7 +32,7 @@ function parseTelegramInitData(): TelegramWebApps.WebAppInitData {
  * const { hash } = useTelegramInitData();
  * console.log({ hash });
  */
-export function useTelegramInitData(): TelegramWebApps.WebAppInitData {
+export function useTelegramInitData() {
   const [data, setData] = useState<TelegramWebApps.WebAppInitData>(USE_DEV_MODE ? DEFAULT_TELEGRAM_DATA : {});
 
   useEffect(() => {

@@ -1,109 +1,104 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useAuthStore } from '../store';
+import { useAuthStore, useFortuneSyncStore } from '../store';
 import { useTelegramInitData, useTelegramUISetting } from './useTelegram';
 import { useAuthTelegramUser } from 'features/services/mutations';
 import { AxiosError } from 'axios';
 import { useFortuneSync } from 'features/services/queries';
+import { LocalStorage } from 'common/libs/storageManager';
+import { api_v1 } from 'common/apis';
+import { SyncResponse } from 'features/services/service.model';
 
 export function useAuthorizationSetting() {
   useTelegramUISetting();
 
-  const { token, setToken } = useAuthStore();
+  const { setToken } = useAuthStore();
+  const { setFortuneSync } = useFortuneSyncStore();
 
-  const { query_id, user, receiver, start_param, auth_date, hash } = useTelegramInitData();
-
-  const [isInitializedAuth, setIsInitializedAuth] = useState(false);
+  const telegramInitData = useTelegramInitData();
+  const { query_id, user, receiver, start_param, auth_date, hash } = telegramInitData;
 
   const promiseResolveRef = useRef<() => void>(() => {});
+  const promiseRejectRef = useRef<(reason?: unknown) => void>(() => {});
+
   const waitForProcessCompletion = useMemo(
     () =>
-      new Promise((resolve) => {
+      new Promise((resolve, reject) => {
         promiseResolveRef.current = () => {
           resolve(void 0);
+        };
+        promiseRejectRef.current = () => {
+          reject(void 0);
         };
       }),
     []
   );
 
-  const { mutateAsync: mutateAuthTelegramUser } = useAuthTelegramUser();
-
-  const { data: loadedFortuneSyncData, refetch: loadFortuneSync } = useFortuneSync(false);
-
-  // const isExistAuthToken = authToken ? !!authToken.accessToken : false;
-
-  // const { refetch: loadAccountProfile } = useAccountProfile(false);
-
   const resolveProcessCompletion = useCallback(() => {
     promiseResolveRef.current();
   }, []);
 
-  // useEffect(() => {
-  //   if (isInitializedAuth) {
-  //     if (isExistAuthToken === false) {
-  //       window.location.href = `${landingHost}${DEFAULT_FALLBACK_URL}`;
-  //       return;
-  //     }
+  const rejectProcessCompletion = useCallback((reason: unknown) => {
+    promiseRejectRef.current(reason);
+  }, []);
 
-  //     if (authToken && authToken.accessToken) {
-  //       dispatch(setAuthToken(authToken));
+  /** telegram data => get token */
+  const { mutateAsync: mutateAuthTelegramUser } = useAuthTelegramUser();
 
-  //       /**
-  //        * TODO: 이 부분 isSocketPrivateConnected 에 대해서 고민해봐야 함
-  //        * - 현재 소켓 객체가 존재하고 && private ws 가 연결이 되었을 경우에만 토큰을 갱신하고 있음
-  //        * - 문제의 케이스는 다음과 같음
-  //        *    - 만약 소켓 연결이 끊어진 상태에서, JWT가 갱신되었다면
-  //        *    - private ws 재연결 동작이 이루어질 때, 이전 토큰을 가지고 인증처리 시도를 할 확률이 있음
-  //        */
-  //       if (socketPrivate && isSocketPrivateConnected) {
-  //         socketPrivate.loginToken = authToken.accessToken;
-  //       }
-  //     }
-  //   }
-  // }, [
-  //   authToken,
-  //   dispatch,
-  //   socketPrivate,
-  //   isSocketPrivateConnected,
-  //   isInitializedAuth,
-  //   isExistAuthToken,
-  // ]);
+  /** token => get user data */
+  const { refetch: loadFortuneSync } = useFortuneSync(false);
 
   useEffect(() => {
     async function authenticate() {
-      if (!user) return;
-      console.log(user);
-
-      // 1. 토큰 있는지 검사
-
-      // 2. AuthParams 만들기
-      const authParams = {
-        telegram_id: 1,
-        first_name: 'test',
-        last_name: 'test',
-        username: 'test',
-        referred_by: 5,
-      };
+      if (!user) {
+        rejectProcessCompletion(void 0);
+        return;
+      }
 
       try {
-        const response = await mutateAuthTelegramUser(authParams);
+        if (LocalStorage.get('token') === null) {
+          const authParams = {
+            telegram_id: user.id!,
+            first_name: user.first_name!,
+            last_name: user.last_name!,
+            ...(user.usernames && { usernames: user.usernames }),
+            ...(start_param?.replace('ref', '') && { referred_by: start_param.replace('ref', '') }),
+          };
+          console.log('[1] telegram data => authParams', authParams);
 
-        // 3. 성공 후 => 토큰 저장
-        // 로그인 signIn
-        setToken('my-token');
+          const { token } = await mutateAuthTelegramUser(authParams);
+          setToken(token);
+          console.log('[2] API Post => token', token);
 
-        // 4. useFortuneSync 로 유저 정보 싱크 맞추기
-        await loadFortuneSync();
+          const loadedFortuenSync: SyncResponse | undefined = (await loadFortuneSync()).data;
 
-        // 5. 최종 성공 시
-        resolveProcessCompletion();
+          if (loadedFortuenSync) {
+            setFortuneSync(loadedFortuenSync);
+            resolveProcessCompletion();
+            console.log('[3] API Get => fortune sync', loadedFortuenSync);
+          } else {
+            rejectProcessCompletion('error');
+          }
+        }
       } catch (error: unknown) {
         if (error instanceof AxiosError) {
           console.error(error);
+          rejectProcessCompletion(error);
+        } else {
+          rejectProcessCompletion(error);
         }
       }
     }
     authenticate();
-  }, [loadFortuneSync, mutateAuthTelegramUser, resolveProcessCompletion, setToken]);
+  }, [
+    loadFortuneSync,
+    mutateAuthTelegramUser,
+    rejectProcessCompletion,
+    resolveProcessCompletion,
+    setFortuneSync,
+    setToken,
+    start_param,
+    user,
+  ]);
 
   return useCallback(async () => {
     await waitForProcessCompletion;

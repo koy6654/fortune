@@ -1,4 +1,4 @@
-import { BaseResponse } from 'common/apis';
+import { SyncResponse, UserType } from 'features/services/service.model';
 
 export interface AuthState {
   token: string | null;
@@ -6,14 +6,9 @@ export interface AuthState {
   clearToken: () => void;
 }
 
-export interface AuthParams {
-  telegram_id: number;
-  first_name: string;
-  last_name: string;
-  username: string;
-  referred_by: number;
-}
-
-export interface AuthResponse {
-  token: string;
+export interface FortuneSyncState {
+  user: UserType | null;
+  isFortune: boolean;
+  fortuneIndex: number;
+  setFortuneSync: (fortuneSync: SyncResponse) => void;
 }

@@ -1,6 +1,8 @@
 import { BaseResponse, api_v1, apiAuth } from 'common/apis';
-import { AuthParams, AuthResponse } from 'features/auth';
+
 import {
+  AuthParams,
+  AuthResponse,
   DailyChecksParams,
   DailyChecksResponse,
   DailyClaimParams,
@@ -51,7 +53,7 @@ export async function getFortuneSync(params: SyncParams): Promise<SyncResponse> 
       telegram_id: 10,
       first_name: 'lee',
       last_name: 'jae',
-      username: null,
+      usernames: null,
       wallet: null,
       balance: 1200,
       login_streak: 0,
@@ -149,7 +151,7 @@ export async function getReferredUsers(params: ReferredUsersParams): Promise<Ref
         telegram_id: 10,
         first_name: 'lee',
         last_name: 'jae',
-        username: null,
+        usernames: null,
         wallet: null,
         balance: 1200,
         login_streak: 0,
