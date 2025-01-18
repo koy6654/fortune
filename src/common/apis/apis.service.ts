@@ -85,7 +85,7 @@ const handleInterceptorResult = (
   });
 
   if (isExistBlacklistAPI) {
-    const message = response?.data?.msg;
+    const message = response?.data?.msg?.toString();
     const code = response?.data?.code?.toString();
 
     const axiosError: AxiosError = new AxiosError(message, code, response.config, response.request, response);
