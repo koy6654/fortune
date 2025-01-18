@@ -1,138 +1,260 @@
 import { BaseResponse, api_v1, apiAuth } from 'common/apis';
 import { AuthParams, AuthResponse } from 'features/auth';
+import {
+  DailyChecksParams,
+  DailyChecksResponse,
+  DailyClaimParams,
+  DailyClaimResponse,
+  FortuneUserFortuneParams,
+  FortuneUserFortuneResponse,
+  FortuneUserHistoryParams,
+  FortuneUserHistoryResponse,
+  ReferredUsersParams,
+  ReferredUsersResponse,
+  SyncParams,
+  SyncResponse,
+} from './service.model';
+import dayjs from 'dayjs';
 
-export interface GenerateToken {
-  token: string;
-}
-// export async function getTokenByDebug(params: AuthParams): Promise<GenerateToken> {
-//   const {
-//     data: { data },
-//   } = await apiAuth.get<BaseResponse<GenerateToken>>('/todos/1', {
-//     params,
-//     withCredentials: false,
-//   });
-//   // return {
-//   //   token: data.token,
-//   // };
-//   return data;
-// }
-
-export async function postAuthTelegramUser(params: AuthParams) {
-  const {
-    data: { data },
-  } = await api_v1.post<any>('/posts', {
+/**
+ * ### telegram-user
+ * "url"/api/auth/telegram-user (POST)
+ */
+export async function postAuthTelegramUser(params: AuthParams): Promise<AuthResponse> {
+  let { data } = await api_v1.post<BaseResponse<AuthResponse>>('/posts', {
     title: 'foo',
     body: 'bar',
     userId: 1,
+    // auth params
     ...params,
   });
+
+  // token
+  data = { token: 'fortune-mock-token' };
   return data;
 }
 
-// export async function postRateLimitInfo(params: RateLmitParams): Promise<unknown> {
-//   // TODO: API가 완성되면, axios 대신 api_v1 을 사용하여 요청할 것
-//   // const {
-//   //   data: { data },
-//   // } = await axios.post<BaseResponse<unknown>>(
-//   //   'https://jsonplaceholder.typicode.com/posts',
-//   //   {
-//   //     title: 'foo',
-//   //     body: 'bar',
-//   //     userId: 1,
-//   //     ...params,
-//   //   },
-//   // );
-//   // TODO: socket 연결할때 채널 요청으로 바뀔 가능성이 있음
-//   // if (USE_DEV_MODE) {
-//   //   const { data } = await api_v1.get<BaseResponse>('/market/time');
-//   //   return data;
-//   // }
-//   // return Promise.resolve();
-// }
+/**
+ * ### sync
+ * "url"/api/fortune/sync (GET)
+ * @caution bearer token
+ */
+export async function getFortuneSync(params: SyncParams): Promise<SyncResponse> {
+  let { data } = await apiAuth.get<BaseResponse<SyncResponse>>('/todos/1', {
+    params,
+  });
 
-// if (localStorage.getItem("token") === null) {
-//   const { data } = await $http.post<{
-//     token: string;
-//     first_login: boolean;
-//   }>("/auth/telegram-user", {
-//     telegram_id: user.id,
-//     first_name: user.first_name,
-//     last_name: user.last_name,
-//     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//     // @ts-ignore
-//     username: user.username,
-//     referred_by: start_param?.replace("ref", ""),
-//   });
-//   setBearerToken(data.token);
-//   setIsFirstLoad(data.first_login);
-// }
+  data = {
+    user: {
+      id: 10,
+      telegram_id: 10,
+      first_name: 'lee',
+      last_name: 'jae',
+      username: null,
+      wallet: null,
+      balance: 1200,
+      login_streak: 0,
+      production_per_hour: 0,
+      referred_by: 1,
+      last_login_date: null,
+      created_at: '2025-01-13T07:57:30.000000Z',
+      updated_at: '2025-01-14T07:31:45.000000Z',
+      fortune: null,
+      last_login_round: null,
+    },
+    isFortune: true,
+    fortuneIndex: 1,
+  };
 
-// const data = await $http.$get<
-//         {
-//           user: UserType;
-//           boosters: Record<BoosterTypes, BoosterType>;
-//           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//         } & Record<string, any>
-//       >("/clicker/sync");
+  return data;
+}
 
-//       useUserStore.setState({
-//         ...data.user,
-//       });
+/**
+ * ### daily-checks
+ * "url"/api/fortune/daily-ckecks (GET)
+ * @caution bearer token
+ */
+export async function getFortuneDailyCheck(params: DailyChecksParams): Promise<DailyChecksResponse> {
+  let { data } = await apiAuth.get<BaseResponse<DailyChecksResponse>>('/todos/1', {
+    params,
+  });
 
-// "url"/api/auth/telegram-user (POST)
+  const now = dayjs();
+  const formattedDate = now.format('YYYY-MM-DD HH:mm:ss');
 
-// {
-//   "telegram_id" : 1,
-//   "first_name" : "test",
-//   "last_name" : "test",
-//   "username" : "test",
-//   "referred_by" : 5
-// }
+  data = [
+    {
+      id: 1,
+      name: 'Day 1',
+      required_login_streak: 1,
+      reward_coins: 100,
+      created_at: formattedDate,
+      updated_at: formattedDate,
+      completed: null,
+      available: false,
+    },
+    {
+      id: 2,
+      name: 'Day 2',
+      required_login_streak: 1,
+      reward_coins: 100,
+      created_at: now.add(1, 'day').format('YYYY-MM-DD HH:mm:ss'),
+      updated_at: now.add(1, 'day').format('YYYY-MM-DD HH:mm:ss'),
+      completed: null,
+      available: false,
+    },
+  ];
 
-// {
-//   "token": "123....."
-// }
+  return data;
+}
 
-// localstorage 에 token이 없는 경우 호출합니다.
-// 요청시 데이터는 telegram 정보로 요청합니다.
-// referred_by 는 app에 start-param 으로 입력된 telegram-id 입니다.
-// (보내드린 miniApp 참고.)
+/**
+ * ### daily-claim
+ * "url"/api/fortune/daily-claim(POST)
+ */
+export async function postFortuneDailyClaim(params: DailyClaimParams): Promise<DailyClaimResponse> {
+  let { data } = await apiAuth.post<BaseResponse<DailyClaimResponse>>('/posts', {
+    title: 'foo',
+    body: 'bar',
+    userId: 1,
+    // params
+    ...params,
+  });
 
-// response 는 token 값입니다.
-// token 값은 localStorage 에 저장해서 사용하시면 됩니다.
-// (보내드린 miniApp 참고.)
+  // token
+  data = {
+    success: true,
+    message: 'message',
+    balance: 100,
+  };
+  return data;
+}
 
-// username , referred_by 의 경우 값을 없을땐 요청 param에서 제외합니다.
-// 메인화면 왼쪽 상단에 표현은 username 이 아닌 firstname , lastname 으로하시면 됩니다.
+/**
+ * ### referred-users
+ * "url"/api/referred-users?page=1~(GET)
+ */
+export async function getReferredUsers(params: ReferredUsersParams): Promise<ReferredUsersResponse> {
+  let { data } = await apiAuth.get<BaseResponse<ReferredUsersResponse>>('/todos/1', {
+    params,
+  });
 
-// "url"/api/fortune/sync (GET)
+  data = {
+    data: [
+      {
+        id: 10,
+        telegram_id: 10,
+        first_name: 'lee',
+        last_name: 'jae',
+        username: null,
+        wallet: null,
+        balance: 1200,
+        login_streak: 0,
+        production_per_hour: 0,
+        referred_by: 1,
+        last_login_date: null,
+        created_at: '2025-01-13T07:57:30.000000Z',
+        updated_at: '2025-01-14T07:31:45.000000Z',
+        fortune: null,
+        last_login_round: null,
+      },
+    ],
+    links: {
+      first: 'http://localhost:8000/api/referred-users?page=1',
+      last: 'http://localhost:8000/api/referred-users?page=3',
+      prev: 'http://localhost:8000/api/referred-users?page=1',
+      next: 'http://localhost:8000/api/referred-users?page=3',
+    },
+    meta: {
+      current_page: 2,
+      from: 2,
+      last_page: 3,
+      links: [
+        {
+          url: 'http://localhost:8000/api/referred-users?page=1',
+          label: '&laquo; Previous',
+          active: false,
+        },
+        {
+          url: 'http://localhost:8000/api/referred-users?page=1',
+          label: '1',
+          active: false,
+        },
+        {
+          url: 'http://localhost:8000/api/referred-users?page=2',
+          label: '2',
+          active: true,
+        },
+        {
+          url: 'http://localhost:8000/api/referred-users?page=3',
+          label: '3',
+          active: false,
+        },
+        {
+          url: 'http://localhost:8000/api/referred-users?page=3',
+          label: 'Next &raquo;',
+          active: false,
+        },
+      ],
+      path: 'http://localhost:8000/api/referred-users',
+      per_page: 1,
+      to: 2,
+      total: 3,
+    },
+  };
 
-// header => Bearer "token"
+  return data;
+}
 
-// {
-//   "user" : {
-//       "id" : 1,
-//       "telegram_id" : 1,
-//       "first_name" : "test",
-//       "last_name" : "test",
-//       "username" : "test",
-//       "wallet" : null,
-//       "balance" : 500,
-//         ....
-//       "fortune" : 0,
-//       }
-//     "isFortune" : true,
-//     "fortuneIndex" : 1
-// }
+/**
+ * ### user fortune
+ * "url"/api/fortune/user-fortune(GET)
+ */
+export async function getFortuneUserFortune(params: FortuneUserFortuneParams): Promise<FortuneUserFortuneResponse> {
+  let { data } = await apiAuth.get<BaseResponse<FortuneUserFortuneResponse>>('/todos/1', {
+    params,
+  });
 
-// app이 실행되었을때 호출되고 접속한 user 의 정보가 리턴됩니다.
-// (보내드린 miniApp 참고.)
+  data = {
+    'fortune-message': '"Buy low, sell high...unless it\'s crypto, then just HODL and pray for the moon 🚀🌕"',
+  };
 
-// response 는 user , isFortune , fortuneIndex 로 되어 있습니다.
-// user (... 은 프론트 관련 데이터가 아니여서 생략.)
-//  1. balance = user 가 가지고 있는 point(FRTN). 메인화면 중앙 위쪽 숫자.
-//  2. fortune = 하루 3번중 user 가 열었던 포츈 number 입니다. ( ex : 0/3 )
+  return data;
+}
 
-// isFortune 는 현재 fortune open 여부 입니다.
+/**
+ * ### user history
+ * "url"/api/fortune/user-history (POST)
+ */
+export async function postFortuneUserHistory(params: FortuneUserHistoryParams): Promise<FortuneUserHistoryResponse> {
+  let { data } = await apiAuth.post<BaseResponse<FortuneUserHistoryResponse>>('/posts', {
+    title: 'foo',
+    body: 'bar',
+    userId: 1,
+    // params
+    ...params,
+  });
 
-// fortuneIndex 는 하루 3번중 현재 몇번째 fortune 인지를 나타냅니다.
+  // token
+  data = {
+    fortuneMessages: [
+      {
+        id: 1,
+        default_message: 'test message',
+        message: 'fortune message',
+      },
+      {
+        id: 2,
+        default_message: 'test message',
+        message: 'fortune message',
+      },
+      {
+        id: 3,
+        default_message: 'test message',
+        message: null,
+      },
+    ],
+    startDate: 'Jan 10, 2025',
+  };
+  return data;
+}

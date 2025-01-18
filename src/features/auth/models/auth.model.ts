@@ -14,6 +14,6 @@ export interface AuthParams {
   referred_by: number;
 }
 
-export interface AuthResponse extends BaseResponse {
+export interface AuthResponse {
   token: string;
 }

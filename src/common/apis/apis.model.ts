@@ -1,14 +1,15 @@
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
-export interface BaseResponse<ResponseDataType = unknown> {
+
+export type BaseResponse<DynamicObject = unknown, DataType = unknown> = {
   /** response code */
-  code?: number;
+  code?: DataType;
   /** api response data */
-  data?: ResponseDataType;
+  data?: DataType;
   /** code와 1:1 매칭되는 상황별 에러 메시지 */
-  msg?: string;
+  msg?: DataType;
   /** timestamp */
-  time_now: string;
-}
+  time_now?: DataType;
+} & DynamicObject;
 
 export type BaseError = Omit<BaseResponse, 'data'>;
 
