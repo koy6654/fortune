@@ -6,6 +6,7 @@ import HomeHeaderBeforeConnect from 'assets/images/home/HeaderBeforeConnect.png'
 import { ReactComponent as HomeHeaderInviteFriend } from 'assets/images/home/HeaderInviteFriend.svg';
 import { ReactComponent as HomeHeaderFortunePoint } from 'assets/images/home/HeaderFortunePoint.svg';
 import { ReactComponent as HomeHeaderDailyCheck } from 'assets/images/home/HeaderDailyCheck.svg';
+import { useFortuneSyncStore } from 'features/auth';
 
 interface HeaderProps {
   title: string;
@@ -26,10 +27,13 @@ export const Header = ({ title, content }: HeaderProps) => {
 };
 
 export const HomeHeader = () => {
+  const { user } = useFortuneSyncStore();
+
   return (
     <div className="h-[147px] flex flex-col justify-between px-4 pt-4">
       <div className="flex flex-row justify-between items-center">
         <HomeHeaderFortuneScroll />
+        <span data-name="user first_name + user last_name">{user ? user.first_name + user.last_name : ''}</span>
         <img src={HomeHeaderBeforeConnect} alt="" className="w-[54px] h-[54px]" />
       </div>
       <div className="flex flex-row justify-between items-end mt-4">
