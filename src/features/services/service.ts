@@ -19,6 +19,7 @@ import dayjs from 'dayjs';
 /**
  * ### telegram-user
  * "url"/api/auth/telegram-user (POST)
+ * @caution - api public
  */
 export async function postAuthTelegramUser(params: AuthParams): Promise<AuthResponse> {
   let { data } = await api_v1.post<BaseResponse<AuthResponse>>('/posts', {
@@ -37,7 +38,7 @@ export async function postAuthTelegramUser(params: AuthParams): Promise<AuthResp
 /**
  * ### sync
  * "url"/api/fortune/sync (GET)
- * @caution bearer token
+ * @caution api auth
  */
 export async function getFortuneSync(params: SyncParams): Promise<SyncResponse> {
   let { data } = await apiAuth.get<BaseResponse<SyncResponse>>('/todos/1', {
@@ -72,7 +73,7 @@ export async function getFortuneSync(params: SyncParams): Promise<SyncResponse> 
 /**
  * ### daily-checks
  * "url"/api/fortune/daily-ckecks (GET)
- * @caution bearer token
+ * @caution api auth
  */
 export async function getFortuneDailyCheck(params: DailyChecksParams): Promise<DailyChecksResponse> {
   let { data } = await apiAuth.get<BaseResponse<DailyChecksResponse>>('/todos/1', {
@@ -111,6 +112,7 @@ export async function getFortuneDailyCheck(params: DailyChecksParams): Promise<D
 /**
  * ### daily-claim
  * "url"/api/fortune/daily-claim(POST)
+ * @caution api auth
  */
 export async function postFortuneDailyClaim(params: DailyClaimParams): Promise<DailyClaimResponse> {
   let { data } = await apiAuth.post<BaseResponse<DailyClaimResponse>>('/posts', {
@@ -133,6 +135,7 @@ export async function postFortuneDailyClaim(params: DailyClaimParams): Promise<D
 /**
  * ### referred-users
  * "url"/api/referred-users?page=1~(GET)
+ * @caution api auth
  */
 export async function getReferredUsers(params: ReferredUsersParams): Promise<ReferredUsersResponse> {
   let { data } = await apiAuth.get<BaseResponse<ReferredUsersResponse>>('/todos/1', {
@@ -209,6 +212,7 @@ export async function getReferredUsers(params: ReferredUsersParams): Promise<Ref
 /**
  * ### user fortune
  * "url"/api/fortune/user-fortune(GET)
+ * @caution api auth
  */
 export async function getFortuneUserFortune(params: FortuneUserFortuneParams): Promise<FortuneUserFortuneResponse> {
   let { data } = await apiAuth.get<BaseResponse<FortuneUserFortuneResponse>>('/todos/1', {
@@ -225,6 +229,7 @@ export async function getFortuneUserFortune(params: FortuneUserFortuneParams): P
 /**
  * ### user history
  * "url"/api/fortune/user-history (POST)
+ * @caution api auth
  */
 export async function postFortuneUserHistory(params: FortuneUserHistoryParams): Promise<FortuneUserHistoryResponse> {
   let { data } = await apiAuth.post<BaseResponse<FortuneUserHistoryResponse>>('/posts', {
