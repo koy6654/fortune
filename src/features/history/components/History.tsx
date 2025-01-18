@@ -1,5 +1,40 @@
-import React from 'react';
+import { useFortuneUserHistory } from 'features/services/mutations';
+import React, { useEffect } from 'react';
 
 export const History = () => {
-  return <div className="flex-1 flex flex-col justify-center items-center relative">History</div>;
+  const { mutate, isError, error, data } = useFortuneUserHistory();
+
+  useEffect(() => {
+    mutate(
+      {},
+      {
+        onSuccess: (data) => {
+          console.log('Mutation successful', data);
+        },
+        onError: (error) => {
+          console.log('Mutation failed', error);
+        },
+      }
+    );
+  }, [mutate]);
+
+  return (
+    <div className="flex-1 flex flex-col justify-center items-center relative">
+      {isError && <p>Error: {error?.message}</p>}
+      {data && (
+        <>
+          <p>Data loaded!</p>
+          <p>{data.startDate}</p>
+          {data.fortuneMessages.map((message) => (
+            <>
+              <p>{message.id}</p>
+              <p>{message.default_message}</p>
+              <p>{message.message}</p>
+            </>
+          ))}
+        </>
+      )}
+      History
+    </div>
+  );
 };
