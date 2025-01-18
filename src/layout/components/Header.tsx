@@ -32,9 +32,13 @@ export const HomeHeader = () => {
   return (
     <div className="h-[147px] flex flex-col justify-between px-4 pt-4">
       <div className="flex flex-row justify-between items-center">
-        <HomeHeaderFortuneScroll />
-        <span data-name="user first_name + user last_name">{user ? user.first_name + user.last_name : ''}</span>
-        <img src={HomeHeaderBeforeConnect} alt="" className="w-[54px] h-[54px]" />
+        <div className="flex flex-row justify-center items-center">
+          <HomeHeaderFortuneScroll />
+          <span data-name="user first_name + user last_name">{user ? user.first_name + user.last_name : ''}</span>
+        </div>
+        <div>
+          <img src={HomeHeaderBeforeConnect} alt="" className="w-[54px] h-[54px]" />
+        </div>
       </div>
       <div className="flex flex-row justify-between items-end mt-4">
         <div className="flex flex-col justify-center items-center">
@@ -43,7 +47,7 @@ export const HomeHeader = () => {
         </div>
         <div className="flex flex-col justify-center items-center">
           <HomeHeaderFortunePoint />
-          <span>200,000</span>
+          <span>{user ? user.balance.toLocaleString() : 0}</span>
         </div>
         <div className="flex flex-col justify-center items-center">
           <HomeHeaderDailyCheck />
