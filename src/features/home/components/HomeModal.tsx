@@ -1,5 +1,6 @@
+import htmlToImage from 'common/libs/htmlToImage';
 import { useFortuneUserFortune } from 'features/services/queries';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface HomeModalProps {
   isOpen: boolean;
@@ -11,6 +12,8 @@ export function HomeModal(props: HomeModalProps) {
   const { isOpen, onClose } = props;
   const [fortuneMessage, setFortuneMessage] = useState<any>();
   const [fortuneNumbers, setFortuneNumbers] = useState([12, 6]);
+
+  const captureRef = useRef<HTMLDivElement>(null);
 
   // tanstack
   const {
@@ -36,9 +39,19 @@ export function HomeModal(props: HomeModalProps) {
     }
   };
 
-  if (isLoading) {
-    return <>is Loading...</>;
-  }
+  const handleShare = (target: 'X' | 'link' | 'download') => {
+    if (target === 'X') {
+      alert('X');
+    }
+    if (target === 'link') {
+      alert('link');
+    }
+    if (target === 'download') {
+      if (captureRef.current) {
+        htmlToImage(captureRef.current);
+      }
+    }
+  };
 
   return isOpen && loadedFortuneUserFortune ? (
     <div className="fixed inset-0 bg-[rgba(139,69,19,0.7)] flex justify-center items-center z-50" onClick={handleClose}>
@@ -46,7 +59,7 @@ export function HomeModal(props: HomeModalProps) {
         {isLoading ? (
           <div data-name="fortune-loading">is Loading...</div>
         ) : (
-          <div data-name="fortune-result">
+          <div data-name="fortune-result" ref={captureRef}>
             <div data-name="fortune-message">
               <header>Fortue Message</header>
               <section>
@@ -66,9 +79,9 @@ export function HomeModal(props: HomeModalProps) {
               </section>
             </div>
             <div data-name="fortune-share">
-              <span>icon1</span>
-              <span>icon2</span>
-              <span>icon3</span>
+              <span onClick={() => handleShare('X')}>icon1 X</span>
+              <span onClick={() => handleShare('link')}>icon2 클립보드</span>
+              <span onClick={() => handleShare('download')}>icon3 다운로드</span>
             </div>
           </div>
         )}
