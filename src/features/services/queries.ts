@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { DailyChecksParams, FortuneUserFortuneParams, ReferredUsersParams, SyncParams } from './service.model';
-import { getFortuneDailyCheck, getFortuneSync, getFortuneUserFortune, getReferredUsers } from './service';
+import { getFortuneDailyChecks, getFortuneSync, getFortuneUserFortune, getReferredUsers } from './service';
 
 export const useFortuneSync = (param: SyncParams = {}, enabled = true) => {
   const query = useQuery({
@@ -11,10 +11,10 @@ export const useFortuneSync = (param: SyncParams = {}, enabled = true) => {
   return query;
 };
 
-export const useFortuneDailyCheck = (param: DailyChecksParams = {}, enabled = true) => {
+export const useFortuneDailyChecks = (param: DailyChecksParams = {}, enabled = true) => {
   const query = useQuery({
     queryKey: ['dailyCheck', param],
-    queryFn: () => getFortuneDailyCheck(param),
+    queryFn: () => getFortuneDailyChecks(param),
     enabled,
   });
   return query;

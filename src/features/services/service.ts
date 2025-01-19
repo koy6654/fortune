@@ -77,7 +77,7 @@ export async function getFortuneSync(params: SyncParams): Promise<SyncResponse> 
  * "url"/api/fortune/daily-ckecks (GET)
  * @caution api auth
  */
-export async function getFortuneDailyCheck(params: DailyChecksParams): Promise<DailyChecksResponse> {
+export async function getFortuneDailyChecks(params: DailyChecksParams): Promise<DailyChecksResponse> {
   let { data } = await apiAuth.get<BaseResponse<DailyChecksResponse>>('/todos/1', {
     params,
   });
@@ -93,7 +93,7 @@ export async function getFortuneDailyCheck(params: DailyChecksParams): Promise<D
       reward_coins: 100,
       created_at: formattedDate,
       updated_at: formattedDate,
-      completed: null,
+      completed: 'done',
       available: false,
     },
     {

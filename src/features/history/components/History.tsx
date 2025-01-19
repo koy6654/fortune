@@ -2,6 +2,7 @@ import { useFortuneUserHistory } from 'features/services/mutations';
 import React, { useEffect } from 'react';
 
 export const History = () => {
+  // tanstack
   const { mutate, isError, error, data } = useFortuneUserHistory();
 
   useEffect(() => {

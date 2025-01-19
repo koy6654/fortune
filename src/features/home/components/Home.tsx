@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ReactComponent as HomeMainFortuneWait } from 'assets/images/home/MainFortuneWait.svg';
 import { ReactComponent as HomeMainFortuneOpen } from 'assets/images/home/MainFortuneOpen.svg';
 import { ReactComponent as HomeMainScrollOpen } from 'assets/images/home/MainScrollOpen.svg';
@@ -6,13 +6,28 @@ import { ReactComponent as HomeSmallClock } from 'assets/images/home/SmallClock.
 import { useFortuneSyncStore } from 'features/auth';
 import { DEFAULT_FORTUNESYNC_FORTUNEINDEX } from 'consts/fortune';
 import { HomeModal } from './HomeModal';
+import { useFortuneDailyChecks } from 'features/services/queries';
+import { useFortuneDailyChecksStore } from '../store';
 
 export const Home = () => {
+  // get store
+  const { setFortuneDailyChecks } = useFortuneDailyChecksStore();
   const fortuneSyncS = useFortuneSyncStore();
+
+  // values
   const { fortuneIndex, isFortune } = fortuneSyncS;
   const openTheScrollRestCount = DEFAULT_FORTUNESYNC_FORTUNEINDEX - fortuneIndex;
   const [isFortuneClicked, setIsFortuneClicked] = useState(false);
   const [isOpenScorllClicked, setIsOpenScrollClicked] = useState(false);
+
+  // tanstack
+  const { data, isLoading, isError, error } = useFortuneDailyChecks();
+
+  useEffect(() => {
+    if (data) {
+      setFortuneDailyChecks(data);
+    }
+  }, [data, setFortuneDailyChecks]);
 
   const handleClose = () => {
     setIsOpenScrollClicked(false);
