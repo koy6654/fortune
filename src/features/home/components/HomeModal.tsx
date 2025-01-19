@@ -29,9 +29,9 @@ export function HomeModal(props: HomeModalProps) {
           <header>Fortue Number</header>
           <section className="flex justify-center gap-4 text-xl text-gray-700">
             {fortuneNumber.map((number, index) => (
-              <>
-                <span key={`fortune-number-${index}`}>{number}</span>
-              </>
+              <span key={`fortune-number-${index}`}>
+                <i>{number}</i>
+              </span>
             ))}
           </section>
         </div>

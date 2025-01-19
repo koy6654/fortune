@@ -21,6 +21,9 @@ export const History = () => {
   return (
     <div className="flex-1 flex flex-col justify-center items-center relative">
       {isError && <p>Error: {error?.message}</p>}
+
+      <h4>Fortune Log</h4>
+
       {data && (
         <>
           <p>Data loaded!</p>
@@ -34,7 +37,6 @@ export const History = () => {
           ))}
         </>
       )}
-      History
     </div>
   );
 };
