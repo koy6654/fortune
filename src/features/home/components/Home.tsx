@@ -25,6 +25,7 @@ export const Home = () => {
 
   useEffect(() => {
     if (data) {
+      console.log(data);
       setFortuneDailyChecks(data);
     }
   }, [data, setFortuneDailyChecks]);
