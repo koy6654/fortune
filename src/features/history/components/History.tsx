@@ -26,11 +26,11 @@ export const History = () => {
           <p>Data loaded!</p>
           <p>{data.startDate}</p>
           {data.fortuneMessages.map((message) => (
-            <>
+            <div key={`fortune-message-id-${message.id}`}>
               <p>{message.id}</p>
               <p>{message.default_message}</p>
               <p>{message.message}</p>
-            </>
+            </div>
           ))}
         </>
       )}
