@@ -3,8 +3,13 @@ import { ReactComponent as HomeMainFortuneWait } from 'assets/images/home/MainFo
 import { ReactComponent as HomeMainFortuneOpen } from 'assets/images/home/MainFortuneOpen.svg';
 import { ReactComponent as HomeMainScrollOpen } from 'assets/images/home/MainScrollOpen.svg';
 import { ReactComponent as HomeSmallClock } from 'assets/images/home/SmallClock.svg';
+import { useFortuneSyncStore } from 'features/auth';
+import { DEFAULT_FORTUNESYNC_FORTUNEINDEX } from 'consts/fortune';
 
 export const Home = () => {
+  const fortuneSyncS = useFortuneSyncStore();
+  const fortuneIndex = fortuneSyncS.fortuneIndex;
+
   return (
     <div className="flex-1 flex flex-col justify-center items-center relative">
       <div className="absolute top-[-55px]">
@@ -25,7 +30,9 @@ export const Home = () => {
 
         <div className="flex flex-row justify-center mt-2">
           <span className="text-[#a48b78] text-sm font-pretendard font-medium">Scroll left today&nbsp;</span>
-          <span className="text-[#956134] text-sm font-pretendard font-semibold">3/3</span>
+          <span className="text-[#956134] text-sm font-pretendard font-semibold">
+            {fortuneIndex}/{DEFAULT_FORTUNESYNC_FORTUNEINDEX}
+          </span>
           <div className="w-[20px]" />
           <HomeSmallClock />
           <div className="text-center text-[#a48b78] text-sm font-pretendard font-semibold">00 : 00 : 00</div>

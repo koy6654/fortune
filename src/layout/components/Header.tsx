@@ -7,6 +7,7 @@ import { ReactComponent as HomeHeaderInviteFriend } from 'assets/images/home/Hea
 import { ReactComponent as HomeHeaderFortunePoint } from 'assets/images/home/HeaderFortunePoint.svg';
 import { ReactComponent as HomeHeaderDailyCheck } from 'assets/images/home/HeaderDailyCheck.svg';
 import { useFortuneSyncStore } from 'features/auth';
+import { DEFAULT_NUM_ZERO } from 'consts';
 
 interface HeaderProps {
   title: string;
@@ -28,6 +29,7 @@ export const Header = ({ title, content }: HeaderProps) => {
 
 export const HomeHeader = () => {
   const { user } = useFortuneSyncStore();
+  const balance = user?.balance.toLocaleString() ?? DEFAULT_NUM_ZERO;
 
   return (
     <div className="h-[147px] flex flex-col justify-between px-4 pt-4">
@@ -47,7 +49,7 @@ export const HomeHeader = () => {
         </div>
         <div className="flex flex-col justify-center items-center">
           <HomeHeaderFortunePoint />
-          <span>{user ? user.balance.toLocaleString() : 0}</span>
+          <span>{balance}</span>
         </div>
         <div className="flex flex-col justify-center items-center">
           <HomeHeaderDailyCheck />

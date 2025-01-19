@@ -1,6 +1,7 @@
 import { injectStore } from 'common/apis';
 import { create } from 'zustand';
 import { AuthState, FortuneSyncState } from '../models/auth.model';
+import { DEFAULT_FORTUNESYNC_FORTUNEINDEX } from 'consts/fortune';
 
 export const useAuthStore = create<AuthState>((set) => ({
   token: null,
@@ -11,7 +12,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 export const useFortuneSyncStore = create<FortuneSyncState>((set) => ({
   user: null,
   isFortune: false,
-  fortuneIndex: 0,
+  fortuneIndex: DEFAULT_FORTUNESYNC_FORTUNEINDEX,
   setFortuneSync: ({ user, isFortune, fortuneIndex }) => set({ user, isFortune, fortuneIndex }),
 }));
 
