@@ -54,7 +54,14 @@ export const DailyCheck = () => {
 
           const content = check.reward_coins < 35 ? 'Check-In :)' : 'Special Reward!';
 
-          return <DailyCheckInBox status={status} dayCount={check.name} content={content} />;
+          return (
+            <DailyCheckInBox
+              key={`daily-check-in-${check.id}`}
+              status={status}
+              dayCount={check.name}
+              content={content}
+            />
+          );
         })}
 
       <div className="w-full h-7 text-center text-[#956134] text-xs font-normal font-pretendard mt-2 mb-4">
