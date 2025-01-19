@@ -40,7 +40,7 @@ interface DailyCheckData {
   created_at: string;
   updated_at: string;
   completed: 'done' | null;
-  available: false;
+  available: boolean;
 }
 export type DailyChecksResponse = DailyCheckData[];
 

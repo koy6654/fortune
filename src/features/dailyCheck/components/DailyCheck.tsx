@@ -1,6 +1,10 @@
+import { useFortuneDailyChecksStore } from 'features/home';
 import { DailyCheckInBox } from './DailyCheckInBox';
 
 export const DailyCheck = () => {
+  const { fortuneDailyChecks } = useFortuneDailyChecksStore();
+  console.log(fortuneDailyChecks);
+
   return (
     <div className="flex-1 flex flex-col justify-center items-center relative">
       <div className="flex flex-row justify-center items-center mb-2">
