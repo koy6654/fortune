@@ -11,7 +11,7 @@ import { SyncResponse } from 'features/services/service.model';
 export function useAuthorizationSetting() {
   useTelegramUISetting();
 
-  const { setToken } = useAuthStore();
+  const { token, setToken } = useAuthStore();
   const { setFortuneSync } = useFortuneSyncStore();
 
   const telegramInitData = useTelegramInitData();
@@ -54,8 +54,16 @@ export function useAuthorizationSetting() {
         return;
       }
 
+      console.group(
+        'useAuthorizationSetting [features/auth/hooks/useAuth.ts => app/bootstap/Bootstrap.tsx => App.tsx]'
+      );
+
       try {
-        if (LocalStorage.get('token') === null) {
+        const localStorageToken = LocalStorage.get<string | null>('token');
+
+        if (localStorageToken === null) {
+          console.log('=== 최초 로그인 ===');
+
           const authParams = {
             telegram_id: user.id!,
             first_name: user.first_name!,
@@ -66,18 +74,26 @@ export function useAuthorizationSetting() {
           console.log('[1] telegram data => authParams', authParams);
 
           const { token } = await mutateAuthTelegramUser(authParams);
-          setToken(token);
           console.log('[2] API Post => token', token);
 
-          const loadedFortuenSync: SyncResponse | undefined = (await loadFortuneSync()).data;
+          setToken(token);
+        } else {
+          console.log('=== 재 로그인 ===');
 
-          if (loadedFortuenSync) {
-            setFortuneSync(loadedFortuenSync);
-            resolveProcessCompletion();
-            console.log('[3] API Get => fortune sync', loadedFortuenSync);
-          } else {
-            rejectProcessCompletion('error');
-          }
+          console.log('[1] token is exsist');
+          console.log('[2] useAuthStore set =>', localStorageToken);
+
+          setToken(localStorageToken);
+        }
+
+        const loadedFortuenSync: SyncResponse | undefined = (await loadFortuneSync()).data;
+
+        if (loadedFortuenSync) {
+          setFortuneSync(loadedFortuenSync);
+          resolveProcessCompletion();
+          console.log('[3] API Get => fortune sync', loadedFortuenSync);
+        } else {
+          rejectProcessCompletion('error');
         }
       } catch (error: unknown) {
         if (error instanceof AxiosError) {
@@ -87,6 +103,7 @@ export function useAuthorizationSetting() {
           rejectProcessCompletion(error);
         }
       }
+      console.groupEnd();
     }
     authenticate();
   }, [
