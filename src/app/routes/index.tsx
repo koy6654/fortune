@@ -1,15 +1,6 @@
 import { useEffect, useMemo } from 'react';
 
-import {
-  BasicPage,
-  DailyCheckPage,
-  HistoryPage,
-  HomePage,
-  IntroPage,
-  InvitePage,
-  OnChainPage,
-  SocialPage,
-} from 'app/pages';
+import { DailyCheckPage, HistoryPage, HomePage, IntroPage, InvitePage, TaskPage } from 'app/pages';
 import { isPathAllowed } from 'common/libs';
 import { DEFAULT_SERVICE_PATH, DEFAULT_ROUTES_PATH, DEFAULT_FALLBACK_URL } from 'consts';
 import { NotFound } from 'features/common';
@@ -42,19 +33,7 @@ const routes: RouteObject[] = [
   },
   {
     path: `${DEFAULT_ROUTES_PATH}/task`,
-    element: <SocialPage />,
-  },
-  {
-    path: `${DEFAULT_ROUTES_PATH}/task/social`,
-    element: <SocialPage />,
-  },
-  {
-    path: `${DEFAULT_ROUTES_PATH}/task/basic`,
-    element: <BasicPage />,
-  },
-  {
-    path: `${DEFAULT_ROUTES_PATH}/task/on-chain`,
-    element: <OnChainPage />,
+    element: <TaskPage />,
   },
   {
     path: `${DEFAULT_ROUTES_PATH}/history`,

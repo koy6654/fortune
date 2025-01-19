@@ -1,4 +1,6 @@
-import DailyCheckFortunePoint from 'assets/images/home/DailyCheckFortunePoint.png';
+import DailyCheckFortunePoint from 'assets/images/FortunePoint.png';
+import DailyCheckFortunePointMissed from 'assets/images/home/DailyCheckFortunePointMissed.png';
+import DailyCheckFortunePointClaimedDisabled from 'assets/images/home/DailyCheckFortunePointClaimedDisabled.png';
 
 export interface DailyCheckInBoxProps {
   status: 'missed' | 'claim' | 'claimed' | 'disabled';
@@ -14,6 +16,8 @@ export const DailyCheckInBox = ({ status, dayCount, content }: DailyCheckInBoxPr
 
   let buttonText = 'Claim';
 
+  let fortunePointImage = DailyCheckFortunePoint;
+
   switch (status) {
     case 'missed':
       bgClassName = 'bg-[#bcbcbc]';
@@ -21,6 +25,7 @@ export const DailyCheckInBox = ({ status, dayCount, content }: DailyCheckInBoxPr
       buttonBgClassName = 'bg-[#9b9797]';
       textClassName = 'text-[#737373]';
       buttonText = 'Missed';
+      fortunePointImage = DailyCheckFortunePointMissed;
       break;
     case 'claim':
       break;
@@ -29,12 +34,15 @@ export const DailyCheckInBox = ({ status, dayCount, content }: DailyCheckInBoxPr
       buttonBgClassName = 'bg-[#c09049]';
       textClassName = 'text-[#956134]';
       buttonText = 'Claimed';
+      fortunePointImage = DailyCheckFortunePointClaimedDisabled;
       break;
     case 'disabled':
       bgClassName = 'bg-neutral-500/20';
       borderClassName = '';
       buttonBgClassName = 'bg-neutral-500/20';
       textClassName = 'text-[#a48b78]';
+
+      fortunePointImage = DailyCheckFortunePointClaimedDisabled;
       break;
   }
 
@@ -53,7 +61,7 @@ export const DailyCheckInBox = ({ status, dayCount, content }: DailyCheckInBoxPr
       <div
         className={`min-w-[100px] h-[46px] p-2.5 ${buttonBgClassName} rounded-xl border-2 border-[#a48b78] flex flex-row justify-center items-center gap-[3px]`}
       >
-        <img src={DailyCheckFortunePoint} alt="" className="w-5 h-5" />
+        <img src={fortunePointImage} alt="" className="w-5 h-5" />
         <div className={`flex justify-center ${textClassName} text-base font-semibold font-pretendard pt-1`}>
           {buttonText}
         </div>

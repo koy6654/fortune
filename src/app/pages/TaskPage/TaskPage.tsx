@@ -1,11 +1,11 @@
 import React from 'react';
 import { Footer, Header, Layout } from 'layout';
-import { Social } from 'features/social';
-export const SocialPage = () => {
+import { Task } from 'features/task';
+export const TaskPage = () => {
   return (
     <Layout>
       <Header title="Task" content="Complete tasks to earn FRTN and boost your progress!" />
-      <Social />
+      <Task />
       <Footer />
     </Layout>
   );
