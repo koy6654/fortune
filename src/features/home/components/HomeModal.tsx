@@ -22,8 +22,8 @@ export function HomeModal(props: HomeModalProps) {
   };
 
   return isOpen ? (
-    <div className="fixed inset-0 bg-[rgba(139,69,19,0.7)] flex justify-center items-center z-50">
-      <div className="bg-white rounded-lg p-6 shadow-lg w-[90%] max-w-md">
+    <div className="fixed inset-0 bg-[rgba(139,69,19,0.7)] flex justify-center items-center z-50" onClick={handleClose}>
+      <div className="bg-white rounded-lg p-6 shadow-lg w-[90%] max-w-md" onClick={(event) => event.stopPropagation()}>
         <div data-name="fortune-message">
           <header>Fortue Message</header>
           <section>
