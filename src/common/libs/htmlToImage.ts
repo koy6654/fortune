@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { toPng } from 'html-to-image';
 
-const htmlToImage = (el: HTMLElement, filename: string = 'fortune') => {
+export const htmlToImage = (el: HTMLElement, filename: string = 'fortune') => {
   if (!el) {
     console.error('Element not found for capturing.');
     return;
@@ -22,5 +22,3 @@ const htmlToImage = (el: HTMLElement, filename: string = 'fortune') => {
       console.error('An error occurred while capturing the element:', error);
     });
 };
-
-export default htmlToImage;

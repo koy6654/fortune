@@ -1,4 +1,4 @@
-import htmlToImage from 'common/libs/htmlToImage';
+import { htmlToImage } from 'common/libs';
 import { useFortuneUserFortune } from 'features/services/queries';
 import { useEffect, useRef, useState } from 'react';
 

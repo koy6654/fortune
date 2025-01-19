@@ -124,7 +124,7 @@ export async function getFortuneDailyChecks(params: DailyChecksParams): Promise<
       created_at: now.add(3, 'day').format('YYYY-MM-DD HH:mm:ss'),
       updated_at: now.add(3, 'day').format('YYYY-MM-DD HH:mm:ss'),
       completed: null,
-      available: true,
+      available: false,
     },
     {
       id: 5,
@@ -134,7 +134,7 @@ export async function getFortuneDailyChecks(params: DailyChecksParams): Promise<
       created_at: now.add(4, 'day').format('YYYY-MM-DD HH:mm:ss'),
       updated_at: now.add(4, 'day').format('YYYY-MM-DD HH:mm:ss'),
       completed: null,
-      available: true,
+      available: false,
     },
     {
       id: 6,
@@ -144,7 +144,7 @@ export async function getFortuneDailyChecks(params: DailyChecksParams): Promise<
       created_at: now.add(5, 'day').format('YYYY-MM-DD HH:mm:ss'),
       updated_at: now.add(5, 'day').format('YYYY-MM-DD HH:mm:ss'),
       completed: null,
-      available: true,
+      available: false,
     },
     {
       id: 7,
@@ -154,7 +154,7 @@ export async function getFortuneDailyChecks(params: DailyChecksParams): Promise<
       created_at: now.add(6, 'day').format('YYYY-MM-DD HH:mm:ss'),
       updated_at: now.add(6, 'day').format('YYYY-MM-DD HH:mm:ss'),
       completed: null,
-      available: true,
+      available: false,
     },
   ];
 

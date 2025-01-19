@@ -1,8 +1,8 @@
 import DailyCheckFortunePoint from 'assets/images/home/DailyCheckFortunePoint.png';
 
-interface DailyCheckInBoxProps {
+export interface DailyCheckInBoxProps {
   status: 'missed' | 'claim' | 'claimed' | 'disabled';
-  dayCount: number;
+  dayCount: string;
   content: string;
 }
 
@@ -43,7 +43,7 @@ export const DailyCheckInBox = ({ status, dayCount, content }: DailyCheckInBoxPr
       className={`w-[85%] h-[50px] flex flex-row justify-between items-center rounded-xl mx-10 mt-1 ${bgClassName} ${borderClassName} `}
     >
       <div className={`min-w-[75px] flex justify-center ${textClassName} text-sm font-semibold font-pretendard pt-1`}>
-        Day {dayCount}
+        {dayCount}
       </div>
       <div className="w-0.5 h-7 bg-[#956134]"></div>
 
