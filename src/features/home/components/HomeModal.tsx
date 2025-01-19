@@ -1,11 +1,18 @@
+import { useFortuneUserFortune } from 'features/services/queries';
+import { useEffect } from 'react';
+
 interface HomeModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
 export function HomeModal(props: HomeModalProps) {
+  // props
   const { isOpen, onClose } = props;
-  const fortuneMessage = 'You will take a chance in the furture. Good Luck to you.';
+
+  // tanstack
+  const { data, isLoading, isError, error } = useFortuneUserFortune();
+  const fortuneMessage = data?.['fortune-message'];
   const fortuneNumber = [12, 6];
 
   const handleClose = () => {

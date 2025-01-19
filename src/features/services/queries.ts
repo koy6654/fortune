@@ -29,7 +29,7 @@ export const useRefferredUsers = (param: ReferredUsersParams, enabled = true) =>
   return query;
 };
 
-export const useFortuneUserFortune = (param: FortuneUserFortuneParams, enabled = true) => {
+export const useFortuneUserFortune = (param: FortuneUserFortuneParams = {}, enabled = true) => {
   const query = useQuery({
     queryKey: ['userFortune', param],
     queryFn: () => getFortuneUserFortune(param),
