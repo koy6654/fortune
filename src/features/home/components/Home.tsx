@@ -5,7 +5,7 @@ import { ReactComponent as HomeMainScrollOpen } from 'assets/images/home/MainScr
 import { ReactComponent as HomeSmallClock } from 'assets/images/home/SmallClock.svg';
 import { useFortuneSyncStore } from 'features/auth';
 import { DEFAULT_FORTUNESYNC_FORTUNEINDEX } from 'consts/fortune';
-import { HomModal } from './HomModal';
+import { HomeModal } from './HomeModal';
 
 export const Home = () => {
   const fortuneSyncS = useFortuneSyncStore();
@@ -37,7 +37,7 @@ export const Home = () => {
             >
               <HomeMainScrollOpen />
             </div>
-            <HomModal isOpen={!!isOpenScorllClicked} onClose={handleClose} />
+            <HomeModal isOpen={!!isOpenScorllClicked} onClose={handleClose} />
           </>
         ) : (
           <>

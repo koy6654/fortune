@@ -1,6 +1,6 @@
 import React from 'react';
-import { Footer, HomeHeader, Layout } from 'layout';
-import { Home } from 'features/home';
+import { Footer, Layout } from 'layout';
+import { Home, HomeHeader } from 'features/home';
 export const HomePage = () => {
   return (
     <Layout>

@@ -1,9 +1,9 @@
-interface HomeModal {
+interface HomeModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export function HomModal(props: HomeModal) {
+export function HomeModal(props: HomeModalProps) {
   const { isOpen, onClose } = props;
   const fortuneMessage = 'You will take a chance in the furture. Good Luck to you.';
   const fortuneNumber = [12, 6];

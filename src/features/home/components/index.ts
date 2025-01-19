@@ -1,2 +1,3 @@
 export * from './Home';
-export * from './HomModal';
+export * from './HomeHeader';
+export * from './HomeModal';
