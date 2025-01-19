@@ -60,7 +60,8 @@ export const Footer = () => {
         <HomeFooterMenu
           selected={false}
           onClick={() => {
-            handleMovePath('stake');
+            alert('get ready');
+            // handleMovePath('stake');
           }}
         >
           <MenuStake />
@@ -69,7 +70,8 @@ export const Footer = () => {
         <HomeFooterMenu
           selected={false}
           onClick={() => {
-            handleMovePath('check-in');
+            alert('get ready');
+            // handleMovePath('check-in');
           }}
         >
           <MenuCheckIn />
