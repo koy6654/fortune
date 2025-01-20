@@ -29,3 +29,20 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 66px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #bc9d66;
+    border-radius: 10px;
+    border: 1px solid #000000;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background-color: rgba(188, 157, 102, 0.2);
+  }
+}

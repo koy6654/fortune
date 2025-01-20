@@ -2,13 +2,13 @@ import React from 'react';
 
 interface TaskCategoryProps {
   listName: string;
-  seleted: boolean;
+  selected: boolean;
 }
 
-export const TaskCategory = ({ listName, seleted }: TaskCategoryProps) => {
+export const TaskCategory = ({ listName, selected }: TaskCategoryProps) => {
   let textColorClassName = 'text-[#a48b78]';
 
-  if (seleted === true) {
+  if (selected === true) {
     textColorClassName = 'text-[#1b1b1b]';
   }
 
