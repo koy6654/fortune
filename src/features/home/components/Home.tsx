@@ -36,7 +36,7 @@ export const Home = () => {
 
   return (
     <div className="flex-1 flex flex-col justify-center items-center relative">
-      <div className={`absolute  ${isFortuneClicked ? 'top-[41px]' : 'top-[-55px]'}`}>
+      <div className={`absolute  ${isFortuneClicked ? 'top-[96px]' : 'top-[123px]'}`}>
         {Boolean(isFortune) ? (
           <>
             <div
