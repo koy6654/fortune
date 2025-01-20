@@ -2,7 +2,7 @@ import { useFortuneDailyChecksStore } from 'features/home';
 import { DailyCheckInBox, DailyCheckInBoxProps } from './DailyCheckInBox';
 import { useFortuneDailyChecks } from 'features/services/queries';
 import { useEffect } from 'react';
-import { DEFAULT_FORTUNE_DAILYCHECK_MAX } from 'consts/fortune';
+import { DEFAULT_FORTUNE_DAILYCHECK_MAX, DEFAULT_FORTUNE_SPECIAL_REWARD } from 'consts/fortune';
 import { checkDateStatus } from 'common/libs';
 
 export const DailyCheck = () => {
@@ -52,7 +52,7 @@ export const DailyCheck = () => {
             status = 'claim';
           }
 
-          const content = check.reward_coins < 35 ? 'Check-In :)' : 'Special Reward!';
+          const content = check.reward_coins >= DEFAULT_FORTUNE_SPECIAL_REWARD ? 'Special Reward!' : 'Check-In :)';
 
           return (
             <DailyCheckInBox
