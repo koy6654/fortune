@@ -1,6 +1,7 @@
 import DailyCheckFortunePoint from 'assets/images/FortunePoint.png';
 import DailyCheckFortunePointMissed from 'assets/images/home/DailyCheckFortunePointMissed.png';
 import DailyCheckFortunePointClaimedDisabled from 'assets/images/home/DailyCheckFortunePointClaimedDisabled.png';
+import { useFortuneDailyClaim } from 'features/services/mutations';
 
 export interface DailyCheckInBoxProps {
   status: 'missed' | 'claim' | 'claimed' | 'disabled';
@@ -13,10 +14,10 @@ export const DailyCheckInBox = ({ status, dayCount, content }: DailyCheckInBoxPr
   let borderClassName = 'border-2 border-[#956134]';
   let textClassName = 'text-[#181818]';
   let buttonBgClassName = 'bg-[#ffc34b]';
-
   let buttonText = 'Claim';
-
   let fortunePointImage = DailyCheckFortunePoint;
+
+  const { mutateAsync: mutateFortuneDailyClaim } = useFortuneDailyClaim();
 
   switch (status) {
     case 'missed':
@@ -46,9 +47,23 @@ export const DailyCheckInBox = ({ status, dayCount, content }: DailyCheckInBoxPr
       break;
   }
 
+  const handleClaim = async () => {
+    if (status === 'claim') {
+      try {
+        const data = await mutateFortuneDailyClaim({});
+        console.log(data);
+        alert(JSON.stringify(data));
+      } catch (error: unknown) {
+        console.error(error);
+      }
+    }
+  };
+
   return (
     <div
+      style={{ cursor: status === 'claim' ? 'pointer' : 'default' }}
       className={`w-[85%] h-[50px] flex flex-row justify-between items-center rounded-xl mx-10 mt-1 ${bgClassName} ${borderClassName} `}
+      onClick={handleClaim}
     >
       <div className={`min-w-[75px] flex justify-center ${textClassName} text-sm font-semibold font-pretendard pt-1`}>
         {dayCount}
