@@ -2,7 +2,6 @@ import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { BaseError } from 'common/apis';
 
-import { postAuthTelegramUser, postFortuneDailyClaim, postFortuneUserHistory } from './service';
 import {
   AuthParams,
   AuthResponse,
@@ -11,6 +10,14 @@ import {
   FortuneUserHistoryParams,
   FortuneUserHistoryResponse,
 } from './service.model';
+
+import { USE_MOCK } from 'consts';
+
+import * as mockService from './service.mock';
+import * as realService from './service';
+
+const service = USE_MOCK ? mockService : realService;
+const { postAuthTelegramUser, postFortuneDailyClaim, postFortuneUserHistory } = service;
 
 export const useAuthTelegramUser = () =>
   useMutation<AuthResponse, AxiosError<BaseError>, AuthParams>({

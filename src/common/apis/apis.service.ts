@@ -105,8 +105,8 @@ const handleInterceptorResultError = (error: AxiosError | Error): Promise<AxiosE
   // 401 Unauthorized (type assertion)
   if (axios.isAxiosError(error) && (error as AxiosError).response?.status === 401) {
     console.error(error);
-    // LocalStorage.remove('token');
-    // window.location.reload();
+    LocalStorage.remove('token');
+    window.location.reload();
   }
 
   return Promise.reject(error);

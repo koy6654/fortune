@@ -27,7 +27,7 @@ export interface SyncParams {}
 
 export interface SyncResponse {
   user: UserType;
-  isFortune: true;
+  isFortune: boolean;
   fortuneIndex: number;
 }
 
@@ -46,7 +46,7 @@ export type DailyChecksResponse = DailyCheckData[];
 
 export interface DailyClaimParams {}
 export interface DailyClaimResponse {
-  success: true;
+  success: boolean;
   message: string;
   balance: number;
 }

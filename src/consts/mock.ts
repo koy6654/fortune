@@ -1,4 +1,13 @@
 import dayjs from 'dayjs';
+import {
+  AuthResponse,
+  DailyChecksResponse,
+  DailyClaimResponse,
+  FortuneUserFortuneResponse,
+  FortuneUserHistoryResponse,
+  ReferredUsersResponse,
+  SyncResponse,
+} from 'features/services/service.model';
 import { TelegramWebApps } from 'telegram-webapps-types';
 
 export const DEFAULT_TELEGRAM_DATA: TelegramWebApps.WebAppInitData = {
@@ -15,9 +24,9 @@ export const DEFAULT_TELEGRAM_DATA: TelegramWebApps.WebAppInitData = {
   start_param: 'ref1',
 };
 
-export const DEFAULT_MOCK_TOKEN = { token: 'fortune-mock-token' };
+export const DEFAULT_MOCK_TOKEN: AuthResponse = { token: 'fortune-mock-token' };
 
-export const DEFAULT_MOCK_SYNC = {
+export const DEFAULT_MOCK_SYNC: SyncResponse = {
   user: {
     id: 10,
     telegram_id: 10,
@@ -41,7 +50,7 @@ export const DEFAULT_MOCK_SYNC = {
 
 const now = dayjs();
 const formattedDate = now.format('YYYY-MM-DD HH:mm:ss');
-export const DEFAULT_MOCK_DAILY_CHECK = [
+export const DEFAULT_MOCK_DAILY_CHECK: DailyChecksResponse = [
   {
     id: 1,
     name: 'Day 1',
@@ -114,13 +123,13 @@ export const DEFAULT_MOCK_DAILY_CHECK = [
   },
 ];
 
-export const DEFAULT_MOCK_DAILY_CLAIM = {
+export const DEFAULT_MOCK_DAILY_CLAIM: DailyClaimResponse = {
   success: true,
   message: 'message',
   balance: 100,
 };
 
-export const DEFAULT_MOCK_REFERRED_USERS = {
+export const DEFAULT_MOCK_REFERRED_USERS: ReferredUsersResponse = {
   data: [
     {
       id: 10,
@@ -184,11 +193,11 @@ export const DEFAULT_MOCK_REFERRED_USERS = {
   },
 };
 
-export const DEFAULT_MOCK_USER_FORTUNE = {
+export const DEFAULT_MOCK_USER_FORTUNE: FortuneUserFortuneResponse = {
   'fortune-message': '"Buy low, sell high...unless it\'s crypto, then just HODL and pray for the moon 🚀🌕"',
 };
 
-export const DEFULAT_MOCK_USER_HISTORY = {
+export const DEFULAT_MOCK_USER_HISTORY: FortuneUserHistoryResponse = {
   fortuneMessages: [
     {
       id: 1,

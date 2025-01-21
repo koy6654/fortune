@@ -1,6 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { DailyChecksParams, FortuneUserFortuneParams, ReferredUsersParams, SyncParams } from './service.model';
-import { getFortuneDailyChecks, getFortuneSync, getFortuneUserFortune, getReferredUsers } from './service';
+
+import { USE_MOCK } from 'consts';
+
+import * as mockService from './service.mock';
+import * as realService from './service';
+
+const service = USE_MOCK ? mockService : realService;
+const { getFortuneDailyChecks, getFortuneSync, getFortuneUserFortune, getReferredUsers } = service;
 
 export const useFortuneSync = (param: SyncParams, enabled = true) => {
   const query = useQuery({
