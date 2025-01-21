@@ -10,7 +10,7 @@ export const DailyCheck = () => {
   const { fortuneDailyChecks, setFortuneDailyChecks } = useFortuneDailyChecksStore();
 
   // tanstack
-  const { data, isLoading, isError, error } = useFortuneDailyChecks();
+  const { data, isLoading, isError, error } = useFortuneDailyChecks({});
 
   // TODO: src/features/home/components/Home.tsx 와 로직이 겹치긴 함
   useEffect(() => {

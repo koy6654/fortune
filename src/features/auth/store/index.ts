@@ -5,7 +5,7 @@ import { DEFAULT_FORTUNESYNC_FORTUNEINDEX } from 'consts/fortune';
 import { SyncResponse } from 'features/services/service.model';
 import { LocalStorage } from 'common/libs/storageManager';
 
-export const useAuthStore = create<AuthState>((set) => ({
+export const useAuthStore = create<AuthState>((set, get) => ({
   token: null,
   setToken: (token) => {
     set({ token });
@@ -13,6 +13,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       LocalStorage.set('token', token);
     }
   },
+  getToken: () => get().token,
   clearToken: () => set({ token: null }),
 }));
 

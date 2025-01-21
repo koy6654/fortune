@@ -42,7 +42,7 @@ const handleInterceptorRequest = (
 
   if (options?.useAuthorization) {
     if (_authStore) {
-      const { token } = _authStore.getState() as AuthState;
+      const token = _authStore.getState().getToken();
       if (token) {
         const authorization = /^bearer/i.test(token) ? token : `bearer ${token}`;
         requestConfig.headers.Authorization = authorization;
@@ -98,13 +98,15 @@ const handleInterceptorResult = (
 
 const handleInterceptorResultError = (error: AxiosError | Error): Promise<AxiosError> => {
   if (axios.isCancel(error)) {
+    console.error(error);
     throw error;
   }
 
   // 401 Unauthorized (type assertion)
   if (axios.isAxiosError(error) && (error as AxiosError).response?.status === 401) {
-    LocalStorage.remove('token');
-    window.location.reload();
+    console.error(error);
+    // LocalStorage.remove('token');
+    // window.location.reload();
   }
 
   return Promise.reject(error);

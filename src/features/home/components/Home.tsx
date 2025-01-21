@@ -21,7 +21,7 @@ export const Home = () => {
   const [isOpenScorllClicked, setIsOpenScrollClicked] = useState(false);
 
   // tanstack
-  const { data, isLoading, isError, error } = useFortuneDailyChecks();
+  const { data, isLoading, isError, error } = useFortuneDailyChecks({});
 
   useEffect(() => {
     if (data) {

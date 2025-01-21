@@ -3,6 +3,7 @@ import { SyncResponse, UserType } from 'features/services/service.model';
 export interface AuthState {
   token: string | null;
   setToken: (token: string) => void;
+  getToken: () => string | null;
   clearToken: () => void;
 }
 

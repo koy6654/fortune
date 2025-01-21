@@ -1,11 +1,10 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useAuthStore, useFortuneSyncStore } from '../store';
 import { useTelegramInitData, useTelegramUISetting } from './useTelegram';
 import { useAuthTelegramUser } from 'features/services/mutations';
 import { AxiosError } from 'axios';
 import { useFortuneSync } from 'features/services/queries';
 import { LocalStorage } from 'common/libs/storageManager';
-import { api_v1 } from 'common/apis';
 import { SyncResponse } from 'features/services/service.model';
 
 export function useAuthorizationSetting() {
@@ -45,7 +44,7 @@ export function useAuthorizationSetting() {
   const { mutateAsync: mutateAuthTelegramUser } = useAuthTelegramUser();
 
   /** token => get user data */
-  const { refetch: loadFortuneSync } = useFortuneSync(false);
+  const { refetch: loadFortuneSync } = useFortuneSync({}, false);
 
   useEffect(() => {
     async function authenticate() {

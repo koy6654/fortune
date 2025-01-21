@@ -25,7 +25,7 @@ export function Bootstrap({ children }: BootstrapProps) {
 
   useEffect(() => {
     bootstrap();
-  }, [bootstrap]);
+  }, []);
 
   if (!initialized) {
     return <>Loading...</>;
