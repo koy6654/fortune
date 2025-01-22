@@ -14,7 +14,7 @@ interface HomeModalProps {
 export function HomeModal(props: HomeModalProps) {
   // props
   const { isOpen, onClose } = props;
-  const [fortuneMessage, setFortuneMessage] = useState<any>();
+  const [fortuneMessage, setFortuneMessage] = useState<string>();
   const [fortuneNumbers, setFortuneNumbers] = useState([12, 6]);
 
   const captureRef = useRef<HTMLDivElement>(null);
@@ -78,7 +78,7 @@ export function HomeModal(props: HomeModalProps) {
               </header>
               <section className="text-[18px] font-semibold font-pridi flex flex-col items-center mt-[15px]">
                 <p className="text-[20px] leading-normal">“</p>
-                <p className="leading-[24px]">{fortuneMessage}</p>
+                <p className="leading-[24px] text-center">{fortuneMessage?.replaceAll('"', '')}</p>
                 <p className="text-[20px] leading-normal">“</p>
               </section>
             </div>
