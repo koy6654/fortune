@@ -26,8 +26,6 @@ export async function postAuthTelegramUser(params: AuthParams): Promise<AuthResp
   let { data } = await api_v1.post<BaseResponse<AuthResponse>>('/api/auth/telegram-user', {
     ...params,
   });
-  // data = DEFAULT_MOCK_TOKEN;
-
   return data;
 }
 
@@ -40,8 +38,6 @@ export async function getFortuneSync(params: SyncParams): Promise<SyncResponse> 
   let { data } = await apiAuth.get<BaseResponse<SyncResponse>>('/api/fortune/sync', {
     params,
   });
-  // data = DEFAULT_MOCK_SYNC;
-
   return data;
 }
 
@@ -54,9 +50,6 @@ export async function getFortuneDailyChecks(params: DailyChecksParams): Promise<
   let { data } = await apiAuth.get<BaseResponse<DailyChecksResponse>>('/api/fortune/daily-checks', {
     params,
   });
-
-  // data = DEFAULT_MOCK_DAILY_CHECK;
-
   return data;
 }
 
@@ -67,14 +60,8 @@ export async function getFortuneDailyChecks(params: DailyChecksParams): Promise<
  */
 export async function postFortuneDailyClaim(params: DailyClaimParams): Promise<DailyClaimResponse> {
   let { data } = await apiAuth.post<BaseResponse<DailyClaimResponse>>('/api/fortune/daily-claim', {
-    // title: 'foo',
-    // body: 'bar',
-    // userId: 1,
-    // params
     ...params,
   });
-
-  // data = DEFAULT_MOCK_DAILY_CLAIM
   return data;
 }
 
@@ -87,9 +74,6 @@ export async function getReferredUsers(params: ReferredUsersParams): Promise<Ref
   let { data } = await apiAuth.get<BaseResponse<ReferredUsersResponse>>('/api/refferd-users', {
     params,
   });
-
-  // data = DEFAULT_MOCK_REFERRED_USERS;
-
   return data;
 }
 
@@ -102,9 +86,6 @@ export async function getFortuneUserFortune(params: FortuneUserFortuneParams): P
   let { data } = await apiAuth.get<BaseResponse<FortuneUserFortuneResponse>>('/api/fortune/user-fortune', {
     params,
   });
-
-  // data = DEFAULT_MOCK_USER_FORTUNE;
-
   return data;
 }
 
@@ -115,13 +96,7 @@ export async function getFortuneUserFortune(params: FortuneUserFortuneParams): P
  */
 export async function postFortuneUserHistory(params: FortuneUserHistoryParams): Promise<FortuneUserHistoryResponse> {
   let { data } = await apiAuth.post<BaseResponse<FortuneUserHistoryResponse>>('/api/fortune/user-history', {
-    // title: 'foo',
-    // body: 'bar',
-    // userId: 1,
-    // params
     ...params,
   });
-
-  // data = DEFULAT_MOCK_USER_HISTORY;
   return data;
 }
