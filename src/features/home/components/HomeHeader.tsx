@@ -4,7 +4,7 @@ import { ReactComponent as HomeHeaderInviteFriend } from 'assets/images/home/Hea
 import { ReactComponent as HomeHeaderFortunePoint } from 'assets/images/home/HeaderFortunePoint.svg';
 import { ReactComponent as HomeHeaderDailyCheck } from 'assets/images/home/HeaderDailyCheck.svg';
 import { useFortuneSyncStore } from 'features/auth';
-import { DEFAULT_NUM_ZERO, DEFAULT_ROUTES_PATH } from 'consts';
+import { DEFAULT_NUM_ZERO, DEFAULT_SERVICE_PATH } from 'consts';
 import { useFortuneDailyChecksStore } from '../store';
 import { DEFAULT_FORTUNE_DAILYCHECK_MAX } from 'consts/fortune';
 import { getDailyCheckRestCount } from '../libs/home.libs';
@@ -21,7 +21,7 @@ export const HomeHeader = () => {
 
   const navigate = useNavigate();
   const handleMovePath = (path: string) => {
-    navigate(`${DEFAULT_ROUTES_PATH}/${path}`);
+    navigate(`${DEFAULT_SERVICE_PATH}/${path}`);
   };
 
   return (

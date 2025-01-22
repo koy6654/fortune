@@ -2,45 +2,45 @@ import { useEffect, useMemo } from 'react';
 
 import { DailyCheckPage, HistoryPage, HomePage, IntroPage, InvitePage, TaskPage } from 'app/pages';
 import { isPathAllowed } from 'common/libs';
-import { DEFAULT_SERVICE_PATH, DEFAULT_ROUTES_PATH, DEFAULT_FALLBACK_URL } from 'consts';
+import { DEFAULT_SERVICE_PATH, DEFAULT_FALLBACK_URL } from 'consts';
 import { NotFound } from 'features/common';
 import { RouteObject, useLocation, useNavigate, useRoutes } from 'react-router-dom';
 
 const routes: RouteObject[] = [
   {
-    path: `${DEFAULT_ROUTES_PATH}/`,
-    element: <IntroPage />,
+    path: `${DEFAULT_SERVICE_PATH}/`,
+    element: <IntroPage start={true} />,
   },
   {
-    path: `${DEFAULT_ROUTES_PATH}/intro`,
-    element: <IntroPage />,
+    path: `${DEFAULT_SERVICE_PATH}/intro`,
+    element: <IntroPage start={true} />,
   },
   {
-    path: `${DEFAULT_ROUTES_PATH}/home`,
+    path: `${DEFAULT_SERVICE_PATH}/home`,
     element: <HomePage />,
   },
   {
-    path: `${DEFAULT_ROUTES_PATH}/home/home`,
+    path: `${DEFAULT_SERVICE_PATH}/home/home`,
     element: <HomePage />,
   },
   {
-    path: `${DEFAULT_ROUTES_PATH}/home/daily-check`,
+    path: `${DEFAULT_SERVICE_PATH}/home/daily-check`,
     element: <DailyCheckPage />,
   },
   {
-    path: `${DEFAULT_ROUTES_PATH}/home/invite`,
+    path: `${DEFAULT_SERVICE_PATH}/home/invite`,
     element: <InvitePage />,
   },
   {
-    path: `${DEFAULT_ROUTES_PATH}/task`,
+    path: `${DEFAULT_SERVICE_PATH}/task`,
     element: <TaskPage />,
   },
   {
-    path: `${DEFAULT_ROUTES_PATH}/history`,
+    path: `${DEFAULT_SERVICE_PATH}/history`,
     element: <HistoryPage />,
   },
   {
-    path: `${DEFAULT_ROUTES_PATH}/history/history`,
+    path: `${DEFAULT_SERVICE_PATH}/history/history`,
     element: <HistoryPage />,
   },
   {
@@ -58,20 +58,19 @@ function AppRoutes() {
     () =>
       isPathAllowed({
         pathname,
-        lists: ['/', DEFAULT_ROUTES_PATH, `${DEFAULT_SERVICE_PATH}/`, `${DEFAULT_ROUTES_PATH}/`],
+        lists: ['/', `${DEFAULT_SERVICE_PATH}/`],
         method: 'endsWith',
       }),
     [pathname]
   );
 
-  // useEffect(() => {
-  //   if (isNotAllowedPath) {
-  //     navigate(DEFAULT_FALLBACK_URL);
-  //   }
-  // }, [isNotAllowedPath, navigate, pathname]);
+  useEffect(() => {
+    if (isNotAllowedPath) {
+      navigate(DEFAULT_FALLBACK_URL);
+    }
+  }, [isNotAllowedPath, navigate, pathname]);
 
-  // return !isNotAllowedPath ? RoutesElement : null;
-  return RoutesElement;
+  return !isNotAllowedPath ? RoutesElement : null;
 }
 
 export default AppRoutes;

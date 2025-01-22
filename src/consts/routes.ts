@@ -1,3 +1,2 @@
 export const DEFAULT_SERVICE_PATH = process.env.PUBLIC_URL;
-export const DEFAULT_ROUTES_PATH = `${DEFAULT_SERVICE_PATH}`;
-export const DEFAULT_FALLBACK_URL = `${DEFAULT_SERVICE_PATH}/home`;
+export const DEFAULT_FALLBACK_URL = `${DEFAULT_SERVICE_PATH}/intro`;

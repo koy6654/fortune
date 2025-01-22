@@ -1,3 +1,4 @@
+import { IntroPage } from 'app/pages';
 import { useAuthorizationSetting } from 'features/auth/hooks/useAuth';
 import { ReactNode, useCallback, useEffect, useState } from 'react';
 
@@ -28,7 +29,11 @@ export function Bootstrap({ children }: BootstrapProps) {
   }, []);
 
   if (!initialized) {
-    return <>Loading...</>;
+    return (
+      <>
+        <IntroPage start={false} />
+      </>
+    );
   }
 
   return <>{children}</>;

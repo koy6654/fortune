@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { isPathAllowed } from 'common/libs';
-import { apiDomain, DEFAULT_FALLBACK_URL } from 'consts';
+import { DEFAULT_FALLBACK_URL, apiDomain } from 'consts';
 
 import { BaseError, BaseResponse, CreateAxiosInstanceOptions, CustomAxiosInstance } from './apis.model';
 import { LocalStorage } from 'common/libs/storageManager';
@@ -106,7 +106,7 @@ const handleInterceptorResultError = (error: AxiosError | Error): Promise<AxiosE
   if (axios.isAxiosError(error) && (error as AxiosError).response?.status === 401) {
     console.error(error);
     LocalStorage.remove('token');
-    window.location.reload();
+    window.location.href = `${DEFAULT_FALLBACK_URL}`;
   }
 
   return Promise.reject(error);

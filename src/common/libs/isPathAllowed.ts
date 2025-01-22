@@ -6,6 +6,17 @@ interface IsPathAllowedParams {
   method: ListsType;
 }
 
+/**
+ *
+ * @example
+ * isPathAllowed({
+ *    // const { pathname } = useLocation();
+ *    // const pathname = response.request.responseURL;
+      pathname: window.location.pathname,
+      lists: ['/info', '/history'],
+      method: 'includes',
+    })
+ */
 export const isPathAllowed = ({ pathname, lists, method }: IsPathAllowedParams): boolean => {
   if (!lists.length) return false;
 

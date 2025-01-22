@@ -1,10 +1,14 @@
 import { Intro } from 'features/intro';
 import React from 'react';
 
-export const IntroPage = () => {
+type IntroPageProps = {
+  start: boolean;
+};
+
+export const IntroPage = ({ start }: IntroPageProps) => {
   return (
     <div>
-      <Intro />
+      <Intro start={start} />
     </div>
   );
 };
