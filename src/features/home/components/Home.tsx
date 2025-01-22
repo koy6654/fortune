@@ -36,7 +36,8 @@ export const Home = () => {
 
   return (
     <div className="flex-1 flex flex-col justify-center items-center relative">
-      <div className={`absolute  ${isFortuneClicked ? 'top-[96px]' : 'top-[123px]'}`}>
+      {/* 처음: 스크롤, 뒤: 포춘쿠키 - 두 SVG가 높이가 다 다르기 때문에 수동으로 조절하였음 */}
+      <div className={`absolute  ${isFortuneClicked ? 'top-[43px]' : 'top-[70px]'}`}>
         {Boolean(isFortune) ? (
           <>
             <div
