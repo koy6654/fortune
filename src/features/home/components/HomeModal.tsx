@@ -54,14 +54,22 @@ export function HomeModal(props: HomeModalProps) {
   };
 
   return isOpen && loadedFortuneUserFortune ? (
-    <div className="fixed inset-0 bg-[rgba(139,69,19,0.7)] flex justify-center items-center z-50" onClick={handleClose}>
-      <div className="bg-white rounded-lg p-6 shadow-lg w-[90%] max-w-md" onClick={(event) => event.stopPropagation()}>
+    <div
+      ref={captureRef}
+      className="fixed inset-0 bg-home-modal-radial flex justify-center items-center z-50"
+      onClick={handleClose}
+    >
+      <div className="w-full pt-[115px] px-[75px] pb-[80px] text-[#FFF]" onClick={(event) => event.stopPropagation()}>
         {isLoading ? (
           <div data-name="fortune-loading">is Loading...</div>
         ) : (
-          <div data-name="fortune-result" ref={captureRef}>
+          <div data-name="fortune-result">
             <div data-name="fortune-message">
-              <header>Fortue Message</header>
+              <header>
+                <hr />
+                <span>Fortue Message</span>
+                <hr />
+              </header>
               <section>
                 <p>"</p>
                 <p>{fortuneMessage}</p>

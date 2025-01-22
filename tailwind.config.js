@@ -11,6 +11,14 @@ module.exports = {
         'pridi-semibold': ['Pridi-SemiBold', 'serif'],
         pretendard: ['Pretendard'],
       },
+      /**
+       * @example
+       * <div class="bg-home-modal-radial">...</div>
+       */
+      backgroundImage: {
+        'home-modal-radial':
+          'radial-gradient(108.21% 50% at 50% 50%, rgba(149, 97, 52, 0.90) 0%, rgba(98, 55, 17, 0.90) 100%)',
+      },
     },
   },
   plugins: [],
