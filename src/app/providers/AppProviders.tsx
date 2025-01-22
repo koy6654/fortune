@@ -14,7 +14,7 @@ export function AppProviders({ children }: AppProviderProps) {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
-      {USE_DEV_MODE ? <ReactQueryDevtools initialIsOpen={false} /> : null}
+      {/* {USE_DEV_MODE ? <ReactQueryDevtools initialIsOpen={false} /> : null} */}
     </QueryClientProvider>
   );
 }
