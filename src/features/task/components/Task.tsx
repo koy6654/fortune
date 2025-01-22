@@ -12,7 +12,7 @@ export const Task = () => {
   return (
     <div className="flex-1 flex flex-col justify-center items-center relative">
       <TaskHistoryBackground>
-        <TaskHistoryHeader>
+        <TaskHistoryHeader className="justify-between">
           <TaskCategory listName="Social" selected={true} />
           <TaskCategoryDivider />
           <TaskCategory listName="Basic" selected={false} />
@@ -20,74 +20,72 @@ export const Task = () => {
           <TaskCategory listName="On Chain" selected={false} />
         </TaskHistoryHeader>
         <TaskHistoryBody>
-          <div className="max-h-[388px]">
-            <TaskListBox
-              title="Share Fortune on Social"
-              description="Connect your Web3 wallet to the Scroll Fortune platform."
-              point={200}
-              status="todo"
-            />
-            <TaskListBox
-              title="Share Fortune on Social"
-              description="Connect your Web3 wallet to the Scroll Fortune platform."
-              point={200}
-              status="todo"
-            />
-            <TaskListBox
-              title="Share Fortune on Social"
-              description="Connect your Web3 wallet to the Scroll Fortune platform."
-              point={200}
-              status="claim"
-            />
-            <TaskListBox
-              title="Share Fortune on Social"
-              description="Connect your Web3 wallet to the Scroll Fortune platform."
-              point={200}
-              status="claim"
-            />
-            <TaskListBox
-              title="Share Fortune on Social"
-              description="Connect your Web3 wallet to the Scroll Fortune platform."
-              point={200}
-              status="disabled"
-            />
-            <TaskListBox
-              title="Share Fortune on Social"
-              description="Connect your Web3 wallet to the Scroll Fortune platform."
-              point={200}
-              status="disabled"
-            />
-            <TaskListBox
-              title="Share Fortune on Social"
-              description="Connect your Web3 wallet to the Scroll Fortune platform."
-              point={200}
-              status="disabled"
-            />
-            <TaskListBox
-              title="Share Fortune on Social"
-              description="Connect your Web3 wallet to the Scroll Fortune platform."
-              point={200}
-              status="disabled"
-            />
-            <TaskListBox
-              title="Share Fortune on Social"
-              description="Connect your Web3 wallet to the Scroll Fortune platform."
-              point={200}
-              status="disabled"
-            />
-            <TaskListBox
-              title="Share Fortune on Social"
-              description="Connect your Web3 wallet to the Scroll Fortune platform."
-              point={200}
-              status="disabled"
-            />
-            <TaskListBox
-              title="Share Fortune on Social"
-              description="Connect your Web3 wallet to the Scroll Fortune platform."
-              point={200}
-              status="disabled"
-            />
-          </div>
+          <TaskListBox
+            title="Share Fortune on Social"
+            description="Connect your Web3 wallet to the Scroll Fortune platform."
+            point={200}
+            status="todo"
+          />
+          <TaskListBox
+            title="Share Fortune on Social"
+            description="Connect your Web3 wallet to the Scroll Fortune platform."
+            point={200}
+            status="todo"
+          />
+          <TaskListBox
+            title="Share Fortune on Social"
+            description="Connect your Web3 wallet to the Scroll Fortune platform."
+            point={200}
+            status="claim"
+          />
+          <TaskListBox
+            title="Share Fortune on Social"
+            description="Connect your Web3 wallet to the Scroll Fortune platform."
+            point={200}
+            status="claim"
+          />
+          <TaskListBox
+            title="Share Fortune on Social"
+            description="Connect your Web3 wallet to the Scroll Fortune platform."
+            point={200}
+            status="disabled"
+          />
+          <TaskListBox
+            title="Share Fortune on Social"
+            description="Connect your Web3 wallet to the Scroll Fortune platform."
+            point={200}
+            status="disabled"
+          />
+          <TaskListBox
+            title="Share Fortune on Social"
+            description="Connect your Web3 wallet to the Scroll Fortune platform."
+            point={200}
+            status="disabled"
+          />
+          <TaskListBox
+            title="Share Fortune on Social"
+            description="Connect your Web3 wallet to the Scroll Fortune platform."
+            point={200}
+            status="disabled"
+          />
+          <TaskListBox
+            title="Share Fortune on Social"
+            description="Connect your Web3 wallet to the Scroll Fortune platform."
+            point={200}
+            status="disabled"
+          />
+          <TaskListBox
+            title="Share Fortune on Social"
+            description="Connect your Web3 wallet to the Scroll Fortune platform."
+            point={200}
+            status="disabled"
+          />
+          <TaskListBox
+            title="Share Fortune on Social"
+            description="Connect your Web3 wallet to the Scroll Fortune platform."
+            point={200}
+            status="disabled"
+          />
         </TaskHistoryBody>
         <div className="w-full flex flex-row justify-center items-center mt-[-5px]">
           <TaskListBoxArrow />
