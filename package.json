@@ -8,6 +8,7 @@
     "start:prod": "REACT_APP_USE_DEV_MODE=false react-scripts start"
   },
   "dependencies": {
+    "@okxconnect/ui": "^1.7.1",
     "@tanstack/eslint-plugin-query": "^5.62.16",
     "@tanstack/react-query": "^5.52.2",
     "@tanstack/react-query-devtools": "^5.17.1",

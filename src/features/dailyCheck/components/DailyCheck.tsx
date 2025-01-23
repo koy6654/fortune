@@ -4,6 +4,7 @@ import { useFortuneDailyChecks } from 'features/services/queries';
 import { useEffect } from 'react';
 import { DEFAULT_FORTUNE_DAILYCHECK_MAX, DEFAULT_FORTUNE_SPECIAL_REWARD } from 'consts/fortune';
 import { checkDateStatus } from 'common/libs';
+import useDailyClaim from 'common/hooks/useDailyClaim';
 
 export const DailyCheck = () => {
   // get store
@@ -11,6 +12,8 @@ export const DailyCheck = () => {
 
   // tanstack
   const { data, isLoading, isError, error } = useFortuneDailyChecks({});
+
+  const { walletAddress, isClaimed, claimDailyReward } = useDailyClaim();
 
   // TODO: src/features/home/components/Home.tsx 와 로직이 겹치긴 함
   useEffect(() => {
@@ -22,6 +25,9 @@ export const DailyCheck = () => {
 
   return (
     <div className="flex-1 flex flex-col justify-center items-center relative">
+      <button onClick={claimDailyReward} type="button">
+        [{`OKX contract > daily claim`}]
+      </button>
       <div className="flex flex-row justify-center items-center mb-2">
         <span className="text-lg font-medium font-pridi leading-[21px]">Progress Tracker </span>
         <span className="text-sm font-normal font-pridi leading-[21px]">(Days 1-{DEFAULT_FORTUNE_DAILYCHECK_MAX})</span>
