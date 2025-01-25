@@ -35,8 +35,8 @@ export const Invite = () => {
       </InviteSubTitle>
       <div className="w-[80%] h-[230px] bg-[#f4dbbd] rounded-xl border-2 border-[#a48b78] px-4 pt-4 mb-auto">
         <div className="grid grid-cols-2 gap-2">
-          {userNames.map((userName) => (
-            <InviteFriendsListUserName userName={userName} />
+          {userNames.map((userName, index) => (
+            <InviteFriendsListUserName key={index} userName={userName} />
           ))}
         </div>
         <div className="w-full flex flex-row justify-center items-center pt-2">

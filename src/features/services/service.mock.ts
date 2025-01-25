@@ -125,13 +125,9 @@ export async function getFortuneUserFortune(params: FortuneUserFortuneParams): P
  * "url"/api/fortune/user-history (POST)
  * @caution api auth
  */
-export async function postFortuneUserHistory(params: FortuneUserHistoryParams): Promise<FortuneUserHistoryResponse> {
-  let { data } = await apiAuth.post<BaseResponse<FortuneUserHistoryResponse>>('/posts', {
-    title: 'foo',
-    body: 'bar',
-    userId: 1,
-    // params
-    ...params,
+export async function getFortuneUserHistory(params: FortuneUserHistoryParams): Promise<FortuneUserHistoryResponse> {
+  let { data } = await apiAuth.get<BaseResponse<FortuneUserHistoryResponse>>('/todos/1', {
+    params,
   });
 
   data = DEFULAT_MOCK_USER_HISTORY;

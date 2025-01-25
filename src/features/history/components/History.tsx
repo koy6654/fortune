@@ -3,24 +3,26 @@ import {
   TaskHistoryBody,
   TaskHistoryHeader,
 } from 'features/common/components/TaskHistoryCommon';
-import { useFortuneUserHistory } from 'features/services/mutations';
-import React, { useEffect, useState } from 'react';
+import { useFortuneUserHistory } from 'features/services/queries';
+import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { HistoryCollapseBox } from './HistoryCollapseBox';
+import { FortuneUserHistoryResponse } from 'features/services/service.model';
 
-interface HistoryData {
-  startDate: string;
-  fortuneMessages: {
-    id: number;
-    default_message?: string;
-    message?: string;
-  }[];
+type HistoryCollapseContent = {
+  opened: boolean;
+  message: string;
+};
+interface HistoryCollapseData {
+  title: string;
+  openedCount: number;
+  contents: HistoryCollapseContent[];
 }
 
 export const History = () => {
-  const { mutate, isError, error, data } = useFortuneUserHistory();
+  const { data, isLoading, isError, error } = useFortuneUserHistory({});
 
-  const [historyData, setHistoryData] = useState<HistoryData>();
+  const [historyData, setHistoryData] = useState<HistoryCollapseData[]>([]);
   const [collapseState, setCollapseState] = useState<Record<number, boolean>>({
     0: true,
     1: false,
@@ -31,77 +33,43 @@ export const History = () => {
     6: false,
   });
 
-  const testData = [
-    {
-      title: 'Jan 10, 2025',
-      contents: [
-        { opened: false, message: `"Not Opened!  “No cookie, no fortune."` },
-        { opened: true, message: `"Fortune text area"` },
-        { opened: true, message: `"Fortune text area"` },
-      ],
-    },
-    {
-      title: 'Jan 11, 2025',
-      contents: [
-        { opened: false, message: `"Not Opened!  “No cookie, no fortune."` },
-        { opened: true, message: `"Fortune text area"` },
-        { opened: true, message: `"Fortune text area"` },
-      ],
-    },
-    {
-      title: 'Jan 12, 2025',
-      contents: [
-        { opened: false, message: `"Not Opened!  “No cookie, no fortune."` },
-        { opened: true, message: `"Fortune text area"` },
-        { opened: true, message: `"Fortune text area"` },
-      ],
-    },
-    {
-      title: 'Jan 13, 2025',
-      contents: [
-        { opened: false, message: `"Not Opened!  “No cookie, no fortune."` },
-        { opened: true, message: `"Fortune text area"` },
-        { opened: true, message: `"Fortune text area"` },
-      ],
-    },
-    {
-      title: 'Jan 14, 2025',
-      contents: [
-        { opened: false, message: `"Not Opened!  “No cookie, no fortune."` },
-        { opened: true, message: `"Fortune text area"` },
-        { opened: true, message: `"Fortune text area"` },
-      ],
-    },
-    {
-      title: 'Jan 15, 2025',
-      contents: [
-        { opened: false, message: `"Not Opened!  “No cookie, no fortune."` },
-        { opened: true, message: `"Fortune text area"` },
-        { opened: true, message: `"Fortune text area"` },
-      ],
-    },
-    {
-      title: 'Jan 16, 2025',
-      contents: [
-        { opened: false, message: `"Not Opened!  “No cookie, no fortune."` },
-        { opened: true, message: `"Fortune text area"` },
-        { opened: true, message: `"Fortune text area"` },
-      ],
-    },
-  ];
+  const parseToCollapseData = (data: FortuneUserHistoryResponse) => {
+    const result: HistoryCollapseData[] = [];
 
-  // const parseToCollapseData = (data: HistoryData) => {
-  //   const result = {};
+    let historyCollapseDataTitle = dayjs(data.startDate);
+    let historyCollapseDataOpenedCount = 0;
+    let historyCollapseDataContents: HistoryCollapseContent[] = [];
 
-  //   let date = dayjs(data.startDate);
+    for (const message of data.scrollMessages) {
+      let historyCollapseData: HistoryCollapseData = {
+        title: historyCollapseDataTitle.format('MMM D, YYYY'),
+        openedCount: historyCollapseDataOpenedCount,
+        contents: historyCollapseDataContents,
+      };
 
-  //   for (const message of data.fortuneMessages) {
-  //     const id = message.id;
-  //     if (id % 3 === 1) {
-  //       date.add(1, 'days').format('MMM D, YYYY');
-  //     }
-  //   }
-  // };
+      if (message.message != null) {
+        historyCollapseDataOpenedCount += 1;
+        historyCollapseData.openedCount = historyCollapseDataOpenedCount;
+        historyCollapseDataContents.push({ opened: true, message: message.message });
+      } else if (message.default_message != null) {
+        historyCollapseDataContents.push({ opened: false, message: message.default_message });
+      } else {
+        historyCollapseDataContents.push({ opened: false, message: 'Something wrong...' });
+      }
+
+      const id = message.id;
+      if (id % 3 === 0) {
+        historyCollapseDataTitle = historyCollapseDataTitle.add(1, 'days');
+
+        result.push(historyCollapseData);
+
+        historyCollapseDataOpenedCount = 0;
+        historyCollapseDataContents = [];
+      }
+    }
+
+    return result;
+  };
 
   const toggleCollapse = (index: number) => {
     setCollapseState((prev) => ({
@@ -111,18 +79,11 @@ export const History = () => {
   };
 
   useEffect(() => {
-    mutate(
-      {},
-      {
-        onSuccess: (data) => {
-          console.log('Mutation successful', data);
-        },
-        onError: (error) => {
-          console.log('Mutation failed', error);
-        },
-      }
-    );
-  }, [mutate]);
+    if (data) {
+      const result = parseToCollapseData(data);
+      setHistoryData(result);
+    }
+  }, [data, setHistoryData]);
 
   return (
     <div className="flex-1 flex flex-col justify-center items-center relative">
@@ -132,7 +93,7 @@ export const History = () => {
         </TaskHistoryHeader>
         <TaskHistoryBody>
           <div className="w-[300px]">
-            {testData.map((data, index) => {
+            {historyData.map((data, index) => {
               return (
                 <HistoryCollapseBox
                   key={index}

@@ -8,6 +8,7 @@ interface HistoryCollapseBoxProps {
   index: number;
   data: {
     title: string;
+    openedCount: number;
     contents: {
       opened: boolean;
       message: string;
@@ -24,7 +25,7 @@ export const HistoryCollapseBox = ({ index, data, isOpen, onClick }: HistoryColl
         <div className="flex flex-row justify-center items-center">
           <span className="w-[100px] text-[#161515] text-[18px] font-semibold font-pretendard">{data.title}</span>
           <div className="w-[34px] h-[16px] flex flex-row justify-center items-center bg-[#956134] text-[#f4dbbd] text-[10px] font-semibold font-pretendard rounded-lg pt-[1px] mb-[3px]">
-            2 / 3
+            {data?.openedCount} / 3
           </div>
         </div>
         <button className="mb-[10px]" onClick={() => onClick(index)}>

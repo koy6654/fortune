@@ -35,7 +35,7 @@ export const TaskListBox = ({ title, description, point, status }: TaskListBoxPr
     <div className={`w-full h-[70px] ${boxClassName} relative rounded-lg border-2 border-[#956134] pl-2 py-2 mb-2`}>
       {status === 'claim' && (
         <div className="w-[100px] h-[32px] absolute top-1/2 left-1/2 p-2.5 bg-[#573518] rounded-xl flex justify-center items-center gap-2.5 cursor-pointer transform -translate-x-1/2 -translate-y-1/2">
-          <div className="text-[#fcf7ef] text-base font-normal font-['Pridi']">Claim</div>
+          <div className="text-[#fcf7ef] text-base font-normal font-pridi">Claim</div>
         </div>
       )}
 

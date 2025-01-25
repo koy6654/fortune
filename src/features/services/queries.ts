@@ -7,7 +7,8 @@ import * as mockService from './service.mock';
 import * as realService from './service';
 
 const service = USE_MOCK ? mockService : realService;
-const { getFortuneDailyChecks, getFortuneSync, getFortuneUserFortune, getReferredUsers } = service;
+const { getFortuneDailyChecks, getFortuneSync, getFortuneUserFortune, getReferredUsers, getFortuneUserHistory } =
+  service;
 
 export const useFortuneSync = (param: SyncParams, enabled = true) => {
   const query = useQuery({
@@ -40,6 +41,15 @@ export const useFortuneUserFortune = (param: FortuneUserFortuneParams, enabled =
   const query = useQuery({
     queryKey: ['userFortune', param],
     queryFn: () => getFortuneUserFortune(param),
+    enabled,
+  });
+  return query;
+};
+
+export const useFortuneUserHistory = (param: FortuneUserFortuneParams, enabled = true) => {
+  const query = useQuery({
+    queryKey: ['userHistory', param],
+    queryFn: () => getFortuneUserHistory(param),
     enabled,
   });
   return query;

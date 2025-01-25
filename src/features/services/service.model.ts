@@ -89,10 +89,12 @@ export interface FortuneUserFortuneResponse {
 export interface FortuneUserHistoryParams {}
 
 export interface FortuneUserHistoryResponse {
-  fortuneMessages: {
+  scrollMessages: {
     id: number;
     default_message: string;
     message: string | null;
+    created_at: string;
+    updated_at: string;
   }[];
   startDate: string;
 }
