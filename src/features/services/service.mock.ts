@@ -7,6 +7,12 @@ import {
   DailyChecksResponse,
   DailyClaimParams,
   DailyClaimResponse,
+  FortuneTasksClaimParams,
+  FortuneTasksClaimResponse,
+  FortuneTasksParams,
+  FortuneTasksResponse,
+  FortuneTasksStoreParams,
+  FortuneTasksStoreResponse,
   FortuneUserFortuneParams,
   FortuneUserFortuneResponse,
   FortuneUserHistoryParams,
@@ -21,9 +27,12 @@ import {
   DEFAULT_MOCK_DAILY_CLAIM,
   DEFAULT_MOCK_REFERRED_USERS,
   DEFAULT_MOCK_SYNC,
+  DEFAULT_MOCK_TASKS_STORE,
   DEFAULT_MOCK_TOKEN,
   DEFAULT_MOCK_USER_FORTUNE,
+  DEFAULT_MOCK_TASKS,
   DEFULAT_MOCK_USER_HISTORY,
+  DEFAULT_MOCK_TASKS_CLAIM,
 } from 'consts/mock';
 
 /**
@@ -131,5 +140,47 @@ export async function getFortuneUserHistory(params: FortuneUserHistoryParams): P
   });
 
   data = DEFULAT_MOCK_USER_HISTORY;
+  return data;
+}
+
+/**
+ * ### tasks
+ * "url"/api/fortune/tasks (GET)
+ * @caution api auth
+ */
+export async function getFortuneTasks(params: FortuneTasksParams): Promise<FortuneTasksResponse[]> {
+  let { data } = await apiAuth.get<BaseResponse<FortuneTasksResponse[]>>('/todos/1', {
+    params,
+  });
+
+  data = DEFAULT_MOCK_TASKS;
+  return data;
+}
+
+/**
+ * ### tasks store
+ * "url"/api/fortune/tasks/store(POST)
+ * @caution api auth
+ */
+export async function postFortuneTasksStore(params: FortuneTasksStoreParams): Promise<FortuneTasksStoreResponse> {
+  let { data } = await apiAuth.post<BaseResponse<FortuneTasksStoreResponse>>('/api/fortune/tasks/store', {
+    ...params,
+  });
+
+  data = DEFAULT_MOCK_TASKS_STORE;
+  return data;
+}
+
+/**
+ * ### tasks claim
+ * "url"/api/fortune/tasks/claim(POST)
+ * @caution api auth
+ */
+export async function postFortuneTasksClaim(params: FortuneTasksClaimParams): Promise<FortuneTasksClaimResponse> {
+  let { data } = await apiAuth.post<BaseResponse<FortuneTasksClaimResponse>>('/api/fortune/tasks/claim', {
+    ...params,
+  });
+
+  data = DEFAULT_MOCK_TASKS_CLAIM;
   return data;
 }

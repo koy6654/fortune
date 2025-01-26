@@ -7,6 +7,12 @@ import {
   DailyChecksResponse,
   DailyClaimParams,
   DailyClaimResponse,
+  FortuneTasksClaimParams,
+  FortuneTasksClaimResponse,
+  FortuneTasksParams,
+  FortuneTasksResponse,
+  FortuneTasksStoreParams,
+  FortuneTasksStoreResponse,
   FortuneUserFortuneParams,
   FortuneUserFortuneResponse,
   FortuneUserHistoryParams,
@@ -91,11 +97,47 @@ export async function getFortuneUserFortune(params: FortuneUserFortuneParams): P
 
 /**
  * ### user history
- * "url"/api/fortune/user-history (POST)
+ * "url"/api/fortune/user-history (GET)
  * @caution api auth
  */
 export async function getFortuneUserHistory(params: FortuneUserHistoryParams): Promise<FortuneUserHistoryResponse> {
   let { data } = await apiAuth.get<BaseResponse<FortuneUserHistoryResponse>>('/api/fortune/user-history', {
+    ...params,
+  });
+  return data;
+}
+
+/**
+ * ### tasks
+ * "url"/api/fortune/tasks (GET)
+ * @caution api auth
+ */
+export async function getFortuneTasks(params: FortuneTasksParams): Promise<FortuneTasksResponse[]> {
+  let { data } = await apiAuth.get<BaseResponse<FortuneTasksResponse[]>>('/api/fortune/tasks', {
+    params,
+  });
+  return data;
+}
+
+/**
+ * ### tasks store
+ * "url"/api/fortune/tasks/store(POST)
+ * @caution api auth
+ */
+export async function postFortuneTasksStore(params: FortuneTasksStoreParams): Promise<FortuneTasksStoreResponse> {
+  let { data } = await apiAuth.post<BaseResponse<FortuneTasksStoreResponse>>('/api/fortune/tasks/store', {
+    ...params,
+  });
+  return data;
+}
+
+/**
+ * ### tasks claim
+ * "url"/api/fortune/tasks/claim(POST)
+ * @caution api auth
+ */
+export async function postFortuneTasksClaim(params: FortuneTasksClaimParams): Promise<FortuneTasksClaimResponse> {
+  let { data } = await apiAuth.post<BaseResponse<FortuneTasksClaimResponse>>('/api/fortune/tasks/claim', {
     ...params,
   });
   return data;

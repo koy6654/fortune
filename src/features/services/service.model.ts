@@ -1,3 +1,5 @@
+import { FortuneTasksType } from 'features/task';
+
 export type UserType = {
   id: number;
   telegram_id: number;
@@ -97,4 +99,42 @@ export interface FortuneUserHistoryResponse {
     updated_at: string;
   }[];
   startDate: string;
+}
+
+export interface FortuneTasksParams {
+  type: FortuneTasksType;
+}
+
+export interface FortuneTasksResponse {
+  id: number;
+  name: string;
+  description: string;
+  reward_coins: number;
+  type: FortuneTasksType;
+  action_name: string;
+  link: string;
+  created_at: string;
+  updated_at: string;
+  image: null;
+  is_submitted: null;
+  is_rewarded: null;
+  submitted_at: null;
+}
+
+export interface FortuneTasksStoreParams {
+  taskid: number;
+}
+
+export interface FortuneTasksStoreResponse {
+  success: boolean;
+  message: string;
+}
+
+export interface FortuneTasksClaimParams {
+  taskid: number;
+}
+
+export interface FortuneTasksClaimResponse {
+  success: boolean;
+  message: string;
 }

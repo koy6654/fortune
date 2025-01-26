@@ -1,11 +1,10 @@
-import React from 'react';
-
 interface TaskCategoryProps {
   listName: string;
   selected: boolean;
+  onClick: () => void;
 }
 
-export const TaskCategory = ({ listName, selected }: TaskCategoryProps) => {
+export const TaskCategory = ({ listName, selected, onClick }: TaskCategoryProps) => {
   let textColorClassName = 'text-[#a48b78]';
 
   if (selected === true) {
@@ -13,9 +12,12 @@ export const TaskCategory = ({ listName, selected }: TaskCategoryProps) => {
   }
 
   return (
-    <div className={`grow shrink basis-0 text-center ${textColorClassName} text-base font-semibold font-pridi`}>
+    <button
+      className={`grow shrink basis-0 text-center ${textColorClassName} text-base font-semibold font-pridi`}
+      onClick={onClick}
+    >
       {listName}
-    </div>
+    </button>
   );
 };
 

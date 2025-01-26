@@ -3,19 +3,23 @@ import { ReactComponent as TaskListBoxStatus } from 'assets/images/task/TaskList
 import { ReactComponent as TaskListBoxDivider } from 'assets/images/task/TaskListBoxDivider.svg';
 import TaskListBoxFortunePoint from 'assets/images/FortunePoint.png';
 import { ReactComponent as TaskListBoxChecked } from 'assets/images/task/TaskListBoxChecked.svg';
+import { FortuneTasksResponse } from 'features/services/service.model';
+
+export type TaskStatus = 'todo' | 'claim' | 'done';
 
 interface TaskListBoxProps {
-  title: string;
-  description: string;
-  point: number;
-  status: 'todo' | 'claim' | 'disabled';
+  task: FortuneTasksResponse;
+  getTaskStatus: (task: FortuneTasksResponse) => TaskStatus;
+  onClickTaskBox: (task: FortuneTasksResponse) => void;
 }
 
-export const TaskListBox = ({ title, description, point, status }: TaskListBoxProps) => {
+export const TaskListBox = ({ task, getTaskStatus, onClickTaskBox }: TaskListBoxProps) => {
   let taskStatus: any = 'N';
   let boxClassName = 'bg-white';
   let titleTextClassName = 'text-black';
   let pointTextClassName = 'text-black';
+
+  const status = getTaskStatus(task);
 
   switch (status) {
     case 'claim':
@@ -24,7 +28,7 @@ export const TaskListBox = ({ title, description, point, status }: TaskListBoxPr
       titleTextClassName = 'text-[#956134]/50';
       pointTextClassName = 'text-[#956134]/50';
       break;
-    case 'disabled':
+    case 'done':
       boxClassName = 'bg-[#573518]/50';
       taskStatus = '';
       titleTextClassName = 'text-[#956134]';
@@ -32,7 +36,10 @@ export const TaskListBox = ({ title, description, point, status }: TaskListBoxPr
   }
 
   return (
-    <div className={`w-full h-[70px] ${boxClassName} relative rounded-lg border-2 border-[#956134] pl-2 py-2 mb-2`}>
+    <button
+      className={`w-full h-[70px] ${boxClassName} relative rounded-lg border-2 border-[#956134] pl-2 py-2 mb-2`}
+      onClick={() => onClickTaskBox(task)}
+    >
       {status === 'claim' && (
         <div className="w-[100px] h-[32px] absolute top-1/2 left-1/2 p-2.5 bg-[#573518] rounded-xl flex justify-center items-center gap-2.5 cursor-pointer transform -translate-x-1/2 -translate-y-1/2">
           <div className="text-[#fcf7ef] text-base font-normal font-pridi">Claim</div>
@@ -46,20 +53,20 @@ export const TaskListBox = ({ title, description, point, status }: TaskListBoxPr
             {taskStatus}
           </div>
         </div>
-        <div className="flex-1 flex flex-col pr-8">
-          <div className={`${titleTextClassName} text-base font-semibold font-pretendard`}>{title}</div>
+        <div className="flex-1 flex flex-col items-start pr-8">
+          <div className={`${titleTextClassName} text-base font-semibold font-pretendard`}>{task.name}</div>
           <div
-            className={`${titleTextClassName} text-[11px] font-normal font-pretendard leading-[13px] tracking-tight`}
+            className={`${titleTextClassName} text-[11px] font-normal font-pretendard leading-[13px] tracking-tight text-left`}
           >
-            {description}
+            {task.description}
           </div>
         </div>
         <TaskListBoxDivider />
         <div className="w-[50px] flex flex-col justify-center items-center">
           <img src={TaskListBoxFortunePoint} alt="" className="w-5 h-5" />
-          <span className={`${pointTextClassName} text-sm font-bold font-pretendard`}>{point}</span>
+          <span className={`${pointTextClassName} text-sm font-bold font-pretendard`}>{task.reward_coins}</span>
         </div>
       </div>
-    </div>
+    </button>
   );
 };
