@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "REACT_APP_USE_DEV_MODE=false react-scripts build",
+    "build": "REACT_APP_USE_DEV_MODE=true react-scripts build",
     "start:dev": "BROWSER=NONE REACT_APP_USE_DEV_MODE=true react-scripts start",
     "start:prod": "REACT_APP_USE_DEV_MODE=true react-scripts start"
   },

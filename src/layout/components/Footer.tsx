@@ -68,7 +68,7 @@ export const Footer = () => {
             // handleMovePath('stake');
           }}
         >
-          <MenuStake />
+          <MenuStake className="brightness-70 grayscale-[1]" />
           <span>Stake</span>
         </HomeFooterMenu>
         <HomeFooterMenu
@@ -78,7 +78,7 @@ export const Footer = () => {
             // handleMovePath('check-in');
           }}
         >
-          <MenuCheckIn />
+          <MenuCheckIn className="brightness-70 grayscale-[1]" />
           <span>Check-in</span>
         </HomeFooterMenu>
         <HomeFooterMenu
