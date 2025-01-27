@@ -5,7 +5,7 @@
   "scripts": {
     "build": "REACT_APP_USE_DEV_MODE=false react-scripts build",
     "start:dev": "BROWSER=NONE REACT_APP_USE_DEV_MODE=true react-scripts start",
-    "start:prod": "REACT_APP_USE_DEV_MODE=false react-scripts start"
+    "start:prod": "REACT_APP_USE_DEV_MODE=true react-scripts start"
   },
   "dependencies": {
     "@okxconnect/ui": "^1.7.1",
