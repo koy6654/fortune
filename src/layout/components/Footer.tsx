@@ -1,5 +1,4 @@
 import React from 'react';
-import './footer.style.scss';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { DEFAULT_SERVICE_PATH } from 'consts';
 import { ReactComponent as MenuNavigation } from 'assets/images/menu/Navigation.svg';
