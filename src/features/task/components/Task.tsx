@@ -10,9 +10,9 @@ import {
 import { useFortuneTasks } from 'features/services/queries';
 import { useFortuneTasksClaim, useFortuneTasksStore } from 'features/services/mutations';
 import { FortuneTasksResponse } from 'features/services/service.model';
-import { DEFAULT_MOCK_TASKS } from 'consts/mock';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
+import { useAlert, Alert } from 'features/alert';
 
 dayjs.extend(utc);
 
@@ -21,7 +21,8 @@ export type FortuneTasksType = 'social' | 'basic' | 'onchain';
 export const Task = () => {
   const [taskType, setTaskType] = useState<FortuneTasksType>('social');
   const [tasks, setTasks] = useState<FortuneTasksResponse[]>([]);
-  const [clickedTask, setClickedTask] = useState<number>();
+
+  const { showAlert } = useAlert();
 
   const { data, isLoading, isError, error, refetch } = useFortuneTasks({ type: taskType });
 
@@ -50,7 +51,7 @@ export const Task = () => {
     if (status === 'todo') {
       onClickTasksStore(task.id, task.link);
     } else if (status === 'claim') {
-      onClickTasksClaim(task.id, task.submitted_at);
+      onClickTasksClaim(task.id, task.submitted_at, task.reward_coins);
     }
   };
 
@@ -62,7 +63,7 @@ export const Task = () => {
     }
   };
 
-  const onClickTasksClaim = (taskid: number, taskSubmittedAt: string | null) => {
+  const onClickTasksClaim = (taskid: number, taskSubmittedAt: string | null, taskRewardCoins: number) => {
     const now = dayjs();
 
     // 차후 수정될 수 있음
@@ -70,20 +71,27 @@ export const Task = () => {
     const allowClaim = now.isAfter(allowTime);
 
     if (allowClaim === true) {
-      mutateFortuneTasksClaim({ taskid }).then(() => refetch());
+      mutateFortuneTasksClaim({ taskid }).then(() => {
+        refetch();
+        showAlert(taskRewardCoins.toString(), 'earned');
+      });
     } else {
       alert(`You can claim after ${allowTime.utc().format('YYYY-MM-DD HH:mm:ss (UTC)')}`);
+      // showAlert(`You can claim after ${allowTime.utc().format('YYYY-MM-DD HH:mm:ss (UTC)')}`, 'oops');
     }
   };
 
   useEffect(() => {
     if (data) {
       setTasks(data);
+    } else if (isError || error) {
+      showAlert('Something went wrong!', 'oops');
     }
-  }, [data, setTaskType]);
+  }, [data, isError, error, showAlert]);
 
   return (
     <div className="flex-1 flex flex-col justify-center items-center relative">
+      <Alert />
       <TaskHistoryBackground>
         <TaskHistoryHeader className="justify-between">
           <TaskCategory listName="Social" selected={taskType === 'social'} onClick={() => onClickTaskType('social')} />
@@ -98,7 +106,7 @@ export const Task = () => {
         </TaskHistoryHeader>
         <TaskHistoryBody>
           {tasks.map((task) => (
-            <TaskListBox task={task} getTaskStatus={getTaskStatus} onClickTaskBox={onClickTaskBox} />
+            <TaskListBox key={task.id} task={task} getTaskStatus={getTaskStatus} onClickTaskBox={onClickTaskBox} />
           ))}
         </TaskHistoryBody>
         <div className="w-full flex flex-row justify-center items-center mt-[-2px]">

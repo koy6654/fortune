@@ -1,7 +1,7 @@
-export interface AlertMesssage {
-  id?: number;
-  /** Alert Message */
-  message: string;
-  /** 아이콘 변경을 위한 프로퍼티 */
-  status: 'success' | 'fail';
+export interface AlertState {
+  showAlert: boolean;
+  alertMessage: string;
+  alertType: 'earned' | 'oops' | null;
+  openAlert: (message: string, type: 'earned' | 'oops') => void;
+  closeAlert: () => void;
 }

@@ -1,3 +1,11 @@
+import { useAlertStore } from '../store';
+
 export const useAlert = () => {
-  return {};
+  const { openAlert, closeAlert } = useAlertStore();
+
+  const showAlert = (message: string, type: 'earned' | 'oops') => {
+    openAlert(message, type);
+  };
+
+  return { showAlert, closeAlert };
 };
