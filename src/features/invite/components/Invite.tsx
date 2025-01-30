@@ -6,9 +6,8 @@ import { ReactComponent as Twitter } from 'assets/images/invite/Twitter.svg';
 import { ReactComponent as LinkLine } from 'assets/images/invite/LinkLine.svg';
 import { ReactComponent as FriendsListArrow } from 'assets/images/invite/FriendsListArrow.svg';
 import { InviteFriendsListUserName } from './InviteFriendsListUserName';
-import { DEFAULT_SHARE_MESSAGE } from 'consts/fortune';
-import { botDomain } from 'consts';
 import { useFortuneSyncStore } from 'features/auth';
+import { ShareOnClipboard, ShareOnTelegram, ShareOnX } from '../libs/shareFunctions';
 
 export const Invite = () => {
   // get auth store
@@ -27,15 +26,16 @@ export const Invite = () => {
     '00 User name1',
   ];
 
-  const handleShare = (target: 'telegram' | 'X' | 'clipboard') => {
+  const handleShare = async (target: 'telegram' | 'X' | 'clipboard') => {
     if (target === 'telegram') {
-      if (user && window.Telegram) {
-        const shareMessage = encodeURI(DEFAULT_SHARE_MESSAGE);
-        const telegram_id = user.telegram_id;
-
-        const referralLink = `${botDomain}/?start_param=ref${telegram_id}`;
-
-        Telegram.WebApp.openTelegramLink(`https://t.me/share/url?text=${shareMessage}&url=${referralLink}`);
+      ShareOnTelegram(user);
+    } else if (target === 'X') {
+      ShareOnX();
+    } else if (target === 'clipboard') {
+      const isCopied = await ShareOnClipboard('this-is-the-text-copied-to-the-clipboard');
+      if (isCopied) {
+        console.log('복사가 완료되었습니다!');
+        alert('Copied!');
       }
     }
   };

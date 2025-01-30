@@ -6,6 +6,7 @@ declare global {
         setHeaderColor: (color: string) => void;
         setBackgroundColor: (color: string) => void;
         expand: () => void;
+        openTelegramLink: (url: string) => void;
       };
     };
   }
