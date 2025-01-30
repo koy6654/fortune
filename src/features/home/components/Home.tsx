@@ -4,10 +4,11 @@ import { ReactComponent as HomeMainFortuneOpen } from 'assets/images/home/MainFo
 import { ReactComponent as HomeMainScrollOpen } from 'assets/images/home/MainScrollOpen.svg';
 import { ReactComponent as HomeSmallClock } from 'assets/images/home/SmallClock.svg';
 import { useFortuneSyncStore } from 'features/auth';
-import { DEFAULT_FORTUNESYNC_FORTUNEINDEX } from 'consts/fortune';
+import { DEFAULT_SCROLL_LEFT_TODAY } from 'consts/fortune';
 import { HomeModal } from './HomeModal';
 import { useFortuneDailyChecks } from 'features/services/queries';
 import { useFortuneDailyChecksStore } from '../store';
+import { DEFAULT_NUM_ZERO } from 'consts';
 
 export const Home = () => {
   // get store
@@ -15,8 +16,9 @@ export const Home = () => {
   const fortuneSyncS = useFortuneSyncStore();
 
   // values
-  const { fortuneIndex, isFortune } = fortuneSyncS;
-  const openTheScrollRestCount = DEFAULT_FORTUNESYNC_FORTUNEINDEX - fortuneIndex;
+  const { fortuneIndex, isFortune, user } = fortuneSyncS;
+  const fortune = user?.fortune ?? DEFAULT_NUM_ZERO;
+
   const [isFortuneClicked, setIsFortuneClicked] = useState(false);
   const [isOpenScorllClicked, setIsOpenScrollClicked] = useState(false);
 
@@ -67,7 +69,7 @@ export const Home = () => {
           <div className=" w-[270px] h-[56px] flex flex-row justify-between items-center px-6 py-6 bg-[#ffc34b] rounded-[22px] border-[#956134] border-2 border-b-4">
             <div className="text-black text-[22px] font-pridi font-semibold">Open the Scroll</div>
             <div className="w-9 h-9 p-2.5 bg-[#956134] rounded-[100px] flex-col justify-center items-center gap-2.5 inline-flex">
-              <div className="text-[#fff5e8] text-[22px] font-pridi font-semibold">{openTheScrollRestCount}</div>
+              <div className="text-[#fff5e8] text-[22px] font-pridi font-semibold">{fortuneIndex}</div>
             </div>
           </div>
         ) : (
@@ -78,7 +80,7 @@ export const Home = () => {
         <div className="flex flex-row justify-center mt-2">
           <span className="text-[#a48b78] text-sm font-pretendard font-medium">Scroll left today&nbsp;</span>
           <span className="text-[#956134] text-sm font-pretendard font-semibold">
-            {fortuneIndex}/{DEFAULT_FORTUNESYNC_FORTUNEINDEX}
+            {fortune}/{DEFAULT_SCROLL_LEFT_TODAY}
           </span>
           <div className="w-[20px]" />
           <HomeSmallClock />

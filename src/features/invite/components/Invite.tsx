@@ -6,8 +6,14 @@ import { ReactComponent as Twitter } from 'assets/images/invite/Twitter.svg';
 import { ReactComponent as LinkLine } from 'assets/images/invite/LinkLine.svg';
 import { ReactComponent as FriendsListArrow } from 'assets/images/invite/FriendsListArrow.svg';
 import { InviteFriendsListUserName } from './InviteFriendsListUserName';
+import { DEFAULT_SHARE_MESSAGE } from 'consts/fortune';
+import { botDomain } from 'consts';
+import { useFortuneSyncStore } from 'features/auth';
 
 export const Invite = () => {
+  // get auth store
+  const { user } = useFortuneSyncStore();
+
   const userNames: string[] = [
     '00 User name1',
     '00 User name1',
@@ -21,13 +27,26 @@ export const Invite = () => {
     '00 User name1',
   ];
 
+  const handleShare = (target: 'telegram' | 'X' | 'clipboard') => {
+    if (target === 'telegram') {
+      if (user && window.Telegram) {
+        const shareMessage = encodeURI(DEFAULT_SHARE_MESSAGE);
+        const telegram_id = user.telegram_id;
+
+        const referralLink = `${botDomain}/?start_param=ref${telegram_id}`;
+
+        Telegram.WebApp.openTelegramLink(`https://t.me/share/url?text=${shareMessage}&url=${referralLink}`);
+      }
+    }
+  };
+
   return (
     <div className="flex-1 flex flex-col justify-center items-center relative">
       <InviteSubTitle subtitle="Share via" />
       <div className="flex flex-row justify-between items-center gap-5 mb-8">
-        <InviteShareViaButton children={<Telegram />} />
-        <InviteShareViaButton children={<Twitter />} />
-        <InviteShareViaButton children={<LinkLine />} />
+        <InviteShareViaButton onClick={() => handleShare('telegram')} children={<Telegram />} />
+        <InviteShareViaButton onClick={() => handleShare('X')} children={<Twitter />} />
+        <InviteShareViaButton onClick={() => handleShare('clipboard')} children={<LinkLine />} />
       </div>
 
       <InviteSubTitle subtitle="Friends List">
