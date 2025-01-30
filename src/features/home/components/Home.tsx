@@ -13,10 +13,7 @@ import { DEFAULT_NUM_ZERO } from 'consts';
 export const Home = () => {
   // get store
   const { setFortuneDailyChecks } = useFortuneDailyChecksStore();
-  const fortuneSyncS = useFortuneSyncStore();
-
-  // values
-  const { fortuneIndex, isFortune, user } = fortuneSyncS;
+  const { fortuneIndex, isFortune, user } = useFortuneSyncStore();
   const fortune = user?.fortune ?? DEFAULT_NUM_ZERO;
 
   const [isFortuneClicked, setIsFortuneClicked] = useState(false);

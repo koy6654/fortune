@@ -2,12 +2,13 @@ import React from 'react';
 import { ReactComponent as EarnedAlertSvg } from 'assets/images/alert/Earned.svg';
 import { ReactComponent as OopsAlertSvg } from 'assets/images/alert/Oops.svg';
 import { ReactComponent as CloseButtonSvg } from 'assets/images/alert/CloseButton.svg';
+import EarnedPng from 'assets/images/alert/Earned.png';
 import { useAlertStore } from '../store';
 
 const EarnedAlert = ({ message }: { message: string }) => {
   return (
     <>
-      <EarnedAlertSvg />
+      <img src={EarnedPng} alt="My Cool Image" />
       <div className="flex flex-row justify-between items-baseline gap-2 mt-3">
         <span className="text-[#231815] text-[22px] font-pridi-semibold">Earned</span>
         <span className="text-[#956134] text-[32px] font-pridi-semibold">{message}</span>
