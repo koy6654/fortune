@@ -29,8 +29,8 @@ export const Intro = (props: IntroProps) => {
       <div className="flex justify-center items-center flex-grow">
         <IntroFortuneScroll />
       </div>
-      <div className="self-center mb-0">
-        <IntroManyFortunes />
+      <div className="self-center mb-0 w-full">
+        <IntroManyFortunes className="w-full object-cover" />
       </div>
     </div>
   );
