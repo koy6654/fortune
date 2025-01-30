@@ -11,13 +11,19 @@ import { isPathAllowed } from 'common/libs';
 
 interface HomeFooterMenuProps {
   selected: boolean;
-  onClick: () => void;
+  onClick?: () => void;
   children: React.ReactNode;
 }
 
 const HomeFooterMenu: React.FC<HomeFooterMenuProps> = ({ selected, onClick, children }) => {
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
+  };
+
   return (
-    <div className="flex flex-col justify-center items-center relative" onClick={onClick}>
+    <div className="flex flex-col justify-center items-center relative" onClick={handleClick}>
       {selected && (
         <div data-name="menu-active-tick" className="absolute top-[-14px] left-1/2 transform -translate-x-1/2">
           <MenuNavigation />
@@ -44,6 +50,7 @@ export const Footer = () => {
       <div className="w-full h-[3px] bg-[#e7c79a] rounded" />
       <div className="flex flex-row justify-between items-center">
         <HomeFooterMenu
+          data-name="home"
           selected={Boolean(isPathAllowed({ pathname, lists: ['/home', 'home/home'], method: 'includes' }))}
           onClick={() => {
             handleMovePath('home');
@@ -52,7 +59,9 @@ export const Footer = () => {
           <MenuHome />
           <span>Home</span>
         </HomeFooterMenu>
+
         <HomeFooterMenu
+          data-name="task"
           selected={Boolean(isPathAllowed({ pathname, lists: ['/task'], method: 'includes' }))}
           onClick={() => {
             handleMovePath('task');
@@ -61,27 +70,32 @@ export const Footer = () => {
           <MenuTask />
           <span>Task</span>
         </HomeFooterMenu>
+
         <HomeFooterMenu
+          data-name="stake"
           selected={false}
-          onClick={() => {
-            alert('get ready');
-            // handleMovePath('stake');
-          }}
+          // onClick={() => {
+          //   handleMovePath('stake');
+          // }}
         >
           <MenuStake className="brightness-70 grayscale-[1]" />
           <span>Stake</span>
         </HomeFooterMenu>
+
         <HomeFooterMenu
+          data-name="check-in"
           selected={false}
-          onClick={() => {
-            alert('get ready');
-            // handleMovePath('check-in');
-          }}
+          // onClick={() => {
+          //   alert('get ready');
+          //   handleMovePath('check-in');
+          // }}
         >
           <MenuCheckIn className="brightness-70 grayscale-[1]" />
           <span>Check-in</span>
         </HomeFooterMenu>
+
         <HomeFooterMenu
+          data-name="history"
           selected={Boolean(isPathAllowed({ pathname, lists: ['/history', 'history/history'], method: 'includes' }))}
           onClick={() => {
             handleMovePath('history');
