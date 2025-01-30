@@ -1,5 +1,4 @@
 import React from 'react';
-import { ReactComponent as EarnedAlertSvg } from 'assets/images/alert/Earned.svg';
 import { ReactComponent as OopsAlertSvg } from 'assets/images/alert/Oops.svg';
 import { ReactComponent as CloseButtonSvg } from 'assets/images/alert/CloseButton.svg';
 import EarnedPng from 'assets/images/alert/Earned.png';
