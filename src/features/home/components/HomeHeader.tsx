@@ -4,7 +4,7 @@ import { ReactComponent as HomeHeaderInviteFriend } from 'assets/images/home/Hea
 import { ReactComponent as HomeHeaderFortunePoint } from 'assets/images/home/HeaderFortunePoint.svg';
 import { ReactComponent as HomeHeaderDailyCheck } from 'assets/images/home/HeaderDailyCheck.svg';
 import { useFortuneSyncStore } from 'features/auth';
-import { DEFAULT_NUM_ZERO, DEFAULT_SERVICE_PATH } from 'consts';
+import { DEFAULT_EMPTY, DEFAULT_NUM_ZERO, DEFAULT_SERVICE_PATH } from 'consts';
 import { useFortuneDailyChecksStore } from '../store';
 import { DEFAULT_FORTUNE_DAILYCHECK_MAX } from 'consts/fortune';
 import { getDailyCheckRestCount } from '../libs/home.libs';
@@ -16,7 +16,10 @@ export const HomeHeader = () => {
   const { fortuneDailyChecks } = useFortuneDailyChecksStore();
 
   // values
-  const balance = user?.balance.toLocaleString() ?? DEFAULT_NUM_ZERO;
+  /** username은 firstname, lastname으로 표시 */
+  const firstNameAndLastName = user ? user.first_name + user.last_name : DEFAULT_EMPTY;
+  /** user가 가지고 있는 point(FRTN) */
+  const pointFRTN = user?.balance.toLocaleString() ?? DEFAULT_NUM_ZERO;
   const dailyCheckRestCount = getDailyCheckRestCount(fortuneDailyChecks);
 
   const navigate = useNavigate();
@@ -29,7 +32,7 @@ export const HomeHeader = () => {
       <div className="flex flex-row justify-between items-center">
         <div className="flex flex-row justify-center items-center">
           <HomeHeaderFortuneScroll />
-          <span data-name="user first_name + user last_name">{user ? user.first_name + user.last_name : ''}</span>
+          <span data-name="user first_name + user last_name">{firstNameAndLastName}</span>
         </div>
         <div>
           <img src={HomeHeaderBeforeConnect} alt="" className="w-[54px] h-[54px]" />
@@ -47,7 +50,7 @@ export const HomeHeader = () => {
         </div>
         <div className="flex flex-col justify-center items-center">
           <HomeHeaderFortunePoint />
-          <span>{balance}</span>
+          <span>{pointFRTN}</span>
         </div>
         <div
           className="flex flex-col justify-center items-center"

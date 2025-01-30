@@ -43,16 +43,14 @@ export function HomeModal(props: HomeModalProps) {
     }
   };
 
-  const handleShare = (target: 'X' | 'link' | 'download') => {
+  const handleShare = (target: 'X' | 'clipboard' | 'download') => {
     if (target === 'X') {
       alert('X');
     }
-    if (target === 'link') {
-      alert('link');
-    }
-    if (target === 'download') {
+    /** 이미지 핸들링 */
+    if (target === 'clipboard' || target === 'download') {
       if (captureRef.current) {
-        htmlToImage(captureRef.current);
+        htmlToImage(captureRef.current, target);
       }
     }
   };
@@ -71,21 +69,21 @@ export function HomeModal(props: HomeModalProps) {
             <div data-name="fortune-message">
               <header className="flex items-center justify-between">
                 <hr className="w-[50px] border-t border-[#BC9D66]" />
-                <span className="text-[14px] text-[#F4DBBD] font-pridi leading-[27px]">
+                <span className="text-[14px] text-[#F4DBBD] font-pridi leading-[27px] whitespace-nowrap">
                   <span className="font-light">Fortue</span> <span className="font-medium">Message</span>
                 </span>
                 <hr className="w-[50px] border-t border-[#BC9D66]" />
               </header>
               <section className="text-[18px] font-semibold font-pridi flex flex-col items-center mt-[15px]">
                 <p className="text-[20px] leading-normal">“</p>
-                <p className="leading-[24px] text-center">{fortuneMessage?.replaceAll('"', '')}</p>
+                <p className="leading-[24px] h-[72px] text-center">{fortuneMessage?.replaceAll('"', '')}</p>
                 <p className="text-[20px] leading-normal">“</p>
               </section>
             </div>
-            <div data-name="fortune-number" className="mt-[36px]">
+            {/* <div data-name="fortune-number" className="mt-[36px]">
               <header className="flex items-center justify-between">
                 <hr className="w-[50px] border-t border-[#BC9D66]" />
-                <span className="text-[14px] text-[#F4DBBD] font-pridi leading-[27px]">
+                <span className="text-[14px] text-[#F4DBBD] font-pridi leading-[27px] whitespace-nowrap">
                   <span className="font-light">Fortue</span> <span className="font-medium">Number</span>
                 </span>
                 <hr className="w-[50px] border-t border-[#BC9D66]" />
@@ -102,10 +100,10 @@ export function HomeModal(props: HomeModalProps) {
                   </span>
                 ))}
               </section>
-            </div>
+            </div> */}
             <div data-name="fortune-share" className="mt-[80px] flex justify-around">
               <TwitterIcon onClick={() => handleShare('X')} />
-              <LinkIcon onClick={() => handleShare('link')} />
+              <LinkIcon onClick={() => handleShare('clipboard')} />
               <DownloadIcon onClick={() => handleShare('download')} />
             </div>
           </div>

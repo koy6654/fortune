@@ -42,9 +42,6 @@ export const Footer = () => {
     navigate(`${DEFAULT_SERVICE_PATH}/${path}`);
   };
 
-  const selected = isPathAllowed({ pathname, lists: ['home', 'home/home'], method: 'includes' });
-  console.log(selected);
-
   return (
     <div className="h=[113px] flex flex-col px-4 pb-4">
       <div className="w-full h-[3px] bg-[#e7c79a] rounded" />
@@ -86,7 +83,6 @@ export const Footer = () => {
           data-name="check-in"
           selected={false}
           // onClick={() => {
-          //   alert('get ready');
           //   handleMovePath('check-in');
           // }}
         >

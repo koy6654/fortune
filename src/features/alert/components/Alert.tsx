@@ -4,23 +4,6 @@ import { ReactComponent as OopsAlertSvg } from 'assets/images/alert/Oops.svg';
 import { ReactComponent as CloseButtonSvg } from 'assets/images/alert/CloseButton.svg';
 import { useAlertStore } from '../store';
 
-export const Alert = () => {
-  const { showAlert, alertMessage, alertType, closeAlert } = useAlertStore();
-
-  if (!showAlert) return null;
-
-  return (
-    <div className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="flex flex-col justify-center items-center transform translate-y-[-5%]">
-        <div className="w-[330px] h-[340px] flex flex-col justify-center items-center bg-[#fcf7ef] rounded-[22px] border-[#956134] border-2 border-b-4">
-          {alertType === 'earned' ? <EarnedAlert message={alertMessage} /> : <OopsAlert message={alertMessage} />}
-        </div>
-        <CloseButtonSvg className="mt-[15px]" onClick={closeAlert} />
-      </div>
-    </div>
-  );
-};
-
 const EarnedAlert = ({ message }: { message: string }) => {
   return (
     <>
@@ -43,5 +26,22 @@ const OopsAlert = ({ message }: { message?: string }) => {
         <span className="text-[#231815] text-[22px] font-pridi-semibold">{message || 'Not quite there yet!'}</span>
       </div>
     </>
+  );
+};
+
+export const Alert = () => {
+  const { showAlert, alertMessage, alertType, closeAlert } = useAlertStore();
+
+  if (!showAlert) return null;
+
+  return (
+    <div className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 z-50">
+      <div className="flex flex-col justify-center items-center transform translate-y-[-5%]">
+        <div className="w-[330px] h-[340px] flex flex-col justify-center items-center bg-[#fcf7ef] rounded-[22px] border-[#956134] border-2 border-b-4">
+          {alertType === 'earned' ? <EarnedAlert message={alertMessage} /> : <OopsAlert message={alertMessage} />}
+        </div>
+        <CloseButtonSvg className="mt-[15px]" onClick={closeAlert} />
+      </div>
+    </div>
   );
 };
