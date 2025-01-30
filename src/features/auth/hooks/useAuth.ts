@@ -5,7 +5,7 @@ import { useAuthTelegramUser } from 'features/services/mutations';
 import { AxiosError } from 'axios';
 import { useFortuneSync } from 'features/services/queries';
 import { LocalStorage } from 'common/libs/storageManager';
-import { SyncResponse } from 'features/services/service.model';
+import { AuthParams, SyncResponse } from 'features/services/service.model';
 
 export function useAuthorizationSetting() {
   useTelegramUISetting();
@@ -14,7 +14,6 @@ export function useAuthorizationSetting() {
   const { setFortuneSync } = useFortuneSyncStore();
 
   const telegramInitData = useTelegramInitData();
-  const { query_id, user, receiver, start_param, auth_date, hash } = telegramInitData;
 
   const promiseResolveRef = useRef<() => void>(() => {});
   const promiseRejectRef = useRef<(reason?: unknown) => void>(() => {});
@@ -48,6 +47,8 @@ export function useAuthorizationSetting() {
 
   useEffect(() => {
     async function authenticate() {
+      const { query_id, user, receiver, start_param, auth_date, hash } = telegramInitData;
+
       if (!user) {
         rejectProcessCompletion(void 0);
         return;
@@ -63,10 +64,11 @@ export function useAuthorizationSetting() {
         if (localStorageToken === null) {
           console.log('=== 최초 로그인 ===');
 
-          const authParams = {
+          const authParams: AuthParams = {
             telegram_id: user.id!,
             first_name: user.first_name!,
             last_name: user.last_name!,
+            /** username, refferd_by 값이 없는경우 param에서 제외 */
             ...(user.usernames && { usernames: user.usernames }),
             ...(start_param?.replace('ref', '') && { referred_by: start_param.replace('ref', '') }),
           };
@@ -112,8 +114,7 @@ export function useAuthorizationSetting() {
     resolveProcessCompletion,
     setFortuneSync,
     setToken,
-    start_param,
-    user,
+    telegramInitData,
   ]);
 
   return useCallback(async () => {
