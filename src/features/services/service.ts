@@ -77,7 +77,7 @@ export async function postFortuneDailyClaim(params: DailyClaimParams): Promise<D
  * @caution api auth
  */
 export async function getReferredUsers(params: ReferredUsersParams): Promise<ReferredUsersResponse> {
-  let { data } = await apiAuth.get<BaseResponse<ReferredUsersResponse>>('/api/refferd-users', {
+  let { data } = await apiAuth.get<BaseResponse<ReferredUsersResponse>>('/api/referred-users', {
     params,
   });
   return data;

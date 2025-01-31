@@ -5,7 +5,7 @@ export type UserType = {
   telegram_id: number;
   first_name: string;
   last_name: string;
-  usernames: string | null;
+  usernames: string;
   wallet: string | null;
   balance: number;
   fortune: number | null;

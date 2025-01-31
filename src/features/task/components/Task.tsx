@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TaskCategory, TaskCategoryDivider } from './TaskCategory';
 import { TaskListBox, TaskStatus } from './TaskListBox';
 import { ReactComponent as TaskListBoxArrow } from 'assets/images/task/TaskListBoxArrow.svg';
@@ -13,6 +13,7 @@ import { FortuneTasksResponse } from 'features/services/service.model';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { useAlert, Alert } from 'features/alert';
+import Spinner from 'features/spinner';
 
 dayjs.extend(utc);
 
@@ -105,9 +106,15 @@ export const Task = () => {
           />
         </TaskHistoryHeader>
         <TaskHistoryBody>
-          {tasks.map((task) => (
-            <TaskListBox key={task.id} task={task} getTaskStatus={getTaskStatus} onClickTaskBox={onClickTaskBox} />
-          ))}
+          {isLoading ? (
+            <Spinner width="30px" height="30px" />
+          ) : (
+            <>
+              {tasks.map((task) => (
+                <TaskListBox key={task.id} task={task} getTaskStatus={getTaskStatus} onClickTaskBox={onClickTaskBox} />
+              ))}
+            </>
+          )}
         </TaskHistoryBody>
         <div className="w-full flex flex-row justify-center items-center mt-[-2px]">
           {tasks.length >= 6 ? <TaskListBoxArrow /> : <></>}
