@@ -6,7 +6,9 @@ import { ReactComponent as DownloadIcon } from 'assets/images/home/home-modal-ic
 import { ReactComponent as LinkIcon } from 'assets/images/home/home-modal-icon-link.svg';
 import { ReactComponent as TwitterIcon } from 'assets/images/home/home-modal-icon-twitter.svg';
 import { SyncResponse } from 'features/services/service.model';
-import { ShareOnX } from 'features/invite/libs/shareFunctions';
+import { MessageToX } from '../libs/home.libs';
+import { useFortuneSyncStore } from 'features/auth';
+import Spinner from 'features/spinner';
 
 interface HomeModalProps {
   isOpen: boolean;
@@ -16,9 +18,13 @@ interface HomeModalProps {
 export function HomeModal(props: HomeModalProps) {
   // props
   const { isOpen, onClose } = props;
-  const [fortuneMessage, setFortuneMessage] = useState<string>();
-  // const [fortuneNumbers, setFortuneNumbers] = useState([12, 6]);
 
+  // store
+  const { setFortuneSync } = useFortuneSyncStore();
+
+  // values
+  const [fortuneMessage, setFortuneMessage] = useState<string>();
+  const [fortuneNumbers, setFortuneNumbers] = useState([12, 6]);
   const captureRef = useRef<HTMLDivElement>(null);
 
   // tanstack
@@ -32,8 +38,9 @@ export function HomeModal(props: HomeModalProps) {
   useEffect(() => {
     async function fetch() {
       const data = (await loadFortuneUserFortune()).data;
-      console.log(data);
-      setFortuneMessage(data?.['fortune-message']);
+      if (data) {
+        setFortuneMessage(data['fortune-message'].replaceAll('"', ''));
+      }
     }
     if (isOpen) {
       fetch();
@@ -41,23 +48,24 @@ export function HomeModal(props: HomeModalProps) {
   }, [isOpen, loadFortuneUserFortune]);
 
   const handleClose = async () => {
-    if (onClose) {
-      try {
-        const loadedFortuenSync: SyncResponse | undefined = (await loadFortuneSync()).data;
+    try {
+      const loadedFortuenSync: SyncResponse | undefined = (await loadFortuneSync()).data;
 
-        if (loadedFortuenSync) {
-          onClose();
-          console.log('[3] API Get => fortune sync', loadedFortuenSync);
-        }
-      } catch (error: unknown) {
-        console.error(error);
+      if (loadedFortuenSync) {
+        setFortuneSync(loadedFortuenSync);
+        console.log('HomeModal Close => receive [/api/fortune/sync] data again', loadedFortuenSync);
+        onClose();
       }
+    } catch (error: unknown) {
+      console.error(error);
     }
   };
 
   const handleShare = (mode: 'X' | 'clipboard' | 'download') => {
     if (mode === 'X') {
-      ShareOnX();
+      if (!!fortuneMessage) {
+        MessageToX(fortuneMessage);
+      }
     } else if (mode === 'clipboard' || mode === 'download') {
       htmlToImage(captureRef.current, mode);
     }
@@ -71,7 +79,9 @@ export function HomeModal(props: HomeModalProps) {
     >
       <div className="w-full pt-[115px] px-[75px] pb-[80px] text-[#FFF]" onClick={(event) => event.stopPropagation()}>
         {isLoading ? (
-          <div data-name="fortune-loading">is Loading...</div>
+          <div data-name="fortune-loading">
+            <Spinner width="50px" height="50px" thick={3} color={'color-white'} />
+          </div>
         ) : (
           <div data-name="fortune-result">
             <div data-name="fortune-message">
@@ -84,11 +94,12 @@ export function HomeModal(props: HomeModalProps) {
               </header>
               <section className="text-[18px] font-semibold font-pridi flex flex-col items-center mt-[15px]">
                 <p className="text-[20px] leading-normal">“</p>
-                <p className="leading-[24px] h-[72px] text-center">{fortuneMessage?.replaceAll('"', '')}</p>
+                <p className="leading-[24px] h-[72px] text-center">{fortuneMessage}</p>
                 <p className="text-[20px] leading-normal">“</p>
               </section>
             </div>
-            {/* <div data-name="fortune-number" className="mt-[36px]">
+
+            <div data-name="fortune-number" className="mt-[36px] hidden">
               <header className="flex items-center justify-between">
                 <hr className="w-[50px] border-t border-[#BC9D66]" />
                 <span className="text-[14px] text-[#F4DBBD] font-pridi leading-[27px] whitespace-nowrap">
@@ -108,7 +119,7 @@ export function HomeModal(props: HomeModalProps) {
                   </span>
                 ))}
               </section>
-            </div> */}
+            </div>
             <div data-name="fortune-share" className="mt-[80px] flex justify-around">
               <TwitterIcon onClick={() => handleShare('X')} />
               <LinkIcon onClick={() => handleShare('clipboard')} />

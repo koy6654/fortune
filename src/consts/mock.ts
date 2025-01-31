@@ -44,7 +44,7 @@ export const DEFAULT_MOCK_SYNC: SyncResponse = {
     last_login_date: null,
     created_at: '2025-01-13T07:57:30.000000Z',
     updated_at: '2025-01-14T07:31:45.000000Z',
-    fortune: null,
+    fortune: 1,
     last_login_round: null,
   },
   isFortune: true,
@@ -61,7 +61,7 @@ export const DEFAULT_MOCK_DAILY_CHECK: DailyChecksResponse = [
     reward_coins: 5,
     created_at: now.subtract(2, 'day').format('YYYY-MM-DD HH:mm:ss'),
     updated_at: now.subtract(2, 'day').format('YYYY-MM-DD HH:mm:ss'),
-    completed: 'done',
+    completed: null,
     available: false,
   },
   {

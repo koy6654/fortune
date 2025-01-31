@@ -19,6 +19,12 @@ const calculateRemainingTime = (targetTime: dayjs.Dayjs, now: dayjs.Dayjs) => {
   };
 };
 
+/**
+ * #### useUtcCounter
+ * @description
+ * - UTC 시간으로 절사 한 뒤, 8시간 주기의 카운트를 세는 함수
+ * @returns {string} - HH : mm : ss 로 이루어진 남은시간 타이머
+ */
 const useUtcCounter = () => {
   const [timeLeft, setTimeLeft] = useState<string>('08 : 00 : 00');
 
