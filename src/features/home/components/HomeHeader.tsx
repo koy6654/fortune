@@ -9,6 +9,7 @@ import { useFortuneDailyChecksStore } from '../store';
 import { DEFAULT_FORTUNE_DAILYCHECK_MAX } from 'consts/fortune';
 import { getDailyCheckRestCount } from '../libs/home.libs';
 import { useNavigate } from 'react-router-dom';
+import useDailyClaim from 'common/hooks/useDailyClaim';
 
 export const HomeHeader = () => {
   // get store
@@ -23,22 +24,43 @@ export const HomeHeader = () => {
   const dailyCheckRestCount = getDailyCheckRestCount(fortuneDailyChecks);
 
   const navigate = useNavigate();
+
+  // util
+  const { walletAddress, connectWallet, sendTransaction } = useDailyClaim();
+
   const handleMovePath = (path: string) => {
     navigate(`${DEFAULT_SERVICE_PATH}/${path}`);
+  };
+
+  const handleConnect = async () => {
+    try {
+      /** 지갑연결 */
+      const walletData = await connectWallet();
+      if (!walletData) {
+        console.log('Failed to connect wallet');
+        return;
+      }
+    } catch (error: unknown) {
+      console.error(error);
+    }
   };
 
   return (
     <div className="h-[147px] flex flex-col justify-between px-4 pt-4">
       <div className="flex flex-row justify-between items-center">
+        {/* username */}
         <div className="flex flex-row justify-center items-center">
           <HomeHeaderFortuneScroll />
           <span data-name="user first_name + user last_name">{firstNameAndLastName}</span>
         </div>
-        <div>
+
+        {/* wallet */}
+        <div onClick={handleConnect}>
           <img src={HomeHeaderBeforeConnect} alt="" className="w-[54px] h-[54px]" />
         </div>
       </div>
       <div className="flex flex-row justify-between items-end mt-4">
+        {/* Invite */}
         <div
           className="flex flex-col justify-center items-center"
           onClick={() => {
@@ -48,10 +70,14 @@ export const HomeHeader = () => {
           <HomeHeaderInviteFriend />
           <span>Invite</span>
         </div>
+
+        {/* Balance */}
         <div className="flex flex-col justify-center items-center">
           <HomeHeaderFortunePoint />
           <span>{pointFRTN}</span>
         </div>
+
+        {/* Daily Check */}
         <div
           className="flex flex-col justify-center items-center"
           onClick={() => {

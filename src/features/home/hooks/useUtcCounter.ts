@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import { SetInterval } from 'types/type';
+
+dayjs.extend(utc);
 
 const calculateRemainingTime = (targetTime: dayjs.Dayjs, now: dayjs.Dayjs) => {
   const totalSeconds = targetTime.diff(now, 'second');

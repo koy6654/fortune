@@ -34,7 +34,7 @@ export interface SyncResponse {
 }
 
 export interface DailyChecksParams {}
-interface DailyCheckData {
+export interface DailyCheckData {
   id: number;
   name: string;
   required_login_streak: number;

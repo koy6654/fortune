@@ -12,7 +12,7 @@ import { useFortuneTasksClaim, useFortuneTasksStore } from 'features/services/mu
 import { FortuneTasksResponse } from 'features/services/service.model';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import { useAlert, Alert } from 'features/alert';
+import { useAlert } from 'features/alert';
 import Spinner from 'features/spinner';
 
 dayjs.extend(utc);
@@ -92,7 +92,6 @@ export const Task = () => {
 
   return (
     <div className="flex-1 flex flex-col justify-center items-center relative">
-      <Alert />
       <TaskHistoryBackground>
         <TaskHistoryHeader className="justify-between">
           <TaskCategory listName="Social" selected={taskType === 'social'} onClick={() => onClickTaskType('social')} />

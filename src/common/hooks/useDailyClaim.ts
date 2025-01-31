@@ -3,9 +3,9 @@ import { OKXUniversalConnectUI, THEME } from '@okxconnect/ui';
 
 const useDailyClaim = () => {
   const [walletAddress, setWalletAddress] = useState('');
-  const [isClaimed, setIsClaimed] = useState(false);
 
   const initializeUi = useCallback(async () => {
+    console.log('step01_initializeUi');
     const Ui = await OKXUniversalConnectUI.init({
       dappMetaData: {
         icon: 'https://static.okx.com/cdn/assets/imgs/247/58E63FEA47A2B7D7.pngpek160114_273',
@@ -24,7 +24,8 @@ const useDailyClaim = () => {
     return Ui;
   }, []);
 
-  const connectWallet = useCallback(async (Ui: OKXUniversalConnectUI) => {
+  const openWallet = useCallback(async (Ui: OKXUniversalConnectUI) => {
+    console.log('step02_connectWallet');
     if (!Ui) {
       console.log('OKXUniversalConnectUI is not ready');
       return null;
@@ -41,12 +42,14 @@ const useDailyClaim = () => {
     if (info) {
       const [namespace, chainId, address] = info.namespaces['eip155'].accounts[0].split(':');
       setWalletAddress(`${address.slice(0, 6)}...`);
-      return address;
+      return { Ui, address };
     }
     return null;
   }, []);
 
-  const sendTransaction = useCallback(async (Ui: OKXUniversalConnectUI, address: string | null) => {
+  const sendTransaction = useCallback(async (Ui: OKXUniversalConnectUI, address: string | null, value: number) => {
+    console.log('step03_sendTransaction');
+
     if (!Ui) {
       console.log('OKXUniversalConnectUI is not ready');
       return null;
@@ -64,7 +67,8 @@ const useDailyClaim = () => {
           to: '0x8c2F7a450F4Cc6E9a86Ef6158E0823E08502bf6f', // Contract address
           from: address, // Connected wallet address
           gas: '0x76c0', // Gas limit
-          value: '0x', // No transfer value
+          // value: '0x', // No transfer value
+          value: value.toString(16),
           data: '0x2a46f2e8', // setUserDailyInfo function selector
           gasPrice: '0x3B9ACA00', // Gas price
         },
@@ -75,20 +79,21 @@ const useDailyClaim = () => {
     return result;
   }, []);
 
-  const claimDailyReward = useCallback(async () => {
+  const connectWallet = useCallback(async () => {
     try {
       const Ui = await initializeUi();
-      const address = await connectWallet(Ui);
-      const result = await sendTransaction(Ui, address);
-
-      console.log('Transaction Result:', result);
-      setIsClaimed(true);
+      const walletData = await openWallet(Ui);
+      if (walletData) {
+        return walletData; // Ui와 address를 함께 반환
+      }
+      return null; // 지갑 연결 실패 시 null 반환
     } catch (error) {
-      console.error('Error during claim:', error);
+      console.error('Error during wallet connection:', error);
+      return null;
     }
-  }, [initializeUi, connectWallet, sendTransaction]);
+  }, [initializeUi, openWallet]);
 
-  return { walletAddress, isClaimed, claimDailyReward };
+  return { walletAddress, connectWallet, sendTransaction };
 };
 
 export default useDailyClaim;

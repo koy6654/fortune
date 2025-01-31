@@ -4,7 +4,8 @@ import { DailyChecksResponse } from 'features/services/service.model';
 
 export function getDailyCheckRestCount(fortuneDailyChecks: DailyChecksResponse | null): number {
   if (!fortuneDailyChecks) return DEFAULT_NUM_ZERO;
-  return fortuneDailyChecks.filter((check) => check.completed !== 'done').length;
+  // completed 는 claim을 받으면 'done' 이고 받지 않았으면 null
+  return fortuneDailyChecks.filter((check) => check.completed === 'done').length;
 }
 
 export const MessageToX = async (message: string): Promise<boolean> => {
