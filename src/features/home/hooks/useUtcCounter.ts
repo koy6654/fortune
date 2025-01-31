@@ -28,26 +28,26 @@ const useUtcCounter = () => {
     const startCountdown = () => {
       const now = dayjs.utc();
       const nowZeroBase = now.startOf('day');
-      const nowFloorHour = Math.floor(nowZeroBase.hour() / 8);
+      const nowFloorHour = Math.floor(now.hour() / 8);
       const nowHourDuration = nowFloorHour * 8;
-      const nextTargetTime = nowZeroBase.add(nowHourDuration + 8, 'hour');
+      let nextTargetTime = nowZeroBase.add(nowHourDuration + 8, 'hour');
 
-      let remainingTimeInSeconds = nextTargetTime.diff(now, 'second');
-
-      setTimeLeft(calculateRemainingTime(nextTargetTime, now).formatted);
-
-      intervalId = setInterval(() => {
-        if (remainingTimeInSeconds <= 0) {
-          remainingTimeInSeconds = 8 * 3600; // 8시간 * 3600초(1시간 초) = 28800초
-        }
-
+      // 초기값 설정
+      const updateRemainingTime = () => {
         const now = dayjs.utc();
         const remaining = calculateRemainingTime(nextTargetTime, now);
 
-        setTimeLeft(remaining.formatted);
+        // 타이머가 0이 되면 다음 주기로 갱신
+        if (remaining.hours <= 0 && remaining.minutes <= 0 && remaining.seconds <= 0) {
+          nextTargetTime = nextTargetTime.add(8, 'hour');
+        }
 
-        remainingTimeInSeconds -= 1;
-      }, 1000);
+        setTimeLeft(remaining.formatted);
+      };
+
+      updateRemainingTime(); // 첫 번째 실행
+
+      intervalId = setInterval(updateRemainingTime, 1000);
     };
 
     startCountdown();
