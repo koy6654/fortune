@@ -6,6 +6,7 @@ import { ReactComponent as DownloadIcon } from 'assets/images/home/home-modal-ic
 import { ReactComponent as LinkIcon } from 'assets/images/home/home-modal-icon-link.svg';
 import { ReactComponent as TwitterIcon } from 'assets/images/home/home-modal-icon-twitter.svg';
 import { SyncResponse } from 'features/services/service.model';
+import { ShareOnX } from 'features/invite/libs/shareFunctions';
 
 interface HomeModalProps {
   isOpen: boolean;
@@ -54,15 +55,11 @@ export function HomeModal(props: HomeModalProps) {
     }
   };
 
-  const handleShare = (target: 'X' | 'clipboard' | 'download') => {
-    if (target === 'X') {
-      alert('X');
-    }
-    /** 이미지 핸들링 */
-    if (target === 'clipboard' || target === 'download') {
-      if (captureRef.current) {
-        htmlToImage(captureRef.current, target);
-      }
+  const handleShare = (mode: 'X' | 'clipboard' | 'download') => {
+    if (mode === 'X') {
+      ShareOnX();
+    } else if (mode === 'clipboard' || mode === 'download') {
+      htmlToImage(captureRef.current, mode);
     }
   };
 

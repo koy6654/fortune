@@ -46,7 +46,7 @@ const copyImageToClipboard = async (dataUrl: string) => {
  * @param filename 다운로드 시 사용할 파일 이름 (기본값: 'fortune')
  */
 export const htmlToImage = async (
-  el: HTMLElement,
+  el: HTMLElement | null,
   mode: 'download' | 'clipboard' = 'download',
   filename: string = 'fortune'
 ) => {
@@ -55,20 +55,19 @@ export const htmlToImage = async (
     return;
   }
 
-  const formattedDate = dayjs().format('YYYYMMDDHHmmss');
-
   try {
     // 요소를 PNG로 변환
     const image = await toPng(el, {
       style: {
         transform: 'scale(1)', // 기본 스케일로 고정
-        fontFamily: 'inherit', // 폰트 상속
+        fontFamily: 'inherit', // 폰트 상속 (테스트해보니, 폰트 때문에 가끔 깨질때가 있음)
       },
       skipFonts: true,
     });
 
     if (mode === 'download') {
       // 모드 1: 이미지를 다운로드
+      const formattedDate = dayjs().format('YYYYMMDDHHmmss');
       downloadImage(image, `${filename}_${formattedDate}.png`);
     } else if (mode === 'clipboard') {
       // 모드 2: 이미지를 클립보드에 복사
