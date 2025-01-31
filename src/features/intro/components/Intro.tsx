@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { DEFAULT_SERVICE_PATH } from 'consts';
 import { ReactComponent as IntroFortuneScroll } from 'assets/images/intro/FortuneScroll.svg';
 import { ReactComponent as IntroManyFortunes } from 'assets/images/intro/ManyFortunes.svg';
+import { SetTimeout } from 'types/type';
 
 type IntroProps = {
   start: boolean;
@@ -14,7 +15,7 @@ export const Intro = (props: IntroProps) => {
 
   useEffect(() => {
     if (start) {
-      const timer = setTimeout(() => {
+      const timer: SetTimeout = setTimeout(() => {
         navigate(`${DEFAULT_SERVICE_PATH}/home`);
       }, 1000);
 
