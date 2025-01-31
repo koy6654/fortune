@@ -9,6 +9,7 @@ import { HomeModal } from './HomeModal';
 import { useFortuneDailyChecks } from 'features/services/queries';
 import { useFortuneDailyChecksStore } from '../store';
 import { DEFAULT_NUM_ZERO } from 'consts';
+import useUtcCounter from '../hooks/useUtcCounter';
 
 export const Home = () => {
   // get store
@@ -16,6 +17,10 @@ export const Home = () => {
   const { fortuneIndex, isFortune, user } = useFortuneSyncStore();
   const fortune = user?.fortune ?? DEFAULT_NUM_ZERO;
 
+  // util
+  const timeLeft = useUtcCounter();
+
+  // state
   const [isFortuneClicked, setIsFortuneClicked] = useState(false);
   const [isOpenScorllClicked, setIsOpenScrollClicked] = useState(false);
 
@@ -40,16 +45,14 @@ export const Home = () => {
         {Boolean(isFortune) ? (
           <>
             <div
-              className={`transition-all duration-300 ${isFortuneClicked ? 'hidden' : 'block'}`}
+              className={`animate-bounce ${isFortuneClicked ? 'hidden' : 'block'}`}
               onClick={() => setIsFortuneClicked(true)}
-              style={{ cursor: 'pointer' }}
             >
               <HomeMainFortuneOpen />
             </div>
             <div
-              className={`transition-all duration-300 ${isFortuneClicked ? 'block' : 'hidden'}`}
+              className={`animate-bounce ${isFortuneClicked ? 'block' : 'hidden'}`}
               onClick={() => setIsOpenScrollClicked(true)}
-              style={{ cursor: 'pointer' }}
             >
               <HomeMainScrollOpen />
             </div>
@@ -61,9 +64,13 @@ export const Home = () => {
           </>
         )}
       </div>
+
       <div className="absolute bottom-[60px]">
         {Boolean(isFortune) ? (
-          <div className=" w-[270px] h-[56px] flex flex-row justify-between items-center px-6 py-6 bg-[#ffc34b] rounded-[22px] border-[#956134] border-2 border-b-4">
+          <div
+            className="w-[270px] h-[56px] flex flex-row justify-between items-center px-6 py-6 bg-[#ffc34b] rounded-[22px] border-[#956134] border-2 border-b-4"
+            onClick={() => setIsOpenScrollClicked(true)}
+          >
             <div className="text-black text-[22px] font-pridi font-semibold">Open the Scroll</div>
             <div className="w-9 h-9 p-2.5 bg-[#956134] rounded-[100px] flex-col justify-center items-center gap-2.5 inline-flex">
               <div className="text-[#fff5e8] text-[22px] font-pridi font-semibold">{fortuneIndex}</div>
@@ -74,14 +81,20 @@ export const Home = () => {
             <div className="text-[#737373] text-[22px] font-pridi font-semibold">Wait for your fortune</div>
           </div>
         )}
-        <div className="flex flex-row justify-center mt-2">
-          <span className="text-[#a48b78] text-sm font-pretendard font-medium">Scroll left today&nbsp;</span>
-          <span className="text-[#956134] text-sm font-pretendard font-semibold">
+        <div className="flex flex-row justify-center items-end mt-2">
+          <span className={`${isFortune ? 'text-[#413C38]' : 'text-[#a48b78]'} text-sm font-pretendard font-medium`}>
+            Scroll left today&nbsp;
+          </span>
+          <span
+            className={`${
+              isFortune ? 'text-[#413C38] font-medium' : 'text-[#956134] font-semibold'
+            } text-sm font-pretendard`}
+          >
             {fortune}/{DEFAULT_SCROLL_LEFT_TODAY}
           </span>
           <div className="w-[20px]" />
           <HomeSmallClock />
-          <div className="text-center text-[#a48b78] text-sm font-pretendard font-semibold">00 : 00 : 00</div>
+          <div className="text-center text-[#a48b78] ml-1 text-sm font-pretendard font-semibold">{timeLeft}</div>
         </div>
       </div>
     </div>

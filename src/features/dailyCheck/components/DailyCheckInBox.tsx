@@ -61,7 +61,6 @@ export const DailyCheckInBox = ({ status, dayCount, content }: DailyCheckInBoxPr
 
   return (
     <div
-      style={{ cursor: status === 'claim' ? 'pointer' : 'default' }}
       className={`w-[85%] h-[50px] flex flex-row justify-between items-center rounded-xl mx-10 mt-1 ${bgClassName} ${borderClassName} `}
       onClick={handleClaim}
     >

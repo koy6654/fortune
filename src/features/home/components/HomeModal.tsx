@@ -1,10 +1,11 @@
 import { htmlToImage } from 'common/libs';
-import { useFortuneUserFortune } from 'features/services/queries';
+import { useFortuneSync, useFortuneUserFortune } from 'features/services/queries';
 import { useEffect, useRef, useState } from 'react';
 import { ReactComponent as CloseIcon } from 'assets/images/home/home-modal-close-button.svg';
 import { ReactComponent as DownloadIcon } from 'assets/images/home/home-modal-icon-download.svg';
 import { ReactComponent as LinkIcon } from 'assets/images/home/home-modal-icon-link.svg';
 import { ReactComponent as TwitterIcon } from 'assets/images/home/home-modal-icon-twitter.svg';
+import { SyncResponse } from 'features/services/service.model';
 
 interface HomeModalProps {
   isOpen: boolean;
@@ -15,7 +16,7 @@ export function HomeModal(props: HomeModalProps) {
   // props
   const { isOpen, onClose } = props;
   const [fortuneMessage, setFortuneMessage] = useState<string>();
-  const [fortuneNumbers, setFortuneNumbers] = useState([12, 6]);
+  // const [fortuneNumbers, setFortuneNumbers] = useState([12, 6]);
 
   const captureRef = useRef<HTMLDivElement>(null);
 
@@ -25,6 +26,7 @@ export function HomeModal(props: HomeModalProps) {
     data: loadedFortuneUserFortune,
     refetch: loadFortuneUserFortune,
   } = useFortuneUserFortune({}, false);
+  const { refetch: loadFortuneSync } = useFortuneSync({}, false);
 
   useEffect(() => {
     async function fetch() {
@@ -37,9 +39,18 @@ export function HomeModal(props: HomeModalProps) {
     }
   }, [isOpen, loadFortuneUserFortune]);
 
-  const handleClose = () => {
+  const handleClose = async () => {
     if (onClose) {
-      onClose();
+      try {
+        const loadedFortuenSync: SyncResponse | undefined = (await loadFortuneSync()).data;
+
+        if (loadedFortuenSync) {
+          onClose();
+          console.log('[3] API Get => fortune sync', loadedFortuenSync);
+        }
+      } catch (error: unknown) {
+        console.error(error);
+      }
     }
   };
 
