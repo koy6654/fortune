@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { ReactComponent as OopsAlertSvg } from 'assets/images/alert/Oops.svg';
 import { ReactComponent as CloseButtonSvg } from 'assets/images/alert/CloseButton.svg';
 import EarnedPng from 'assets/images/alert/Earned.png';
 import { useAlertStore } from '../store';
 
-const EarnedAlert = ({ message }: { message: string }) => {
+const EarnedAlert = ({ message }: { message: ReactNode }) => {
   return (
     <>
       <img src={EarnedPng} alt="My Cool Image" />
@@ -17,11 +17,11 @@ const EarnedAlert = ({ message }: { message: string }) => {
   );
 };
 
-const OopsAlert = ({ message }: { message?: string }) => {
+const OopsAlert = ({ message }: { message?: ReactNode }) => {
   return (
     <>
       <OopsAlertSvg />
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center text-center">
         <span className="text-[#956134] text-[34px] font-pridi-semibold">Oops!</span>
         <span className="text-[#231815] text-[22px] font-pridi-semibold">{message || 'Not quite there yet!'}</span>
       </div>

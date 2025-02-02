@@ -1,7 +1,9 @@
+import { ReactNode } from 'react';
+
 export interface AlertState {
   showAlert: boolean;
-  alertMessage: string;
+  alertMessage: ReactNode;
   alertType: 'earned' | 'oops' | null;
-  openAlert: (message: string, type: 'earned' | 'oops') => void;
+  openAlert: (message: ReactNode, type: 'earned' | 'oops') => void;
   closeAlert: () => void;
 }
