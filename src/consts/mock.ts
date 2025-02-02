@@ -523,7 +523,7 @@ export const DEFAULT_MOCK_TASKS: FortuneTasksResponse[] = [
     updated_at: '2025-01-17T03:44:22.000000Z',
     image: null,
     is_submitted: null,
-    is_rewarded: null,
+    is_rewarded: true, // done
     submitted_at: null,
   },
   {
@@ -552,9 +552,9 @@ export const DEFAULT_MOCK_TASKS: FortuneTasksResponse[] = [
     created_at: '2025-01-17T03:44:22.000000Z',
     updated_at: '2025-01-17T03:44:22.000000Z',
     image: null,
-    is_submitted: null,
+    is_submitted: true,
     is_rewarded: null,
-    submitted_at: null,
+    submitted_at: now.subtract(2, 'hour').format('YYYY-MM-DD HH:mm:ss'),
   },
   {
     id: 6,
@@ -567,9 +567,9 @@ export const DEFAULT_MOCK_TASKS: FortuneTasksResponse[] = [
     created_at: '2025-01-17T03:44:22.000000Z',
     updated_at: '2025-01-17T03:44:22.000000Z',
     image: null,
-    is_submitted: null,
+    is_submitted: true,
     is_rewarded: null,
-    submitted_at: null,
+    submitted_at: now.subtract(10, 'minute').format('YYYY-MM-DD HH:mm:ss'),
   },
   {
     id: 7,

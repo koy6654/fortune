@@ -163,7 +163,7 @@ export async function getFortuneTasks(params: FortuneTasksParams): Promise<Fortu
  * @caution api auth
  */
 export async function postFortuneTasksStore(params: FortuneTasksStoreParams): Promise<FortuneTasksStoreResponse> {
-  let { data } = await apiAuth.post<BaseResponse<FortuneTasksStoreResponse>>('/api/fortune/tasks/store', {
+  let { data } = await apiAuth.post<BaseResponse<FortuneTasksStoreResponse>>('/posts', {
     ...params,
   });
 
@@ -177,7 +177,7 @@ export async function postFortuneTasksStore(params: FortuneTasksStoreParams): Pr
  * @caution api auth
  */
 export async function postFortuneTasksClaim(params: FortuneTasksClaimParams): Promise<FortuneTasksClaimResponse> {
-  let { data } = await apiAuth.post<BaseResponse<FortuneTasksClaimResponse>>('/api/fortune/tasks/claim', {
+  let { data } = await apiAuth.post<BaseResponse<FortuneTasksClaimResponse>>('/posts', {
     ...params,
   });
 

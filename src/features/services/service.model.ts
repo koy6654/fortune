@@ -115,10 +115,10 @@ export interface FortuneTasksResponse {
   link: string;
   created_at: string;
   updated_at: string;
-  image: null;
-  is_submitted: null;
-  is_rewarded: null;
-  submitted_at: null;
+  image: string | null;
+  is_submitted: boolean | null;
+  is_rewarded: boolean | null;
+  submitted_at: string | null;
 }
 
 export interface FortuneTasksStoreParams {

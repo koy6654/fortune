@@ -7,26 +7,34 @@ import {
   TaskHistoryBody,
   TaskHistoryHeader,
 } from 'features/common/components/TaskHistoryCommon';
-import { useFortuneTasks } from 'features/services/queries';
+import { useFortuneSync, useFortuneTasks } from 'features/services/queries';
 import { useFortuneTasksClaim, useFortuneTasksStore } from 'features/services/mutations';
-import { FortuneTasksResponse } from 'features/services/service.model';
+import { FortuneTasksResponse, SyncResponse } from 'features/services/service.model';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { useAlert } from 'features/alert';
 import Spinner from 'features/spinner';
+import useClaim from 'common/hooks/useClaim';
+import { useFortuneSyncStore } from 'features/auth';
 
 dayjs.extend(utc);
 
 export type FortuneTasksType = 'social' | 'basic' | 'onchain';
 
 export const Task = () => {
+  const { setFortuneSync } = useFortuneSyncStore();
+
   const [taskType, setTaskType] = useState<FortuneTasksType>('social');
   const [tasks, setTasks] = useState<FortuneTasksResponse[]>([]);
+
+  // util
+  const { walletAddress, connectWallet, sendTransaction } = useClaim();
 
   const { showAlert } = useAlert();
 
   const { data, isLoading, isError, error, refetch } = useFortuneTasks({ type: taskType });
 
+  const { refetch: loadFortuneSync } = useFortuneSync({}, false);
   const { mutateAsync: mutateFortuneTasksStore } = useFortuneTasksStore();
   const { mutateAsync: mutateFortuneTasksClaim } = useFortuneTasksClaim();
 
@@ -49,6 +57,7 @@ export const Task = () => {
   const onClickTaskBox = async (task: FortuneTasksResponse) => {
     const status = getTaskStatus(task);
 
+    console.log(status);
     if (status === 'todo') {
       onClickTasksStore(task.id, task.link);
     } else if (status === 'claim') {
@@ -60,11 +69,12 @@ export const Task = () => {
     const result = await mutateFortuneTasksStore({ taskid: taskId });
 
     if (result.success === true) {
+      refetch(); // is_submitted, submitted_at refetch 를 갱신하기 위해, refetch
       window.open(taskLink, '_blank');
     }
   };
 
-  const onClickTasksClaim = (taskid: number, taskSubmittedAt: string | null, taskRewardCoins: number) => {
+  const onClickTasksClaim = async (taskid: number, taskSubmittedAt: string | null, taskRewardCoins: number) => {
     const now = dayjs();
 
     // 차후 수정될 수 있음
@@ -72,13 +82,50 @@ export const Task = () => {
     const allowClaim = now.isAfter(allowTime);
 
     if (allowClaim === true) {
-      mutateFortuneTasksClaim({ taskid }).then(() => {
-        refetch();
-        showAlert(taskRewardCoins.toString(), 'earned');
-      });
+      try {
+        // FIXME: mock 모드로 진행할 수 있도록 주석처리 함
+
+        /** [1] 지갑연결 */
+        // const walletData = await connectWallet();
+        // if (!walletData) {
+        //   console.log('Failed to connect wallet');
+        //   return;
+        // }
+
+        /** [2] transaction  */
+        // const { Ui, address } = walletData;
+        // const result = await sendTransaction(Ui, address, taskRewardCoins);
+
+        /** [3] task/claim(post) */
+        const { success, message } = await mutateFortuneTasksClaim({ taskid });
+
+        // 성공
+        if (success) {
+          // [4] task 리스트의 is_rewarded 를 갱신하기 위해, refetch
+          refetch();
+
+          // [5] sync API 갱신 (잔고 갱신)
+          const loadedFortuenSync: SyncResponse | undefined = (await loadFortuneSync()).data;
+          if (loadedFortuenSync) {
+            setFortuneSync(loadedFortuenSync);
+            console.log('DailyCheck claim end => receive [/api/fortune/sync] data again', loadedFortuenSync);
+          }
+
+          /** [6] 알럿 표시 */
+          showAlert(taskRewardCoins.toString(), 'earned');
+        }
+      } catch (error: unknown) {
+        console.error(error);
+      }
     } else {
-      alert(`You can claim after ${allowTime.utc().format('YYYY-MM-DD HH:mm:ss (UTC)')}`);
-      // showAlert(`You can claim after ${allowTime.utc().format('YYYY-MM-DD HH:mm:ss (UTC)')}`, 'oops');
+      // alert(`You can claim after ${allowTime.utc().format('YYYY-MM-DD HH:mm:ss (UTC)')}`);
+      showAlert(
+        <>
+          <div>You can claim after</div>
+          <div>{allowTime.utc().format('YYYY-MM-DD HH:mm:ss')} (UTC)</div>
+        </>,
+        'oops'
+      );
     }
   };
 
@@ -122,3 +169,6 @@ export const Task = () => {
     </div>
   );
 };
+function connectWallet() {
+  throw new Error('Function not implemented.');
+}
