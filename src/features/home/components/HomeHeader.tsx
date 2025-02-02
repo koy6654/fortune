@@ -9,7 +9,7 @@ import { useFortuneDailyChecksStore } from '../store';
 import { DEFAULT_FORTUNE_DAILYCHECK_MAX } from 'consts/fortune';
 import { getDailyCheckRestCount } from '../libs/home.libs';
 import { useNavigate } from 'react-router-dom';
-import useDailyClaim from 'common/hooks/useDailyClaim';
+import useClaim from 'common/hooks/useClaim';
 
 export const HomeHeader = () => {
   // get store
@@ -26,7 +26,7 @@ export const HomeHeader = () => {
   const navigate = useNavigate();
 
   // util
-  const { walletAddress, connectWallet, sendTransaction } = useDailyClaim();
+  const { walletAddress, connectWallet, sendTransaction } = useClaim();
 
   const handleMovePath = (path: string) => {
     navigate(`${DEFAULT_SERVICE_PATH}/${path}`);

@@ -18,14 +18,14 @@ export const Home = () => {
   const fortune = user?.fortune ?? DEFAULT_NUM_ZERO;
 
   // util
-  const timeLeft = useUtcCounter();
+  const { timeLeft, isResetTime } = useUtcCounter();
 
   // state
   const [isFortuneClicked, setIsFortuneClicked] = useState(false);
   const [isOpenScorllClicked, setIsOpenScrollClicked] = useState(false);
 
   // tanstack
-  const { data, isLoading, isError, error } = useFortuneDailyChecks({});
+  const { data, isLoading, isError, error, refetch: loadFortuneDailyChecks } = useFortuneDailyChecks({});
 
   useEffect(() => {
     if (data) {
@@ -33,6 +33,13 @@ export const Home = () => {
       setFortuneDailyChecks(data);
     }
   }, [data, setFortuneDailyChecks]);
+
+  // 타이머가 쿨타임 00:00:00 이 되면 useFortuneDailyChecks API를 다시 호출한다 (polling)
+  useEffect(() => {
+    if (isResetTime) {
+      loadFortuneDailyChecks();
+    }
+  }, [isResetTime, loadFortuneDailyChecks]);
 
   const handleClose = () => {
     setIsOpenScrollClicked(false);

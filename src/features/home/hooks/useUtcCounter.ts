@@ -30,6 +30,7 @@ const calculateRemainingTime = (targetTime: dayjs.Dayjs, now: dayjs.Dayjs) => {
  */
 const useUtcCounter = () => {
   const [timeLeft, setTimeLeft] = useState<string>('08 : 00 : 00');
+  const [isResetTime, setIsResetTime] = useState<boolean>(false);
 
   useEffect(() => {
     let intervalId: SetInterval;
@@ -48,7 +49,10 @@ const useUtcCounter = () => {
 
         // 타이머가 0이 되면 다음 주기로 갱신
         if (remaining.hours <= 0 && remaining.minutes <= 0 && remaining.seconds <= 0) {
+          setIsResetTime(true); // 00:00:00 감지
           nextTargetTime = nextTargetTime.add(8, 'hour');
+        } else {
+          setIsResetTime(false);
         }
 
         setTimeLeft(remaining.formatted);
@@ -66,7 +70,7 @@ const useUtcCounter = () => {
     };
   }, []);
 
-  return timeLeft;
+  return { timeLeft, isResetTime };
 };
 
 export default useUtcCounter;
