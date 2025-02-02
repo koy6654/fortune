@@ -3,7 +3,7 @@ import { DailyCheckInBox, DailyCheckInBoxProps, DailyCheckInStatusTypes } from '
 import { useFortuneDailyChecks, useFortuneSync } from 'features/services/queries';
 import { useEffect } from 'react';
 import { DEFAULT_FORTUNE_DAILYCHECK_MAX, DEFAULT_FORTUNE_SPECIAL_REWARD } from 'consts/fortune';
-import useDailyClaim from 'common/hooks/useDailyClaim';
+import useClaim from 'common/hooks/useClaim';
 import { useFortuneDailyClaim } from 'features/services/mutations';
 import { DailyCheckData, SyncResponse } from 'features/services/service.model';
 import { checkDateStatus } from '../libs/checkDateStatus';
@@ -24,7 +24,7 @@ export const DailyCheck = () => {
   const { refetch: loadFortuneSync } = useFortuneSync({}, false);
 
   // util
-  const { walletAddress, connectWallet, sendTransaction } = useDailyClaim();
+  const { walletAddress, connectWallet, sendTransaction } = useClaim();
 
   // TODO: src/features/home/components/Home.tsx 와 로직이 겹치긴 함
   useEffect(() => {
@@ -68,6 +68,8 @@ export const DailyCheck = () => {
   const handleClaim = async (status: DailyCheckInStatusTypes) => {
     if (status === 'claim') {
       try {
+        // FIXME: mock 모드로 진행할 수 있도록 주석처리 함
+
         /** [1] 지갑연결 */
         // const walletData = await connectWallet();
         // if (!walletData) {
@@ -81,6 +83,8 @@ export const DailyCheck = () => {
 
         // 성공
         if (success) {
+          // FIXME: mock 모드로 진행할 수 있도록 주석처리 함
+
           /** [3] transaction  */
           // const { Ui, address } = walletData;
           // const result = await sendTransaction(Ui, address, balance);
@@ -93,14 +97,14 @@ export const DailyCheck = () => {
           //   setFortuneDailyChecks(loadedFortuneDailyChecks);
           // }
 
-          // sync API 갱신
+          // [5] sync API 갱신 (잔고 갱신)
           const loadedFortuenSync: SyncResponse | undefined = (await loadFortuneSync()).data;
           if (loadedFortuenSync) {
             setFortuneSync(loadedFortuenSync);
             console.log('DailyCheck claim end => receive [/api/fortune/sync] data again', loadedFortuenSync);
           }
 
-          /** [5] 알럿 표시 */
+          /** [6] 알럿 표시 */
           showAlert(balance.toLocaleString(), 'earned');
         }
       } catch (error: unknown) {
