@@ -1,11 +1,11 @@
 import { useState, useCallback } from 'react';
 import { OKXUniversalConnectUI, THEME } from '@okxconnect/ui';
 
-const useDailyClaim = () => {
+const useClaim = () => {
   const [walletAddress, setWalletAddress] = useState('');
 
   const initializeUi = useCallback(async () => {
-    console.log('step01_initializeUi');
+    console.log('initializeUi');
     const Ui = await OKXUniversalConnectUI.init({
       dappMetaData: {
         icon: 'https://static.okx.com/cdn/assets/imgs/247/58E63FEA47A2B7D7.pngpek160114_273',
@@ -25,7 +25,7 @@ const useDailyClaim = () => {
   }, []);
 
   const openWallet = useCallback(async (Ui: OKXUniversalConnectUI) => {
-    console.log('step02_connectWallet');
+    console.log('openWallet');
     if (!Ui) {
       console.log('OKXUniversalConnectUI is not ready');
       return null;
@@ -48,7 +48,7 @@ const useDailyClaim = () => {
   }, []);
 
   const sendTransaction = useCallback(async (Ui: OKXUniversalConnectUI, address: string | null, value: number) => {
-    console.log('step03_sendTransaction');
+    console.log('sendTransaction');
 
     if (!Ui) {
       console.log('OKXUniversalConnectUI is not ready');
@@ -96,4 +96,4 @@ const useDailyClaim = () => {
   return { walletAddress, connectWallet, sendTransaction };
 };
 
-export default useDailyClaim;
+export default useClaim;
