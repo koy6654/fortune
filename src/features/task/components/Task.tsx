@@ -155,11 +155,11 @@ export const Task = () => {
           {isLoading ? (
             <Spinner width="50px" height="50px" thick={2} />
           ) : (
-            <div className="min-h-[389px]">
+            <>
               {tasks.map((task) => (
                 <TaskListBox key={task.id} task={task} getTaskStatus={getTaskStatus} onClickTaskBox={onClickTaskBox} />
               ))}
-            </div>
+            </>
           )}
         </TaskHistoryBody>
         <div className="w-full flex flex-row justify-center items-center mt-[-2px]">
