@@ -1,5 +1,5 @@
 import { ReactComponent as HomeHeaderFortuneScroll } from 'assets/images/home/HeaderFortuneScroll.svg';
-import HomeHeaderBeforeConnect from 'assets/images/home/HeaderBeforeConnect.png';
+import { ReactComponent as HomeHeaderBeforeConnect } from 'assets/images/home/HeaderBeforeConnect.svg';
 import { ReactComponent as HomeHeaderInviteFriend } from 'assets/images/home/HeaderInviteFriend.svg';
 import { ReactComponent as HomeHeaderFortunePoint } from 'assets/images/home/HeaderFortunePoint.svg';
 import { ReactComponent as HomeHeaderDailyCheck } from 'assets/images/home/HeaderDailyCheck.svg';
@@ -51,12 +51,14 @@ export const HomeHeader = () => {
         {/* username */}
         <div className="flex flex-row justify-center items-center">
           <HomeHeaderFortuneScroll />
-          <span data-name="user first_name + user last_name">{firstNameAndLastName}</span>
+          <span className="font-pretendard font-semibold" data-name="user first_name + user last_name">
+            {firstNameAndLastName}
+          </span>
         </div>
 
         {/* wallet */}
         <div onClick={handleConnect}>
-          <img src={HomeHeaderBeforeConnect} alt="" className="w-[54px] h-[54px]" />
+          <HomeHeaderBeforeConnect />
         </div>
       </div>
       <div className="flex flex-row justify-between items-end mt-4">
@@ -68,13 +70,13 @@ export const HomeHeader = () => {
           }}
         >
           <HomeHeaderInviteFriend />
-          <span>Invite</span>
+          <span className="font-pridi">Invite</span>
         </div>
 
         {/* Balance */}
         <div className="flex flex-col justify-center items-center">
           <HomeHeaderFortunePoint />
-          <span>{pointFRTN}</span>
+          <span className="font-pretendard font-bold text-[20px]">{pointFRTN}</span>
         </div>
 
         {/* Daily Check */}
@@ -85,7 +87,7 @@ export const HomeHeader = () => {
           }}
         >
           <HomeHeaderDailyCheck />
-          <span>
+          <span className="font-pridi">
             {dailyCheckRestCount}/{DEFAULT_FORTUNE_DAILYCHECK_MAX}
           </span>
         </div>

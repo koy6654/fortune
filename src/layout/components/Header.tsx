@@ -15,7 +15,7 @@ export const Header = ({ title, content }: HeaderProps) => {
 
   return (
     <div className="h-[90px] w-full px-4 py-4">
-      <div className="fixed left-[20px] top-[44px]">
+      <div className="fixed left-[20px] top-[18px]">
         <NavLeftArrow onClick={handleMoveBack} />
       </div>
       <div className="text-center text-black text-xl font-pridi-medium">{title}</div>

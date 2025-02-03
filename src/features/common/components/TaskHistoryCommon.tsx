@@ -14,7 +14,7 @@ export const TaskHistoryHeader = ({ className, children }: TaskHistoryProps & { 
 
 export const TaskHistoryBody = ({ children }: TaskHistoryProps) => {
   return (
-    <div className="overflow-y-auto overflow-x-hidden custom-scrollbar pr-3 flex flex-col justify-start items-center">
+    <div className="overflow-y-scroll overflow-x-hidden custom-scrollbar pr-3 flex flex-col justify-start items-center">
       <div className="w-full h-[388px]">{children}</div>
     </div>
   );

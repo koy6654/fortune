@@ -1,7 +1,7 @@
 import React from 'react';
 import { ReactComponent as TaskListBoxStatus } from 'assets/images/task/TaskListBoxStatus.svg';
 import { ReactComponent as TaskListBoxDivider } from 'assets/images/task/TaskListBoxDivider.svg';
-import TaskListBoxFortunePoint from 'assets/images/FortunePoint.png';
+import { ReactComponent as TaskListBoxFortunePoint } from 'assets/images/FortunePoint.svg';
 import { ReactComponent as TaskListBoxChecked } from 'assets/images/task/TaskListBoxChecked.svg';
 import { FortuneTasksResponse } from 'features/services/service.model';
 
@@ -18,6 +18,7 @@ export const TaskListBox = ({ task, getTaskStatus, onClickTaskBox }: TaskListBox
   let boxClassName = 'bg-white';
   let titleTextClassName = 'text-black';
   let pointTextClassName = 'text-black';
+  let taskListBoxFortunePointOpacity = 'opacity-100';
 
   const status = getTaskStatus(task);
 
@@ -27,12 +28,14 @@ export const TaskListBox = ({ task, getTaskStatus, onClickTaskBox }: TaskListBox
       taskStatus = <TaskListBoxChecked />;
       titleTextClassName = 'text-[#956134]/50';
       pointTextClassName = 'text-[#956134]/50';
+      taskListBoxFortunePointOpacity = 'opacity-20';
       break;
     case 'done':
       boxClassName = 'bg-[#573518]/50';
       taskStatus = '';
       titleTextClassName = 'text-[#956134]';
       pointTextClassName = 'text-[#956134]/50';
+      taskListBoxFortunePointOpacity = 'opacity-40';
   }
 
   return (
@@ -63,7 +66,7 @@ export const TaskListBox = ({ task, getTaskStatus, onClickTaskBox }: TaskListBox
         </div>
         <TaskListBoxDivider />
         <div className="w-[50px] flex flex-col justify-center items-center">
-          <img src={TaskListBoxFortunePoint} alt="" className="w-5 h-5" />
+          <TaskListBoxFortunePoint className={`${taskListBoxFortunePointOpacity} mix-blend-multiply`} />
           <span className={`${pointTextClassName} text-sm font-bold font-pretendard`}>{task.reward_coins}</span>
         </div>
       </div>

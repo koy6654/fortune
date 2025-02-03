@@ -80,7 +80,7 @@ export function HomeModal(props: HomeModalProps) {
       <div className="w-full pt-[115px] px-[75px] pb-[80px] text-[#FFF]" onClick={(event) => event.stopPropagation()}>
         {isLoading ? (
           <div data-name="fortune-loading">
-            <Spinner width="50px" height="50px" thick={3} color={'color-white'} />
+            <Spinner width="50px" height="50px" thick={3} color={'#ffffff'} />
           </div>
         ) : (
           <div data-name="fortune-result">
