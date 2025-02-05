@@ -43,7 +43,7 @@ export const History = () => {
 
     for (const message of data.scrollMessages) {
       let historyCollapseData: HistoryCollapseData = {
-        title: historyCollapseDataTitle.format('MMM D, YYYY'),
+        title: historyCollapseDataTitle.format('MMM / ddd / DD'),
         openedCount: historyCollapseDataOpenedCount,
         contents: historyCollapseDataContents,
       };
