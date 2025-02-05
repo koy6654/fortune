@@ -23,7 +23,7 @@ const OopsAlert = ({ message }: { message?: ReactNode }) => {
       <OopsAlertSvg />
       <div className="flex flex-col justify-center items-center text-center">
         <span className="text-[#956134] text-[34px] font-pridi-semibold">Oops!</span>
-        <span className="text-[#231815] text-[22px] font-pridi-semibold">{message || 'Not quite there yet!'}</span>
+        <span className="text-[#231815] text-[16px] font-pridi-regular">{message || 'Not quite there yet!'}</span>
       </div>
     </>
   );

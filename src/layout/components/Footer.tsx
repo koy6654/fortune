@@ -54,7 +54,7 @@ export const Footer = () => {
           }}
         >
           <MenuHome />
-          <span>Home</span>
+          <span className="font-pridi">Home</span>
         </HomeFooterMenu>
 
         <HomeFooterMenu
@@ -65,7 +65,7 @@ export const Footer = () => {
           }}
         >
           <MenuTask />
-          <span>Task</span>
+          <span className="font-pridi">Task</span>
         </HomeFooterMenu>
 
         <HomeFooterMenu
@@ -76,7 +76,7 @@ export const Footer = () => {
           // }}
         >
           <MenuStake className="brightness-70 grayscale-[1]" />
-          <span>Stake</span>
+          <span className="font-pridi">Stake</span>
         </HomeFooterMenu>
 
         <HomeFooterMenu
@@ -87,7 +87,7 @@ export const Footer = () => {
           // }}
         >
           <MenuCheckIn className="brightness-70 grayscale-[1]" />
-          <span>Check-in</span>
+          <span className="font-pridi">Check-in</span>
         </HomeFooterMenu>
 
         <HomeFooterMenu
@@ -98,7 +98,7 @@ export const Footer = () => {
           }}
         >
           <MenuHistory />
-          <span>History</span>
+          <span className="font-pridi">History</span>
         </HomeFooterMenu>
       </div>
     </div>

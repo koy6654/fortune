@@ -12,7 +12,6 @@ const Spinner = ({ width, height, thick, color }: SpinnerProps) => {
   return (
     <div className="flex justify-center items-center mt-2 mb-4">
       <div
-        // className={`animate-spin rounded-full border-b-[${borderThick}px] border-${borderColor}`}
         className={`animate-spin rounded-full`}
         style={{ width, height, borderBottomWidth: `${borderThick}px`, borderColor: borderColor }}
       />

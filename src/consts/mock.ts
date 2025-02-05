@@ -360,7 +360,8 @@ export const DEFULAT_MOCK_USER_HISTORY: FortuneUserHistoryResponse = {
       default_message: 'Not Opendle No cookie, no fortune.',
       created_at: '2025-01-21T17:28:49.000000Z',
       updated_at: '2025-01-21T17:28:49.000000Z',
-      message: '"Buy low, sell high...or just HODL and hope for the best. #cryptostruggles"',
+      message:
+        '"Buy low, sell high...or just HODL and hope for the best. #cryptostruggles Buy low, sell high...or just HODL and hope for the best. #cryptostruggles Buy low, sell high...or just HODL and hope for the best. #cryptostruggles"',
     },
     {
       id: 2,

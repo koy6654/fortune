@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { HistoryCollapseBox } from './HistoryCollapseBox';
 import { FortuneUserHistoryResponse } from 'features/services/service.model';
+import Spinner from 'features/spinner';
 
 type HistoryCollapseContent = {
   opened: boolean;
@@ -92,19 +93,23 @@ export const History = () => {
           <div className="text-center text-[#1b1b1b] text-base font-pridi-semibold">Fortune Log</div>
         </TaskHistoryHeader>
         <TaskHistoryBody>
-          <div className="w-[300px]">
-            {historyData.map((data, index) => {
-              return (
-                <HistoryCollapseBox
-                  key={index}
-                  index={index}
-                  data={data}
-                  onClick={toggleCollapse}
-                  isOpen={collapseState[index]}
-                />
-              );
-            })}
-          </div>
+          {isLoading ? (
+            <Spinner width="50px" height="50px" thick={2} />
+          ) : (
+            <>
+              {historyData.map((data, index) => {
+                return (
+                  <HistoryCollapseBox
+                    key={index}
+                    index={index}
+                    data={data}
+                    onClick={toggleCollapse}
+                    isOpen={collapseState[index]}
+                  />
+                );
+              })}
+            </>
+          )}
         </TaskHistoryBody>
       </TaskHistoryBackground>
     </div>

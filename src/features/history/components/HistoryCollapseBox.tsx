@@ -23,7 +23,9 @@ export const HistoryCollapseBox = ({ index, data, isOpen, onClick }: HistoryColl
     <div className="px-4">
       <div className="h-[42px] flex flex-row justify-between items-end">
         <div className="flex flex-row justify-center items-center">
-          <span className="w-[100px] text-[#161515] text-[18px] font-semibold font-pretendard">{data.title}</span>
+          <span className="w-[105px] text-[#161515] text-[18px] font-semibold font-pretendard overflow-hidden whitespace-nowrap text-ellipsis">
+            {data.title}
+          </span>
           <div className="w-[34px] h-[16px] flex flex-row justify-center items-center bg-[#956134] text-[#f4dbbd] text-[10px] font-semibold font-pretendard rounded-lg pt-[1px] mb-[3px]">
             {data?.openedCount} / 3
           </div>

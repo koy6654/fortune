@@ -86,7 +86,7 @@ export const Home = () => {
             </div>
           </div>
         ) : (
-          <div className=" w-[270px] h-[56px] flex flex-row justify-center items-center px-6 py-6 bg-[#E5D5BA] rounded-[22px] border-[#737373] border-2 border-b-4">
+          <div className="w-[270px] h-[56px] flex flex-row justify-center items-center px-6 py-6 bg-[#E5D5BA] rounded-[22px] border-[#737373] border-2 border-b-4">
             <div className="text-[#737373] text-[22px] font-pridi font-semibold">Wait for your fortune</div>
           </div>
         )}
