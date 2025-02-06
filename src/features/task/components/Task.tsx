@@ -122,7 +122,7 @@ export const Task = () => {
       showAlert(
         <>
           <div>You can claim after</div>
-          <div>{allowTime.utc().format('YYYY-MM-DD HH:mm:ss')} (UTC)</div>
+          <div>{allowTime.utc().format('YYYY-MM-DD HH:mm')} (UTC)</div>
         </>,
         'oops'
       );
