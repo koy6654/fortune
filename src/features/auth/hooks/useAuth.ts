@@ -49,52 +49,49 @@ export function useAuthorizationSetting() {
     async function authenticate() {
       const { query_id, user, receiver, start_param, auth_date, hash } = telegramInitData;
 
-      if (!user) {
-        rejectProcessCompletion(void 0);
-        return;
-      }
-
       console.group(
         'useAuthorizationSetting [features/auth/hooks/useAuth.ts => app/bootstap/Bootstrap.tsx => App.tsx]'
       );
 
       try {
-        const localStorageToken = LocalStorage.get<string | null>('token');
+        if (user) {
+          const localStorageToken = LocalStorage.get<string | null>('token');
 
-        if (localStorageToken === null) {
-          console.log('=== 최초 로그인 ===');
+          if (localStorageToken === null) {
+            console.log('=== 최초 로그인 ===');
 
-          const authParams: AuthParams = {
-            telegram_id: user.id!,
-            first_name: user.first_name!,
-            last_name: user.last_name!,
-            /** username, refferd_by 값이 없는경우 param에서 제외 */
-            ...(user.usernames && { usernames: user.usernames }),
-            ...(start_param?.replace('ref', '') && { referred_by: start_param.replace('ref', '') }),
-          };
-          console.log('[1] telegram data => authParams', authParams);
+            const authParams: AuthParams = {
+              telegram_id: user.id!,
+              first_name: user.first_name!,
+              last_name: user.last_name!,
+              /** username, refferd_by 값이 없는경우 param에서 제외 */
+              ...(user.usernames && { usernames: user.usernames }),
+              ...(start_param?.replace('ref', '') && { referred_by: start_param.replace('ref', '') }),
+            };
+            console.log('[1] telegram data => authParams', authParams);
 
-          const { token } = await mutateAuthTelegramUser(authParams);
-          console.log('[2] API Post => token', token);
+            const { token } = await mutateAuthTelegramUser(authParams);
+            console.log('[2] API Post => token', token);
 
-          setToken(token);
-        } else {
-          console.log('=== 재 로그인 ===');
+            setToken(token);
+          } else {
+            console.log('=== 재 로그인 ===');
 
-          console.log('[1] token is exsist');
-          console.log('[2] useAuthStore set =>', localStorageToken);
+            console.log('[1] token is exsist');
+            console.log('[2] useAuthStore set =>', localStorageToken);
 
-          setToken(localStorageToken);
-        }
+            setToken(localStorageToken);
+          }
 
-        const loadedFortuenSync: SyncResponse | undefined = (await loadFortuneSync()).data;
+          const loadedFortuenSync: SyncResponse | undefined = (await loadFortuneSync()).data;
 
-        if (loadedFortuenSync) {
-          setFortuneSync(loadedFortuenSync);
-          resolveProcessCompletion();
-          console.log('[3] API Get => fortune sync', loadedFortuenSync);
-        } else {
-          rejectProcessCompletion('error');
+          if (loadedFortuenSync) {
+            setFortuneSync(loadedFortuenSync);
+            resolveProcessCompletion();
+            console.log('[3] API Get => fortune sync', loadedFortuenSync);
+          } else {
+            rejectProcessCompletion('error');
+          }
         }
       } catch (error: unknown) {
         if (error instanceof AxiosError) {
