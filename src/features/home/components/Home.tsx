@@ -62,7 +62,7 @@ export const Home = () => {
   return (
     <div className="flex flex-col justify-center items-center relative h-[265px]">
       {/* 처음: 스크롤, 뒤: 포춘쿠키 - 두 SVG가 높이가 다 다르기 때문에 수동으로 조절하였음 */}
-      <div className="absolute top-[0px]">
+      <div className={`absolute  ${isFortuneClicked ? 'top-[-30px]' : 'top-[0px]'}`}>
         {Boolean(isFortune) ? (
           <>
             <div
