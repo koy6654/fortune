@@ -206,15 +206,19 @@ export const Invite = () => {
           data-name="infinity-scroll"
           className="overflow-y-auto w-full h-[204px] px-4 pt-4"
         >
-          <div className="grid grid-cols-2 gap-2">
-            {referredUsers.map((user, index) => (
-              <InviteFriendsListUserName
-                key={`invite-friend-key:${user.id}`}
-                userNumber={String(index + 1).padStart(2, '0')}
-                userName={user.username}
-              />
-            ))}
-          </div>
+          {isLoading ? (
+            <Spinner width="50px" height="50px" thick={2} />
+          ) : (
+            <div className="grid grid-cols-2 gap-2">
+              {referredUsers.map((user, index) => (
+                <InviteFriendsListUserName
+                  key={`invite-friend-key:${user.id}`}
+                  userNumber={String(index + 1).padStart(2, '0')}
+                  userName={user.username}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         {/* more(arrow) 및 로딩바 영역 */}
