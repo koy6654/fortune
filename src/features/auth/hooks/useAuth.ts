@@ -96,10 +96,8 @@ export function useAuthorizationSetting() {
       } catch (error: unknown) {
         if (error instanceof AxiosError) {
           console.error(error);
-          rejectProcessCompletion(error);
-        } else {
-          rejectProcessCompletion(error);
         }
+        rejectProcessCompletion(error);
       }
       console.groupEnd();
     }
