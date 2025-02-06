@@ -13,7 +13,7 @@ export function Layout(props: LayoutProps) {
 
   return (
     <div
-      className="w-full h-screen flex flex-col"
+      className="w-full h-screen flex flex-col justify-between"
       style={{
         backgroundImage: `url(${Background})`,
         backgroundSize: 'cover',
