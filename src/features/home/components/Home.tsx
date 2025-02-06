@@ -45,6 +45,20 @@ export const Home = () => {
     setIsOpenScrollClicked(false);
   };
 
+  const handleScrollButtonClick = () => {
+    if (!isFortune) return;
+
+    // 포춘 아직 안눌렀을 때 => 포춘 open helper
+    if (!isFortuneClicked) {
+      setIsFortuneClicked(true);
+    }
+
+    // 포춘이 눌려졌을 때 => 스크롤 오픈 helper
+    if (isFortuneClicked) {
+      setIsOpenScrollClicked(true);
+    }
+  };
+
   return (
     <div className="flex-1 flex flex-col justify-center items-center relative">
       {/* 처음: 스크롤, 뒤: 포춘쿠키 - 두 SVG가 높이가 다 다르기 때문에 수동으로 조절하였음 */}
@@ -76,7 +90,7 @@ export const Home = () => {
         {Boolean(isFortune) ? (
           <div
             className="w-[270px] h-[56px] flex flex-row justify-between items-center px-6 py-6 bg-[#ffc34b] rounded-[22px] border-[#956134] border-2 border-b-4"
-            onClick={() => setIsOpenScrollClicked(true)}
+            onClick={handleScrollButtonClick}
           >
             <div className="text-black text-[22px] font-pridi font-semibold">
               {isFortuneClicked ? 'Open the Scroll' : 'Open the Cookie'}
