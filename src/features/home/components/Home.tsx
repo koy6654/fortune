@@ -90,7 +90,7 @@ export const Home = () => {
             <div className="text-[#737373] text-[22px] font-pridi font-semibold">Wait for your fortune</div>
           </div>
         )}
-        <div className="flex flex-row justify-center items-end mt-2">
+        <div className="flex flex-row justify-center items-top mt-2">
           <span className={`${isFortune ? 'text-[#413C38]' : 'text-[#a48b78]'} text-sm font-pretendard font-medium`}>
             Scroll left today&nbsp;
           </span>
