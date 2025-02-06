@@ -1,10 +1,11 @@
 import { FortuneTasksType } from 'features/task';
+import { TelegramWebApps } from 'telegram-webapps-types';
 
 export type UserType = {
-  id: number;
+  id: TelegramWebApps.WebAppUser['id'];
   telegram_id: number;
-  first_name: string;
-  last_name: string;
+  first_name: TelegramWebApps.WebAppUser['first_name'];
+  last_name: TelegramWebApps.WebAppUser['last_name'];
   username: string;
   wallet: string | null;
   balance: number;
@@ -19,11 +20,11 @@ export type UserType = {
 };
 
 export type AuthParams = {
-  telegram_id: number;
-  first_name: string;
-  last_name: string;
-  usernames?: string;
-  referred_by?: number | string;
+  telegram_id: UserType['telegram_id'];
+  first_name: UserType['first_name'];
+  last_name: UserType['last_name'];
+  usernames?: TelegramWebApps.WebAppUser['usernames'];
+  referred_by?: UserType['referred_by'];
 };
 
 export interface AuthResponse {
