@@ -157,7 +157,12 @@ export const Task = () => {
           ) : (
             <>
               {tasks.map((task) => (
-                <TaskListBox key={task.id} task={task} getTaskStatus={getTaskStatus} onClickTaskBox={onClickTaskBox} />
+                <TaskListBox
+                  key={`task-list-box-${task.id}`}
+                  task={task}
+                  getTaskStatus={getTaskStatus}
+                  onClickTaskBox={onClickTaskBox}
+                />
               ))}
             </>
           )}
@@ -169,6 +174,3 @@ export const Task = () => {
     </div>
   );
 };
-function connectWallet() {
-  throw new Error('Function not implemented.');
-}

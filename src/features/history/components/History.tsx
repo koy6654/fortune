@@ -100,7 +100,7 @@ export const History = () => {
               {historyData.map((data, index) => {
                 return (
                   <HistoryCollapseBox
-                    key={index}
+                    key={`history-collapse-box-${index}`}
                     index={index}
                     data={data}
                     onClick={toggleCollapse}

@@ -40,7 +40,7 @@ export const HistoryCollapseBox = ({ index, data, isOpen, onClick }: HistoryColl
       <Collapse isOpened={isOpen}>
         <div className="flex flex-col justify-center items-start">
           {data.contents.map((content, index) => (
-            <div key={index} className="flex flex-row items-center">
+            <div key={`history-collapse-contents-${index}`} className="flex flex-row items-center">
               {content.opened === true ? (
                 <>
                   <OpenTheScrollFortune className="flex-shrink-0" />
