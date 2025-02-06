@@ -5,7 +5,7 @@ export type UserType = {
   telegram_id: number;
   first_name: string;
   last_name: string;
-  usernames: string;
+  username: string;
   wallet: string | null;
   balance: number;
   fortune: number | null;
@@ -18,8 +18,13 @@ export type UserType = {
   last_login_round: string | null;
 };
 
-export type AuthParams = Pick<UserType, 'telegram_id' | 'first_name' | 'last_name'> &
-  Partial<Pick<UserType, 'usernames' | 'referred_by'>>;
+export type AuthParams = {
+  telegram_id: number;
+  first_name: string;
+  last_name: string;
+  usernames?: string;
+  referred_by?: number | string;
+};
 
 export interface AuthResponse {
   token: string;

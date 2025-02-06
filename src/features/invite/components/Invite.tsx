@@ -211,7 +211,7 @@ export const Invite = () => {
               <InviteFriendsListUserName
                 key={`invite-friend-key:${user.id}`}
                 userNumber={String(index + 1).padStart(2, '0')}
-                userName={user.usernames}
+                userName={user.username}
               />
             ))}
           </div>
