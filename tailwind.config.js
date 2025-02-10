@@ -10,6 +10,7 @@ module.exports = {
         'pridi-bold': ['Pridi-Bold', 'serif'],
         'pridi-semibold': ['Pridi-SemiBold', 'serif'],
         pretendard: ['Pretendard'],
+        'pretendard-semibold': ['Pretendard-Semibold'],
       },
       /**
        * backgroundImage
