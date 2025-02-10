@@ -40,18 +40,18 @@ export const HistoryCollapseBox = ({ index, data, isOpen, onClick }: HistoryColl
       <Collapse isOpened={isOpen}>
         <div className="flex flex-col justify-center items-start gap-[10px] py-[10px]">
           {data.contents.map((content, index) => (
-            <div key={`history-collapse-contents-${index}`} className="flex flex-row items-center">
+            <div key={`history-collapse-contents-${index}`} className="flex flex-row items-top mt-[5px]">
               {content.opened === true ? (
                 <>
-                  <OpenTheScrollFortune className="flex-shrink-0" />
-                  <span className="w-full text-black text-[12px] font-normal font-pretendard leading-[13px] tracking-tight">
+                  <OpenTheScrollFortune className="flex-shrink-0 mt-[-12px]" />
+                  <span className="w-full text-black text-[12px] font-normal font-pretendard leading-[16px] tracking-tight">
                     {content.message}
                   </span>
                 </>
               ) : (
                 <>
                   <NotOpenTheScrollFortune className="flex-shrink-0" />
-                  <span className="w-full text-[#a48b78] text-[10px] font-normal font-pretendard leading-[13px] tracking-tight">
+                  <span className="w-full text-[#a48b78] text-[10px] font-normal font-pretendard leading-[16px] tracking-tight">
                     {content.message}
                   </span>
                 </>
