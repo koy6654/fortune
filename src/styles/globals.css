@@ -30,6 +30,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Pretendard-Semibold';
+  src: url('~assets/fonts/PretendardSemiBold.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @layer utilities {
   .custom-scrollbar::-webkit-scrollbar {
     width: 8px;

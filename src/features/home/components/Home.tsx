@@ -91,7 +91,7 @@ export const Home = () => {
             className="w-[270px] h-[56px] flex flex-row justify-between items-center px-6 py-6 bg-[#ffc34b] rounded-[22px] border-[#956134] border-2 border-b-4"
             onClick={handleScrollButtonClick}
           >
-            <div className="text-black text-[22px] font-pridi font-semibold">
+            <div className="text-black text-[22px] font-pridi font-semibold whitespace-nowrap">
               {isFortuneClicked ? 'Open the Scroll' : 'Open the Cookie'}
             </div>
             <div className="w-9 h-9 p-2.5 bg-[#956134] rounded-[100px] flex-col justify-center items-center gap-2.5 inline-flex">
