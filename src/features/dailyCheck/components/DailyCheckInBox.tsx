@@ -1,6 +1,7 @@
 import DailyCheckFortunePoint from 'assets/images/FortunePoint.png';
 import DailyCheckFortunePointMissed from 'assets/images/home/DailyCheckFortunePointMissed.png';
-import DailyCheckFortunePointClaimedDisabled from 'assets/images/home/DailyCheckFortunePointClaimedDisabled.png';
+import DailyCheckFortunePointClaimed from 'assets/images/home/DailyCheckFortunePointClaimed.png';
+import DailyCheckFortunePointDisabled from 'assets/images/home/DailyCheckFortunePointDisabled.png';
 
 export type DailyCheckInStatusTypes = 'missed' | 'claim' | 'claimed' | 'disabled';
 export interface DailyCheckInBoxProps {
@@ -39,7 +40,7 @@ export const DailyCheckInBox = ({ status, dayCount, content, onClick }: DailyChe
       buttonBgClassName = 'bg-[#c09049]';
       textClassName = 'text-[#956134]';
       buttonText = 'Claimed';
-      fortunePointImage = DailyCheckFortunePointClaimedDisabled;
+      fortunePointImage = DailyCheckFortunePointClaimed;
       break;
     /** 미래의 날짜 */
     case 'disabled':
@@ -49,7 +50,7 @@ export const DailyCheckInBox = ({ status, dayCount, content, onClick }: DailyChe
       buttonBorderClassName = 'border-2 border-[#A48B78]';
       textClassName = 'text-[#a48b78]';
 
-      fortunePointImage = DailyCheckFortunePointClaimedDisabled;
+      fortunePointImage = DailyCheckFortunePointDisabled;
       break;
   }
 
@@ -73,7 +74,7 @@ export const DailyCheckInBox = ({ status, dayCount, content, onClick }: DailyChe
       <div
         className={`min-w-[100px] h-[50px] p-2.5 ml-auto ${buttonBgClassName} ${buttonBorderClassName} rounded-xl flex flex-row justify-center items-center gap-[3px]`}
       >
-        <img src={fortunePointImage} alt="" className="w-5 h-5" />
+        <img src={fortunePointImage} alt="" className="w-[20px] h-[20px]" />
         <div className={`flex justify-center ${textClassName} text-base font-semibold font-pretendard pt-1`}>
           {buttonText}
         </div>
