@@ -91,7 +91,7 @@ export const Home = () => {
             className="w-[270px] h-[56px] flex flex-row justify-between items-center px-6 py-6 bg-[#ffc34b] rounded-[22px] border-[#956134] border-2 border-b-4"
             onClick={handleScrollButtonClick}
           >
-            <div className="text-black text-[22px] font-pridi font-semibold">
+            <div className="text-black text-[22px] font-pridi font-semibold whitespace-nowrap">
               {isFortuneClicked ? 'Open the Scroll' : 'Open the Cookie'}
             </div>
             <div className="w-9 h-9 p-2.5 bg-[#956134] rounded-[100px] flex-col justify-center items-center gap-2.5 inline-flex">
@@ -100,7 +100,9 @@ export const Home = () => {
           </div>
         ) : (
           <div className="w-[270px] h-[56px] flex flex-row justify-center items-center px-6 py-6 bg-[#E5D5BA] rounded-[22px] border-[#737373] border-2 border-b-4">
-            <div className="text-[#737373] text-[22px] font-pridi font-semibold">Wait for your fortune</div>
+            <div className="text-[#737373] text-[22px] font-pridi font-semibold whitespace-nowrap">
+              Wait for your fortune
+            </div>
           </div>
         )}
         <div className="flex flex-row justify-center items-top mt-2">
