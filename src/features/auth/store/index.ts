@@ -14,7 +14,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
   },
   getToken: () => get().token,
-  clearToken: () => set({ token: null }),
+  clearToken: () => {
+    set({ token: null });
+    LocalStorage.remove('token');
+  },
 }));
 
 export const useFortuneSyncStore = create<FortuneSyncState>((set) => ({
